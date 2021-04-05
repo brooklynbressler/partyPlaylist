@@ -23,22 +23,43 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "INSERT INTO events(dj_user_id, host_user_id, playlist_id, event_name, event_date, start_time, end_time) VALUES ('@dj_user_id', '@host_user_id', '@playlist_id', '@event_name', '@event_date', '@start_time', '@end_time');";
+                    string sql = "INSERT INTO events(dj_user_id, host_user_id, playlist_id, event_name, event_date, start_time, end_time) VALUES (@dj_user_id, @host_user_id, @playlist_id, @event_name, @event_date, @start_time, @end_time);";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@dj_user_id", newEvent.DjUserId);
                     cmd.Parameters.AddWithValue("@host_user_id", newEvent.HostUserId);
                     cmd.Parameters.AddWithValue("@playlist_id", newEvent.PlaylistId);
                     cmd.Parameters.AddWithValue("@event_name", newEvent.EventName);
-                    cmd.Parameters.AddWithValue("@event_date", newEvent.EventDate);
-                    cmd.Parameters.AddWithValue("@start_time", newEvent.StartTime);
-                    cmd.Parameters.AddWithValue("@end_time", newEvent.EndTime);
-
+                    if (newEvent.EventDate != null)
+                    {
+                        cmd.Parameters.AddWithValue("@event_date", newEvent.EventDate);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@event_date", "");
+                    }
+                    if (newEvent.StartTime != null)
+                    {
+                        cmd.Parameters.AddWithValue("@start_time", newEvent.StartTime);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@start_time", "");
+                    }
+                    if (newEvent.EndTime != null)
+                    {
+                        cmd.Parameters.AddWithValue("@end_time", newEvent.EndTime);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@end_time", "");
+                    }
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch (SqlException)
+            catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
                 throw;
             }
         }
