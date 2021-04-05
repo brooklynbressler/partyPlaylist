@@ -32,11 +32,11 @@ namespace Capstone.Controllers
             }
             else
             {
-                return BadRequest("Incomplete or missing event data");
+                return Unauthorized("Incomplete or missing event data");
             }
         }
 
-        [HttpGet("events")]
+        [HttpGet("/events")]
         public ActionResult<List<Event>> GetEvents()
         {
             List<Event> allEvents = eventDAO.getEvents();

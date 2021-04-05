@@ -9,7 +9,7 @@
           id="eventname"
           class="form-control"
           placeholder="enter event name"
-          v-model="event.name"
+          v-model="event.EventName"
         />
       </div>
       <div>
@@ -18,7 +18,7 @@
           type="date"
           id="date"
           class="form-control"
-          v-model="event.date"
+          v-model="event.EventDate"
         />
       </div>
       <div>
@@ -27,12 +27,12 @@
           type="time"
           id="start"
           class="form-control"
-          v-model="event.start"
+          v-model="event.StartTime"
         />
       </div>
       <div>
         <label for="end">End Time</label> <br />
-        <input type="time" id="end" class="form-control" v-model="event.end" />
+        <input type="time" id="end" class="form-control" v-model="event.EndTime" />
       </div>
       <div>
           <button type="submit">Save Event</button>
@@ -49,10 +49,13 @@ export default {
   data() {
     return {
       event: {
-        name: "",
-        date: "",
-        start: "",
-        end: "",
+        DjUserId: 1,
+        HostUserId: 2,
+        PlaylistId: 1,
+        EventName: "",
+        EventDate: "",
+        StartTime: "",
+        EndTime: "",
       },
     };
   },
@@ -61,12 +64,12 @@ export default {
       EventsService.addEvent(this.event)
         .then((response) => {
           if (response.status === 201) {
-            this.$router.push({ name: "events" });
+            this.$router.push({ name: 'events' });
           }
         })
         .catch((error) => {
           alert(
-            `Error: ${error.response.status} - ${error.response.statusText}`
+            `Error: ${error.response.status} - DANG! ${error.response.statusText}`
           );
         });
     },
