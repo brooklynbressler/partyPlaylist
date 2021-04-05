@@ -18,6 +18,10 @@
         <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>SEE EVENTS</v-btn>
       </router-link>
 
+      <router-link :to="{ name: 'create-event' }">
+        <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>ADD EVENTS</v-btn>
+      </router-link>
+
     </v-navigation-drawer>
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>

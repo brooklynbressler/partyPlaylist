@@ -23,21 +23,24 @@ export default new Vuex.Store({
     events: [
       {
         id: 1,
-        host: 'Davie504',
         name: 'Bass Party',
-        date: '01-01-2021' 
+        date: '01-01-2021',
+        start: '28:00',
+        end: '23:00'
       },
       {
         id: 2,
-        host: 'The Dude',
         name: 'White Russian Party',
-        date: '04-10-2020' 
+        date: '04-10-2020',
+        start: '12:00',
+        end: '22:00'
       },
       {
         id: 3,
-        host: 'Some Guy',
         name: 'I dunno',
-        date: '01-01-2023' 
+        date: '01-01-2023',
+        start: '05:00',
+        end: '09:00'
       }
     ],
   },
