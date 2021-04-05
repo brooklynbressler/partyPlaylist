@@ -1,0 +1,95 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using Capstone.Models;
+
+namespace Capstone.DAO
+{
+    public class EventSqlDAO : IEventDAO
+    {
+        private readonly string connectionString;
+
+        public EventSqlDAO(string dbConnectionString)
+        {
+            connectionString = dbConnectionString;
+        }
+
+        public void addEvent(Event newEvent)
+        {
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "INSERT INTO events(dj_user_id, host_user_id, playlist_id, event_name, event_date, start_time, end_time) VALUES ('@dj_user_id', '@host_user_id', '@playlist_id', '@event_name', '@event_date', '@start_time', '@end_time');";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@dj_user_id", newEvent.DjUserId);
+                    cmd.Parameters.AddWithValue("@host_user_id", newEvent.HostUserId);
+                    cmd.Parameters.AddWithValue("@playlist_id", newEvent.PlaylistId);
+                    cmd.Parameters.AddWithValue("@event_name", newEvent.EventName);
+                    cmd.Parameters.AddWithValue("@event_date", newEvent.EventDate);
+                    cmd.Parameters.AddWithValue("@start_time", newEvent.StartTime);
+                    cmd.Parameters.AddWithValue("@end_time", newEvent.EndTime);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+
+        public List<Event> getEvents()
+        {
+            List<Event> allEvents = new List<Event>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+
+                    conn.Open();
+
+                    string sql = "SELECT event_id, dj_user_id, host_user_id, playlist_id, event_name, event_date, start_time, end_time FROM events;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        allEvents.Add(GetEventFromReader(reader));
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return allEvents;
+        }
+
+        private Event GetEventFromReader(SqlDataReader reader)
+        {
+            Event e = new Event()
+            {
+                EventId = Convert.ToInt32(reader["event_id"]),
+                DjUserId = Convert.ToInt32(reader["dj_user_id"]),
+                HostUserId = Convert.ToInt32(reader["host_user_id"]),
+                PlaylistId = Convert.ToInt32(reader["playlist_id"]),
+                EventName = Convert.ToString(reader["event_name"]),
+                EventDate = Convert.ToDateTime(reader["event_date"]),
+                StartTime = Convert.ToDateTime(reader["start_time"]),
+                EndTime = Convert.ToDateTime(reader["end_time"])
+                
+            };
+
+            return e;
+        }
+
+    }
+}
