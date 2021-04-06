@@ -21,7 +21,7 @@ namespace Capstone.Controllers
             eventDAO = _eventDAO;
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpPost("/create-event")]
         public ActionResult CreateEvent(Event newEvent)
         {
