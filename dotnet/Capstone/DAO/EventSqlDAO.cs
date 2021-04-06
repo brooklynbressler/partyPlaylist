@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using Capstone.Models;
 
 namespace Capstone.DAO
@@ -30,30 +31,10 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@host_user_id", newEvent.HostUserId);
                     cmd.Parameters.AddWithValue("@playlist_id", newEvent.PlaylistId);
                     cmd.Parameters.AddWithValue("@event_name", newEvent.EventName);
-                    if (newEvent.EventDate != null)
-                    {
-                        cmd.Parameters.AddWithValue("@event_date", newEvent.EventDate);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@event_date", "");
-                    }
-                    if (newEvent.StartTime != null)
-                    {
-                        cmd.Parameters.AddWithValue("@start_time", newEvent.StartTime);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@start_time", "");
-                    }
-                    if (newEvent.EndTime != null)
-                    {
-                        cmd.Parameters.AddWithValue("@end_time", newEvent.EndTime);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@end_time", "");
-                    }
+                    cmd.Parameters.AddWithValue("@event_date", newEvent.EventDate);
+                    cmd.Parameters.AddWithValue("@start_time", newEvent.StartTime);
+                    cmd.Parameters.AddWithValue("@end_time", newEvent.EndTime);
+
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -102,14 +83,33 @@ namespace Capstone.DAO
                 DjUserId = Convert.ToInt32(reader["dj_user_id"]),
                 HostUserId = Convert.ToInt32(reader["host_user_id"]),
                 PlaylistId = Convert.ToInt32(reader["playlist_id"]),
-                EventName = Convert.ToString(reader["event_name"]),
-                EventDate = Convert.ToString(reader["event_date"]),
-                StartTime = Convert.ToString(reader["start_time"]),
-                EndTime = Convert.ToString(reader["end_time"])
-                
+                EventName = Convert.ToString(reader["event_name"])
             };
-
+            string tempStart = Convert.ToString(reader["start_time"]);
+            TimeSpan tempStartTime = TimeSpan.Parse(tempStart);
+            e.StartTime = timeConverter(tempStartTime);
+            string tempEnd = Convert.ToString(reader["end_time"]);
+            TimeSpan tempEndTime = TimeSpan.Parse(tempEnd);
+            e.EndTime = timeConverter(tempEndTime);
+            string tempDate = Convert.ToString(reader["event_date"]);
+            string[] temp = tempDate.Split(' ');
+            e.EventDate = temp[0];
             return e;
+        }
+        private string timeConverter(TimeSpan time)
+        {
+            int hours = 0;
+            string tT = "AM";
+            if (time.Hours > 12)
+            {
+                hours = time.Hours - 12;
+                tT = "PM";
+            }
+            else
+            {
+                hours = time.Hours;
+            }
+            return $"{hours}:{time.Minutes} {tT}";
         }
 
     }

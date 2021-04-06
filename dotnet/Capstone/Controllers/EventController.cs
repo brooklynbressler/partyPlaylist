@@ -21,6 +21,7 @@ namespace Capstone.Controllers
             eventDAO = _eventDAO;
         }
 
+        [Authorize]
         [HttpPost("/create-event")]
         public ActionResult CreateEvent(Event newEvent)
         {
@@ -32,7 +33,7 @@ namespace Capstone.Controllers
             }
             else
             {
-                return Unauthorized("Incomplete or missing event data");
+                return BadRequest("Incomplete or missing event data");
             }
         }
 
