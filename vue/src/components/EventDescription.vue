@@ -1,30 +1,37 @@
 <template>
   <div class="event-description">
-      <p id="hosted-by">hosted by: {{$store.state.activeEvent.EventHost}}</p>
-      <h1>{{$store.state.activeEvent.EventName}}</h1>
-      <h2>{{$store.state.activeEvent.EventDate}}</h2>
-      <h3>{{$store.state.activeEvent.EventDescription}}</h3>  
-      <p>Party time from {{$store.state.activeEvent.StartTime}} to {{$store.state.activeEvent.EndTime}}</p>    
+    <h1>{{ event.eventName }}</h1>
+    <h2>{{ event.eventDate }}</h2>
+    <p>
+      Party time from {{ event.startTime }} to
+      {{ event.endTime }}
+    </p>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      event: {},
+    };
+  },
 
-}
+  created() {
+    this.event = this.$store.state.events.find((event) => {
+      return event.eventId == this.$route.params.id;
+    });
+  },
+};
 </script>
 
 <style>
 .event-description {
-    text-align: center;
-    border: solid black;
-    width: 75%;
-    margin: auto;
-    margin-top: 30px;
-    padding: 20px;
-}
-
-#hosted-by {
-    
+  text-align: center;
+  border: solid black;
+  width: 75%;
+  margin: auto;
+  margin-top: 30px;
+  padding: 20px;
 }
 </style>
