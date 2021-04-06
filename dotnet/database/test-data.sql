@@ -43,9 +43,7 @@ CREATE TABLE events (
 	start_time time,
 	end_time time,
 	CONSTRAINT PK_event PRIMARY KEY (event_id),
-	CONSTRAINT FK_event_dj FOREIGN KEY (dj_user_id) REFERENCES users(user_id),
-	CONSTRAINT FK_event_host FOREIGN KEY (host_user_id) REFERENCES users(user_id),
-	CONSTRAINT FK_event_playlist FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id)
+	CONSTRAINT FK_event_dj FOREIGN KEY (dj_user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE songs (
@@ -68,4 +66,18 @@ CREATE TABLE playlist_songs (
 
 INSERT INTO users(username, first_name, last_name, password_hash, salt, user_role)
 VALUES ('tester', 'Bob', 'Testerson', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj'),
-('tester2', 'Janet', 'Testperson', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'host')
+('tester2', 'Janet', 'Testperson', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'host');
+
+INSERT INTO songs(song_name, artist_name, genre)
+VALUES ('Friends In Low Places', 'Garth Brooks', 'Country'),
+('The Thunder Rolls', 'Garth Brooks', 'Country'),
+('The River', 'Garth Brooks', 'Country'),
+('Boot Scootin Boogie', 'Brooks & Dunn', 'Country'),
+('Neon Moon', 'Brooks & Dunn', 'Country'),
+('My Maria', 'Brooks & Dunn', 'Country'),
+('Drinkin Problem', 'Midland', 'Country'),
+('Sixteen Gears', 'Midland', 'Country'),
+('Thriller', 'Michael Jackson', 'Pop'),
+('Billie Jean', 'Michael Jackson', 'Pop'),
+('Beat It', 'Michael Jackson', 'Pop'),
+('Man In The Mirror', 'Michael Jackson', 'Pop')
