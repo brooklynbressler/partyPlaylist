@@ -21,6 +21,8 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     events: [],
+    possiblePlaylist: [],
+    activePlaylist: [],
     isLoggedIn: false,
   },
   mutations: {
