@@ -1,6 +1,6 @@
 <template>
   <div id="register" class="text-center">
-    <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
+    <h1>Create Account</h1>
 
     <v-form class="form-register" @submit.prevent="register">
       <v-container>
@@ -145,4 +145,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

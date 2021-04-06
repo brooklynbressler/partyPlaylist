@@ -1,38 +1,67 @@
 <template>
   <div id="login" class="text-center">
-    <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
-      <div class="alert alert-danger" role="alert" v-if="invalidCredentials">
-        Invalid username and password!
-      </div>
-      <div
-        class="alert alert-success"
-        role="alert"
-        v-if="this.$route.query.registration"
-      >
-        Thank you for registering, please sign in.
-      </div>
-      <label for="username" class="sr-only">Username</label>
-      <input
-        type="text"
-        id="username"
-        class="form-control"
-        placeholder="Username"
-        v-model="user.username"
-        required
-        autofocus
-      />
-      <label for="password" class="sr-only">Password</label>
-      <input
-        type="password"
-        id="password"
-        class="form-control"
-        placeholder="Password"
-        v-model="user.password"
-        required
-      />
-      <button type="submit">Sign in</button>
-    </form>
+    <h1>Please Sign In</h1>
+
+    <v-form class="form-signin" @submit.prevent="login">
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="6">
+            <div
+              class="alert alert-danger"
+              role="alert"
+              v-if="invalidCredentials"
+            >
+              Invalid username and password!
+            </div>
+            <div
+              class="alert alert-success"
+              role="alert"
+              v-if="this.$route.query.registration"
+            >
+              Thank you for registering, please sign in.
+            </div>
+            <v-text-field
+              id="username"
+              label="Username"
+              outlined
+              v-model="user.username"
+              required
+              autofocus
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="12" sm="6">
+            <v-text-field
+              id="password"
+              label="Password"
+              outlined
+              v-model="user.password"
+              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show1 ? 'text' : 'password'"
+              @click:append="show1 = !show1"
+              required
+              autofocus
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="6" sm="3">
+            <v-btn
+              large
+              block
+              class="btn btn-lg btn-primary btn-block"
+              @click="login"
+              >
+              Login
+            </v-btn>
+          </v-col>
+        </v-row>
+
+      </v-container>
+    </v-form>
   </div>
 </template>
 
@@ -44,6 +73,7 @@ export default {
   components: {},
   data() {
     return {
+      show1: false,
       user: {
         username: "",
         password: "",
