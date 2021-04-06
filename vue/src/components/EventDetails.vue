@@ -1,9 +1,9 @@
 <template>
   <div>
-      <div class="event-div" v-for="event in $store.state.events" v-bind:key="event.id">
-          <h1>{{event.name}}</h1>
-          <h2>{{event.date}}</h2>
-          <p>This event will go from {{event.start}} to {{event.end}}</p>
+      <div class="event-div" v-for="event in $store.state.events" v-bind:key="event.eventId">
+          <h1>{{event.eventName}}</h1>
+          <h2>{{event.eventDate}}</h2>
+          <p>This event will go from {{event.startTime}} to {{event.endTime}}</p>
       </div>
   </div>
 </template>

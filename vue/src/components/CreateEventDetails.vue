@@ -61,6 +61,7 @@ export default {
   },
   methods: {
     createNewEvent() {
+      console.log("trying to create new event");
       EventsService.addEvent(this.event)
         .then((response) => {
           if (response.status === 201) {

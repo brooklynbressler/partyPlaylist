@@ -20,29 +20,7 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    events: [
-      {
-        id: 1,
-        name: 'Bass Party',
-        date: '01-01-2021',
-        start: '28:00',
-        end: '23:00'
-      },
-      {
-        id: 2,
-        name: 'White Russian Party',
-        date: '04-10-2020',
-        start: '12:00',
-        end: '22:00'
-      },
-      {
-        id: 3,
-        name: 'I dunno',
-        date: '01-01-2023',
-        start: '05:00',
-        end: '09:00'
-      }
-    ],
+    events: [],
   },
   mutations: {
     SET_EVENTS(state, events) {

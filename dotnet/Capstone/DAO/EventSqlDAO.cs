@@ -80,7 +80,7 @@ namespace Capstone.DAO
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read())
+                    while (reader.Read())
                     {
                         allEvents.Add(GetEventFromReader(reader));
                     }
@@ -103,9 +103,9 @@ namespace Capstone.DAO
                 HostUserId = Convert.ToInt32(reader["host_user_id"]),
                 PlaylistId = Convert.ToInt32(reader["playlist_id"]),
                 EventName = Convert.ToString(reader["event_name"]),
-                EventDate = Convert.ToDateTime(reader["event_date"]),
-                StartTime = Convert.ToDateTime(reader["start_time"]),
-                EndTime = Convert.ToDateTime(reader["end_time"])
+                EventDate = Convert.ToString(reader["event_date"]),
+                StartTime = Convert.ToString(reader["start_time"]),
+                EndTime = Convert.ToString(reader["end_time"])
                 
             };
 
