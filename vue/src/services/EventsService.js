@@ -6,7 +6,6 @@ export default {
     },
 
     addEvent(newEvent) {
-        console.log(newEvent);
         return axios.post('/create-event', newEvent)
     }
 }

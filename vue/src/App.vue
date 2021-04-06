@@ -6,20 +6,24 @@
         <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>HOME</v-btn>
       </router-link>
 
-      <router-link :to="{name: 'login'}">
-        <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>SIGN IN</v-btn>
-      </router-link>
-
-      <router-link :to="{ name: 'register' }">
-        <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>NEED AN ACCOUNT?</v-btn>
-      </router-link>
-
-      <router-link :to="{ name: 'events' }">
+      <router-link :to="{ name: 'events' }"> 
         <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>SEE EVENTS</v-btn>
-      </router-link>
+      </router-link>      
 
-      <router-link :to="{ name: 'create-event' }">
-        <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>ADD EVENTS</v-btn>
+      <router-link :to="{ name: 'register' }" v-if="$store.state.isLoggedIn === false">
+        <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>NEED AN ACCOUNT?</v-btn>
+      </router-link>      
+
+      <router-link :to="{ name: 'create-event' }" v-if="$store.state.isLoggedIn === true">
+        <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>ADD AN EVENT</v-btn>
+      </router-link>  
+
+      <router-link :to="{name: 'login'}" v-if="$store.state.isLoggedIn === false">
+        <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>SIGN IN</v-btn>
+      </router-link>    
+
+      <router-link :to="{ name: 'logout' }" v-if="$store.state.isLoggedIn === true">
+        <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>SIGN OUT</v-btn>
       </router-link>
 
     </v-navigation-drawer>

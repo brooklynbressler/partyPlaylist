@@ -21,6 +21,7 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     events: [],
+    isLoggedIn: false,
   },
   mutations: {
     SET_EVENTS(state, events) {
@@ -42,5 +43,8 @@ export default new Vuex.Store({
       state.user = {};
       axios.defaults.headers.common = {};
     },
+    FLIP_LOGIN_STATUS(state) {
+      state.isLoggedIn = !state.isLoggedIn;
+    }
   }
 })
