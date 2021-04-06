@@ -30,7 +30,7 @@ namespace Capstone.Controllers
             {
                 newEvent.DjUserId = int.Parse(User.FindFirst("sub")?.Value);
                 eventDAO.addEvent(newEvent);
-                return Ok(newEvent);
+                return Created("created", newEvent);
             }
             else
             {

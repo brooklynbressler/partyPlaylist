@@ -13,6 +13,7 @@ export default {
     EventDetails,
   },
   created() {
+    console.log("are we here");
     EventsService.getEvents().then((resp) => {
       this.$store.commit("SET_EVENTS", resp.data);
     });

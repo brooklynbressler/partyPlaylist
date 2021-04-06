@@ -78,6 +78,7 @@ export default {
     createNewEvent() {
       EventsService.addEvent(this.event)
         .then((response) => {
+          console.log(response.status);
           if (response.status === 201) {
             this.$router.push({ name: "events" });
           }
