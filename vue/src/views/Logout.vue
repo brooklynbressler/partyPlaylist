@@ -6,6 +6,7 @@
 export default {
   created() {
     this.$store.commit("LOGOUT");
+    this.$store.commit("FLIP_LOGIN_STATUS");
     this.$router.push("/login");
   }
 };

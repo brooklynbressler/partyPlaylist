@@ -1,9 +1,9 @@
 <template>
-  <div class="form-div">
+  <div class="form-div" justify="space-around" align="center" >
     <form class="form-add-event" v-on:submit.prevent="createNewEvent">
       <h1 class="h3 mb-3 font-weight-normal">Create An Event</h1>
       <div>
-        <label for="eventname">Event Name</label> <br />
+        <label for="eventname">New Event Name: </label>
         <input
           type="text"
           id="eventname"
@@ -12,31 +12,27 @@
           v-model="event.EventName"
         />
       </div>
+
       <div>
-        <label for="date">Date</label> <br />
-        <input
-          type="date"
-          id="date"
-          class="form-control"
-          v-model="event.EventDate"
-        />
+        <v-row justify="space-around" align="center">
+          <v-col style="width: auto; flex: 0 1 auto">
+            <h2>Date:</h2>
+            <v-date-picker id="date" v-model="event.EventDate"></v-date-picker>
+          </v-col>
+          <v-col style="width: auto; flex: 0 1 auto">
+            <h2>Start:</h2>
+            <v-time-picker id="start" v-model="event.StartTime" :max="end"></v-time-picker>
+          </v-col>
+          <v-col style="width: auto; flex: 0 1 auto">
+            <h2>End:</h2>
+            <v-time-picker id="end" v-model="event.EndTime" :min="start"></v-time-picker>
+          </v-col>
+        </v-row>
       </div>
+
       <div>
-        <label for="start">Start Time</label> <br />
-        <input
-          type="time"
-          id="start"
-          class="form-control"
-          v-model="event.StartTime"
-        />
+        <button type="submit">Save Event</button>
       </div>
-      <div>
-        <label for="end">End Time</label> <br />
-        <input type="time" id="end" class="form-control" v-model="event.EndTime" />
-      </div>
-      <div>
-          <button type="submit">Save Event</button>
-      </div>      
     </form>
   </div>
 </template>
@@ -61,11 +57,11 @@ export default {
   },
   methods: {
     createNewEvent() {
-      console.log("trying to create new event");
+      console.log(this.event);
       EventsService.addEvent(this.event)
         .then((response) => {
           if (response.status === 201) {
-            this.$router.push({ name: 'events' });
+            this.$router.push({ name: "events" });
           }
         })
         .catch((error) => {
@@ -80,11 +76,11 @@ export default {
 
 <style>
 .form-div {
-    border: solid black;
-    padding: 25px;
+  border: solid black;
+  padding: 25px;
 }
 
 div {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 </style>
