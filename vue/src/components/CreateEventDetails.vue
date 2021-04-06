@@ -63,9 +63,9 @@ export default {
   data() {
     return {
       event: {
-        DjUserId: null,
-        HostUserId: null,
-        PlaylistId: null,
+        DjUserId: 0,
+        HostUserId: 0,
+        PlaylistId: 0,
         EventName: "",
         EventDescription: "",
         EventDate: "",
