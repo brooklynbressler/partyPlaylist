@@ -22,6 +22,8 @@
               autofocus
             ></v-text-field>
           </v-col>
+        </v-row>
+          <v-row>
           <v-col cols="12" sm="6">
             <v-text-field
               id="lastname"
@@ -51,20 +53,29 @@
               label="Password"
               outlined
               v-model="user.password"
+              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show1 ? 'text' : 'password'"
+              @click:append="show1 = !show1"
               required
             ></v-text-field>
           </v-col>
+        </v-row>
+          <v-row>
           <v-col cols="12" sm="6">
             <v-text-field
               id="confirmPassword"
               label="Confirm Password"
               outlined
               v-model="user.confirmPassword"
+              :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show2 ? 'text' : 'password'"
+              @click:append="show2 = !show2"
               required
             ></v-text-field>
           </v-col>
         </v-row>
         <v-row>
+          <v-col cols="6" sm="3">
           <v-btn
             large
             block
@@ -73,6 +84,7 @@
           >
             Create Account
           </v-btn>
+          </v-col>
         </v-row>
       </v-container>
     </v-form>
@@ -86,6 +98,8 @@ export default {
   name: "register",
   data() {
     return {
+      show1: false,
+      show2: false,
       user: {
         firstname: "",
         lastname: "",
