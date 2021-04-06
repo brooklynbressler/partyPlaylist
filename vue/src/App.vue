@@ -14,7 +14,7 @@
         <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>NEED AN ACCOUNT?</v-btn>
       </router-link>      
 
-      <router-link :to="{ name: 'create-event' }" v-if="$store.state.isLoggedIn === true">
+      <router-link :to="{ name: 'createEvent' }" v-if="$store.state.isLoggedIn === true">
         <v-btn class="nav-button" block color="primary" depressed elevation="6" rounded>ADD AN EVENT</v-btn>
       </router-link>  
 

@@ -18,10 +18,18 @@ GO
 CREATE TABLE users (
 	user_id int IDENTITY(1,1) NOT NULL,
 	username varchar(50) NOT NULL,
+	first_name varchar(50) NOT NULL,
+	last_name varchar(50) NOT NULL,
 	password_hash varchar(200) NOT NULL,
 	salt varchar(200) NOT NULL,
 	user_role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
+);
+
+CREATE TABLE playlists (
+	playlist_id int IDENTITY(1,1) NOT NULL,
+	playlist_name varchar(50) NOT NULL,
+	CONSTRAINT PK_playlist PRIMARY KEY (playlist_id)
 );
 
 CREATE TABLE events (
@@ -30,22 +38,21 @@ CREATE TABLE events (
 	host_user_id int NOT NULL,
 	playlist_id int NOT NULL,
 	event_name varchar(50) NOT NULL,
+	description varchar(255) NOT NULL,
 	event_date date,
 	start_time time,
 	end_time time,
 	CONSTRAINT PK_event PRIMARY KEY (event_id),
-	CONSTRAINT FK_event_dj FOREIGN KEY (dj_user_id) REFERENCES users(user_id)
-);
-
-CREATE TABLE playlists (
-	playlist_id int IDENTITY(1,1) NOT NULL,
-	CONSTRAINT PK_playlist PRIMARY KEY (playlist_id)
+	CONSTRAINT FK_event_dj FOREIGN KEY (dj_user_id) REFERENCES users(user_id),
+	CONSTRAINT FK_event_host FOREIGN KEY (host_user_id) REFERENCES users(user_id),
+	CONSTRAINT FK_event_playlist FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id)
 );
 
 CREATE TABLE songs (
 	song_id int IDENTITY(1,1) NOT NULL,
 	song_name varchar(255) NOT NULL,
 	artist_name varchar(255) NOT NULL,
+	genre varchar(50) NOT NULL,
 	CONSTRAINT PK_song PRIMARY KEY (song_id)
 );
 
@@ -59,6 +66,6 @@ CREATE TABLE playlist_songs (
 
 /* All data above this line must match capstone.sql */
 
-INSERT INTO users(username, password_hash, salt, user_role)
-VALUES ('tester', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj'),
-('tester 2', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'host')
+INSERT INTO users(username, first_name, last_name, password_hash, salt, user_role)
+VALUES ('tester', 'Bob', 'Testerson', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj'),
+('tester2', 'Janet', 'Testperson', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'host')

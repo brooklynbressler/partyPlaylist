@@ -18,16 +18,30 @@ if (currentToken != null) {
 
 export default new Vuex.Store({
   state: {
+    isLoggedIn: false,
     token: currentToken || '',
     user: currentUser || {},
     events: [],
     possiblePlaylist: [],
-    activePlaylist: [],
-    isLoggedIn: false,
+    activePlaylist: [],    
+    activeEvent: {
+        DjUserId: 0,
+        HostUserId: 0,
+        PlaylistId: 0,
+        EventHost: "Party Greg",
+        EventName: "Event Name",
+        EventDate: "01-01-1999",
+        EventDescription: "A party for people who love to party. Let's celebrate our love of parties as we party like it's our last party. Partying is life, life is partying. I struggle to conceptualize myself when I don't party. I party, therefore I am.",
+        StartTime: "4:30 pm",
+        EndTime: "8:45 pm",
+    },
   },
   mutations: {
     SET_EVENTS(state, events) {
       state.events = events;
+    },
+    SET_ACTIVE_EVENT(state, data) {
+      state.activeEvent = data;
     },
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
