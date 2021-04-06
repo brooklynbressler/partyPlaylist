@@ -35,8 +35,8 @@ CREATE TABLE playlists (
 CREATE TABLE events (
 	event_id int IDENTITY(1,1) NOT NULL,
 	dj_user_id int NOT NULL,
-	host_user_id int NOT NULL,
-	playlist_id int NOT NULL,
+	host_user_id int,
+	playlist_id int,
 	event_name varchar(50) NOT NULL,
 	description varchar(255) NOT NULL,
 	event_date date,
