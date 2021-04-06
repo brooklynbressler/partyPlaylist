@@ -28,6 +28,7 @@ namespace Capstone.Controllers
             
             if (newEvent != null)
             {
+                newEvent.DjUserId = int.Parse(User.FindFirst("sub")?.Value);
                 eventDAO.addEvent(newEvent);
                 return Ok(newEvent);
             }
