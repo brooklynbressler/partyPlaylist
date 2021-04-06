@@ -12,7 +12,6 @@
           v-model="event.EventName"
         />
       </div>
-
       <div>
         <v-row justify="space-around" align="center">
           <v-col style="width: auto; flex: 0 1 auto">
@@ -29,7 +28,6 @@
           </v-col>
         </v-row>
       </div>
-
       <div>
         <button type="submit">Save Event</button>
       </div>
@@ -57,7 +55,6 @@ export default {
   },
   methods: {
     createNewEvent() {
-      console.log(this.event);
       EventsService.addEvent(this.event)
         .then((response) => {
           if (response.status === 201) {

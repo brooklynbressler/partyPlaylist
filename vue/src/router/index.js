@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import Events from '../views/Events.vue'
+import EventDescription from '../views/EventDescription.vue'
 import CreateEvent from '../views/CreateEvent.vue'
 import store from '../store/index'
 
@@ -64,13 +65,21 @@ const router = new Router({
       }
     },
     {
+      path: "/events/:id",
+      name: "eventDescription",
+      component: EventDescription,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
       path: "/create-event",
-      name: "create-event",
+      name: "createEvent",
       component: CreateEvent, 
       meta: {
         requiresAuth: false
       }
-    }
+    },    
   ]
 })
 

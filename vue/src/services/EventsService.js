@@ -5,6 +5,10 @@ export default {
         return axios.get('/events')
     },
 
+    getEvent(id) {
+        return axios.get(`/events/${id}`)
+    },
+
     addEvent(newEvent) {
         return axios.post('/create-event', newEvent)
     }
