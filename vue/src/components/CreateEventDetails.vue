@@ -43,10 +43,11 @@ export default {
   data() {
     return {
       event: {
-        DjUserId: 1,
-        HostUserId: 2,
-        PlaylistId: 1,
-        EventName: "",
+        DjUserId: null,
+        HostUserId: null,
+        PlaylistId: null,
+        EventName: "",        
+        EventDescription: "",
         EventDate: "",
         StartTime: "",
         EndTime: "",
