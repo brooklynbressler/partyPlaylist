@@ -53,6 +53,21 @@
         </v-row>
       </div>
       <div>
+        <v-col
+        class="d-flex"
+        cols="12"
+        sm="3"
+      >
+        <v-select
+          :items="allItems"
+          item-text="name"
+          label="Select a host"
+          dense
+          solo
+        ></v-select>
+      </v-col>
+      </div>
+      <div>
         <button type="submit">Save Event</button>
       </div>
     </form>
@@ -81,13 +96,23 @@ export default {
   },
   created() {
     UsersService.getUsers().then((users) => {
-      this.$store.commit("GET_ALL_USERS", users);
-      console.log(this.$store.state.users);
+      this.$store.commit("GET_ALL_USERS", users);     
+      console.log(users);
     });
+  },
+  computed: {
+    allItems() {
+      return this.$store.state.users.data.map(
+        user => {
+          return {value: user.userId, name: `${user.firstName} ${user.lastName}`} 
+        }
+      )
+    }
   },
   methods: {
     allowedMinutes: v => v % 15 === 0,
     createNewEvent() {
+      this.event.HostUserId = 
       EventsService.addEvent(this.event)
         .then((response) => {
           console.log(response.status);
