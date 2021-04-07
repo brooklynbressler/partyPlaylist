@@ -64,6 +64,7 @@
           label="Select a host"
           dense
           solo
+          v-model="event.HostUserId"
         ></v-select>
       </v-col>
       </div>
@@ -84,7 +85,7 @@ export default {
     return {
       event: {
         DjUserId: 0,
-        HostUserId: 0,
+        HostUserId: "",
         PlaylistId: 0,
         EventName: "",
         EventDescription: "",
