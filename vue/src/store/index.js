@@ -21,38 +21,17 @@ export default new Vuex.Store({
     isLoggedIn: false,
     token: currentToken || '',
     user: currentUser || {},
-    events: [
-      {
-        eventId: 1,
-        eventName: "Party Time",
-        eventDate: "01-01-1999",
-        startTime: "5:30 pm",
-        endTime: "10:30 pm",
-      },
-      {
-        eventId: 2,
-        eventName: "Another Party",
-        eventDate: "01-01-2000",
-        startTime: "7:30 pm",
-        endTime: "12:30 pm",
-      },
-      {
-        eventId: 3,
-        eventName: "Another One",
-        eventDate: "01-01-2005",
-        startTime: "7:30 pm",
-        endTime: "12:30 pm",
-      },
-    ],
+    users: [],
+    events: [],
     possiblePlaylist: [],
     activePlaylist: [],
   },
   mutations: {
+    GET_ALL_USERS(state, users) {
+      state.users = users;
+    },
     SET_EVENTS(state, events) {
       state.events = events;
-    },
-    SET_ACTIVE_EVENT(state, data) {
-      state.activeEvent = data;
     },
     SET_AUTH_TOKEN(state, token) {
       state.token = token;

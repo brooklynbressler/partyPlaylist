@@ -16,9 +16,9 @@
         <label for="eventdescription">Event Description: </label>
         <textarea
           id="eventdescription"
-          name="w3review" 
+          name="w3review"
           placeholder="Enter Event Description"
-          rows="4" 
+          rows="4"
           cols="50"
           v-model="event.EventDescription"
         ></textarea>
@@ -57,6 +57,7 @@
 
 <script>
 import EventsService from "../services/EventsService.js";
+import UsersService from "../services/UsersService.js";
 
 export default {
   name: "create-event",
@@ -73,6 +74,12 @@ export default {
         EndTime: "",
       },
     };
+  },
+  created() {
+    UsersService.getUsers().then((users) => {
+      this.$store.commit("GET_ALL_USERS", users);
+      console.log(this.$store.state.users);
+    });
   },
   methods: {
     createNewEvent() {
