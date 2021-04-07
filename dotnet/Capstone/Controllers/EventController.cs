@@ -51,5 +51,22 @@ namespace Capstone.Controllers
                 return BadRequest();
             }
         }
+    
+        [Authorize]
+        [HttpGet("/users")]
+        public ActionResult<List<ReturnUser>> GetAllUsers()
+        {
+
+            List<ReturnUser> allUsers = userDAO.ReturnUserList();
+            if(allUsers != null)
+            {
+                return Ok(allUsers);
+            }
+            else
+            {
+                return BadRequest("User list is empty");
+            }
+
+        }
     }
 }

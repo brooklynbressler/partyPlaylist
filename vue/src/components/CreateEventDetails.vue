@@ -36,6 +36,8 @@
               id="start"
               v-model="event.StartTime"
               :max="end"
+              ampm-in-title
+              :allowed-minutes="allowedMinutes"
             ></v-time-picker>
           </v-col>
           <v-col style="width: auto; flex: 0 1 auto">
@@ -44,6 +46,8 @@
               id="end"
               v-model="event.EndTime"
               :min="start"
+              ampm-in-title
+              :allowed-minutes="allowedMinutes"
             ></v-time-picker>
           </v-col>
         </v-row>
@@ -82,6 +86,7 @@ export default {
     });
   },
   methods: {
+    allowedMinutes: v => v % 15 === 0,
     createNewEvent() {
       EventsService.addEvent(this.event)
         .then((response) => {
