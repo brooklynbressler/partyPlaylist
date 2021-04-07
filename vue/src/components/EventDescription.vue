@@ -1,11 +1,12 @@
 <template>
-  <div class="event-description">
+  <div class="main-description">
     <h1>{{ event.eventName }}</h1>
-    <h2>{{ event.eventDate }}</h2>
-    <p>
-      Party time from {{ event.startTime }} to
-      {{ event.endTime }}
-    </p>
+    <h3>Hosted by: {{ event.hostName }}</h3>
+    <h4>{{ event.eventDate }} from {{ event.startTime }} until {{ event.endTime }}</h4>
+    <h4>Here are the details</h4>
+    <div class="event-description">
+      <p>{{ event.eventDescription }}</p>
+    </div>
 
     <div class="media-player">
       <img
@@ -13,11 +14,11 @@
         alt="a media player"
       />
     </div>
-
+    <div class="playlist-display">
     <div class="playlist-div">
       <v-card class="mx-auto" max-width="500">
         <v-toolbar color="deep-purple accent-4" dark>
-          <v-toolbar-title>Party Playlist</v-toolbar-title>
+          <v-toolbar-title>DJ's Current Playlist</v-toolbar-title>
 
           <v-spacer></v-spacer>
 
@@ -26,9 +27,7 @@
           </v-btn>
         </v-toolbar>
 
-        <v-list class="playlist" subheader>
-          <v-subheader>Song selection</v-subheader>
-
+        <v-list class="playlist">
           <v-list-item v-for="chat in recent" :key="chat.title">
             <v-list-item-avatar rounded size="60">
               <v-img :alt="`${chat.title} avatar`" :src="chat.avatar"></v-img>
@@ -46,6 +45,39 @@
           </v-list-item>
         </v-list>
       </v-card>
+    </div>
+        <div class="playlist-div">
+      <v-card class="mx-auto" max-width="500">
+        <v-toolbar color="deep-purple accent-4" dark>
+          <v-toolbar-title>Available Songs To Pick</v-toolbar-title>
+
+          <v-spacer></v-spacer>
+
+          <v-btn icon>
+            <v-icon>mdi-music</v-icon>
+          </v-btn>
+        </v-toolbar>
+
+        <v-list class="playlist">
+          <v-list-item v-for="chat in recent" :key="chat.title">
+            <v-list-item-avatar rounded size="60">
+              <v-img :alt="`${chat.title} avatar`" :src="chat.avatar"></v-img>
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="chat.title"></v-list-item-title>
+            </v-list-item-content>
+
+            <v-list-item-icon>
+              <v-icon :color="chat.active ? 'deep-purple accent-4' : 'grey'">
+                mdi-music-note-plus
+              </v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list>
+      </v-card>
+    </div>
+
     </div>
   </div>
 </template>
@@ -97,21 +129,38 @@ export default {
 </script>
 
 <style>
-.event-description {
+.main-description {
   text-align: center;
   border: solid black;
+  border-radius: 3px;
   width: 75%;
   margin: auto;
   margin-top: 30px;
   padding: 20px;
 }
+.event-description {
+  text-align: center;
+  border: solid black;
+  border-radius: 3px;
+  width: 50%;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 10px;
+}
+.playlist-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
 
 .media-player > img {
-  width: 25%;
+  width: 20%;
 }
 
 .playlist-div {
-  width: 35%;
+  width: 90%;
   margin: auto;
 }
 </style>
