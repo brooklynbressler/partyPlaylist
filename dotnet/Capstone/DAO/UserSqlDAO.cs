@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using Capstone.Models;
 using Capstone.Security;
@@ -72,6 +73,38 @@ namespace Capstone.DAO
             return GetUser(username);
         }
 
+        public List<ReturnUser> ReturnUserList()
+        {
+
+            List<ReturnUser> returnUsersList = new List<ReturnUser>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT user_id, username, first_name, last_name, user_role FROM users;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        returnUsersList.Add(GetUsersFromReader(reader));
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnUsersList;
+
+
+        }
+
         private User GetUserFromReader(SqlDataReader reader)
         {
             User u = new User()
@@ -84,6 +117,20 @@ namespace Capstone.DAO
             };
 
             return u;
+        }
+
+        private ReturnUser GetUsersFromReader(SqlDataReader reader)
+        {
+            ReturnUser ru = new ReturnUser()
+            {
+                UserId = Convert.ToInt32(reader["user_id"]),
+                Username = Convert.ToString(reader["username"]),
+                FirstName = Convert.ToString(reader["first_name"]),
+                LastName = Convert.ToString(reader["last_name"]),
+                Role = Convert.ToString(reader["user_role"])
+            };
+
+            return ru;
         }
     }
 }
