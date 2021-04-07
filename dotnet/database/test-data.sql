@@ -66,7 +66,11 @@ CREATE TABLE playlist_songs (
 
 INSERT INTO users(username, first_name, last_name, password_hash, salt, user_role)
 VALUES ('tester', 'Bob', 'Testerson', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj'),
-('tester2', 'Janet', 'Testperson', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'host');
+('tester2', 'Janet', 'Testperson', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'host'),
+('murphy', 'Zak', 'Murphy', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj'),
+('bressler', 'Brooklyn', 'Bressler', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj'),
+('morgan', 'David', 'Morgan', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj'),
+('davis', 'Brian', 'Davis', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj');
 
 INSERT INTO songs(song_name, artist_name, genre)
 VALUES ('Friends In Low Places', 'Garth Brooks', 'Country'),
@@ -80,4 +84,50 @@ VALUES ('Friends In Low Places', 'Garth Brooks', 'Country'),
 ('Thriller', 'Michael Jackson', 'Pop'),
 ('Billie Jean', 'Michael Jackson', 'Pop'),
 ('Beat It', 'Michael Jackson', 'Pop'),
-('Man In The Mirror', 'Michael Jackson', 'Pop')
+('Man In The Mirror', 'Michael Jackson', 'Pop'),
+('Smells Like Teen Spirit', 'Nirvana', 'Alternative'),
+('Come As You Are', 'Nirvana', 'Alternative'),
+('Lithium', 'Nirvana', 'Alternative'),
+('I Want It That Way', 'Backstreet Boys', 'Pop'),
+('Everybody', 'Backstreet Boys', 'Pop'),
+('As Long As You Love Me', 'Backstreet Boys', 'Pop'),
+('Wonderwall', 'Oasis', 'Alternative'),
+('Champagne Supernova', 'Oasis', 'Alternative'),
+('Dont Look Back In Anger', 'Oasis', 'Alternative'),
+('My Heart Will Go On', 'Celine Dion', 'Pop'),
+('All By Myself', 'Celine Dion', 'Pop'),
+('Nothing Broken But My Heart', 'Celine Dion', 'Pop'),
+('You Shook Me All Night Long', 'AC/DC', 'Rock'),
+('Thunderstruck', 'AC/DC', 'Rock'),
+('Highway To Hell', 'AC/DC', 'Rock'),
+('Money', 'Pink Floyd', 'Rock'),
+('Wish You Were Here', 'Pink Floyd', 'Rock'),
+('Time', 'Pink Floyd', 'Rock'),
+('Comfortably Numb', 'Pink Floyd', 'Rock'),
+('Stairway To Heaven', 'Led Zeppelin', 'Rock'),
+('Whole Lotta Love', 'Led Zeppelin', 'Rock'),
+('Dazed And Confused', 'Led Zeppelin', 'Rock'),
+('Kashmir', 'Led Zeppelin', 'Rock'),
+('Ms. Jackson', 'Outkast', 'Hip Hop'),
+('Hey Ya', 'Outkast', 'Hip Hop'),
+('So Fresh, So Clean', 'Outkast', 'Hip Hop'),
+('Baby Got Back', 'Sir Mix-a-Lot', 'Hip Hop'),
+('It Was A Good Day', 'Ice Cube', 'Hip Hop'),
+('X Gon Give It To Ya', 'DMX', 'Hip Hop'),
+('Ruff Ryders Anthem', 'DMX', 'Hip Hop'),
+('Where The Hood At', 'DMX', 'Hip Hop'),
+('Dont Speak', 'No Doubt', 'Alternative'),
+('Creep', 'Radiohead', 'Alternative'),
+('Waterfalls', 'TLC', 'Pop'),
+('No Scrubs', 'TLC', 'Pop'),
+('Africa', 'Toto', 'Rock'),
+('Material Girl', 'Madonna', 'Pop'),
+('Whats Love Got To Do With It', 'Tina Turner', 'Pop');
+
+INSERT INTO playlists (playlist_name)
+VALUES ('Brooklyn'), ('Brian'), ('Zak');
+
+INSERT INTO playlist_songs (playlist_id, song_id)
+VALUES (3, 48),
+(1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18),
+(2, 2), (2, 21), (2, 7), (2, 49), (2, 24), (2, 28), (2, 19), (2, 32), (2, 36), (2, 44);

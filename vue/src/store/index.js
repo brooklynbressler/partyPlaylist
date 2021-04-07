@@ -21,16 +21,17 @@ export default new Vuex.Store({
     isLoggedIn: false,
     token: currentToken || '',
     user: currentUser || {},
+    users: [],
     events: [],
     possiblePlaylist: [],
     activePlaylist: [],
   },
   mutations: {
+    GET_ALL_USERS(state, users) {
+      state.users = users;
+    },
     SET_EVENTS(state, events) {
       state.events = events;
-    },
-    SET_ACTIVE_EVENT(state, data) {
-      state.activeEvent = data;
     },
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
