@@ -62,6 +62,16 @@ CREATE TABLE playlist_songs (
 	CONSTRAINT FK_song_id FOREIGN KEY (song_id) REFERENCES songs(song_id)
 );
 
+CREATE TABLE playlist_songs_shoutouts (
+	playlist_id int NOT NULL,
+	song_id int NOT NULL,
+	shoutout_id int IDENTITY(1,1) NOT NULL,
+	shoutout_message varchar(255),
+	CONSTRAINT PK_playlist_song_shoutouts PRIMARY KEY (playlist_id, song_id, shoutout_id),
+	CONSTRAINT FK_playlist_id_shoutouts FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id),
+	CONSTRAINT FK_song_id_shoutouts FOREIGN KEY (song_id) REFERENCES songs(song_id)
+);
+
 /* All data above this line must match capstone.sql */
 
 INSERT INTO users(username, first_name, last_name, password_hash, salt, user_role)
@@ -135,3 +145,4 @@ VALUES (3, 48),
 INSERT INTO events (dj_user_id, host_user_id, playlist_id, event_name, description, event_date, start_time, end_time)
 VALUES (6, 4, 3, 'Party with Brooklyn', 'Aint no party like a Brooklyn party cause a Brooklyn party dont stop!', '2021-04-07', '17:00', '18:00'),
 	   (6, 3, 3, 'Zak Shack', 'Zak loves Toto!!!!', '2021-04-08', '19:00', '20:00');
+
