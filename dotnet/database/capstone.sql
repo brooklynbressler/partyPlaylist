@@ -43,9 +43,7 @@ CREATE TABLE events (
 	start_time time,
 	end_time time,
 	CONSTRAINT PK_event PRIMARY KEY (event_id),
-	CONSTRAINT FK_event_dj FOREIGN KEY (dj_user_id) REFERENCES users(user_id),
-	CONSTRAINT FK_event_host FOREIGN KEY (host_user_id) REFERENCES users(user_id),
-	CONSTRAINT FK_event_playlist FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id)
+	CONSTRAINT FK_event_dj FOREIGN KEY (dj_user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE songs (
