@@ -122,7 +122,16 @@ namespace Capstone.DAO
             {
                 hours = time.Hours;
             }
-            return $"{hours}:{time.Minutes} {tT}";
+            string minutes = "00";
+            if (time.Minutes > 9)
+            {
+                minutes = time.Minutes.ToString();
+            }
+            else if (time.Minutes >= 1 && time.Minutes <= 9)
+            {
+                minutes = $"0{time.Minutes}";
+            }
+            return $"{hours}:{minutes} {tT}";
         }
 
     }
