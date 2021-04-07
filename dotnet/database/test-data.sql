@@ -122,4 +122,12 @@ VALUES ('Friends In Low Places', 'Garth Brooks', 'Country'),
 ('No Scrubs', 'TLC', 'Pop'),
 ('Africa', 'Toto', 'Rock'),
 ('Material Girl', 'Madonna', 'Pop'),
-('Whats Love Got To Do With It', 'Tina Turner', 'Pop')
+('Whats Love Got To Do With It', 'Tina Turner', 'Pop');
+
+INSERT INTO playlists (playlist_name)
+VALUES ('Brooklyn'), ('Brian'), ('Zak');
+
+INSERT INTO playlist_songs (playlist_id, song_id)
+VALUES (3, 48),
+(1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18),
+(2, 2), (2, 21), (2, 7), (2, 49), (2, 24), (2, 28), (2, 19), (2, 32), (2, 36), (2, 44);
