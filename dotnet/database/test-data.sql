@@ -36,14 +36,15 @@ CREATE TABLE events (
 	event_id int IDENTITY(1,1) NOT NULL,
 	dj_user_id int NOT NULL,
 	host_user_id int,
-	playlist_id int,
+	playlist_id int NOT NULL,
 	event_name varchar(50) NOT NULL,
 	description varchar(255) NOT NULL,
 	event_date date,
 	start_time time,
 	end_time time,
 	CONSTRAINT PK_event PRIMARY KEY (event_id),
-	CONSTRAINT FK_event_dj FOREIGN KEY (dj_user_id) REFERENCES users(user_id)
+	CONSTRAINT FK_event_dj FOREIGN KEY (dj_user_id) REFERENCES users(user_id),
+	CONSTRAINT FK_event_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id)
 );
 
 CREATE TABLE songs (
@@ -136,14 +137,13 @@ VALUES ('Friends In Low Places', 'Garth Brooks', 'Country'),
 ('Whats Love Got To Do With It', 'Tina Turner', 'Pop');
 
 INSERT INTO playlists (playlist_name)
-VALUES ('Brooklyn'), ('Brian'), ('Zak');
+VALUES ('Party with Brooklyn'), ('Zak Shack');
 
 INSERT INTO playlist_songs (playlist_id, song_id)
-VALUES (3, 48),
-(1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18),
-(2, 2), (2, 21), (2, 7), (2, 49), (2, 24), (2, 28), (2, 19), (2, 32), (2, 36), (2, 44);
+VALUES (1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18),
+(2, 48);
 
 INSERT INTO events (dj_user_id, host_user_id, playlist_id, event_name, description, event_date, start_time, end_time)
-VALUES (6, 4, 3, 'Party with Brooklyn', 'Aint no party like a Brooklyn party cause a Brooklyn party dont stop!', '2021-04-07', '17:00', '18:00'),
-	   (6, 3, 3, 'Zak Shack', 'Zak loves Toto!!!!', '2021-04-08', '19:00', '20:00');
+VALUES (6, 4, 1, 'Party with Brooklyn', 'Aint no party like a Brooklyn party cause a Brooklyn party dont stop!', '2021-04-07', '17:00', '18:00'),
+	   (6, 3, 2, 'Zak Shack', 'Zak loves Toto!!!!', '2021-04-08', '19:00', '20:00');
 

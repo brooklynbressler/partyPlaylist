@@ -23,7 +23,7 @@ namespace Capstone.Controllers
             songDAO = _songDAO;
         }
 
-        [HttpPost("/up-vote")]
+        [HttpPost("/vote")]
         public ActionResult<bool> SongVoteUpdate(SongVote songVote)
         {
 
@@ -34,6 +34,19 @@ namespace Capstone.Controllers
             else
             {
                 return BadRequest("Incomplete or missing vote data");
+            }
+        }
+        [HttpGet("/possible-songs")]
+        public ActionResult<List<Song>> GetPossibleSongs(List<string> excludedGenres)
+        {
+            List<Song> allPossibleSongs = songDAO.GetAllPossibleSongs(excludedGenres);
+            if (allPossibleSongs != null)
+            {
+                return Ok(allPossibleSongs);
+            }
+            else
+            {
+                return BadRequest("This did not work because you are a loser");
             }
         }
     }

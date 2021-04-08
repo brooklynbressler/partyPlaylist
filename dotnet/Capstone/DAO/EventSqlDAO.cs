@@ -24,7 +24,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "INSERT INTO events(dj_user_id, host_user_id, playlist_id, event_name, description, event_date, start_time, end_time) VALUES (@dj_user_id, @host_user_id, @playlist_id, @event_name, @description, @event_date, @start_time, @end_time);";
+                    string sql = "INSERT INTO events(dj_user_id, host_user_id, playlist_id, event_name, description, event_date, start_time, end_time) VALUES (@dj_user_id, @host_user_id, @playlist_id, @event_name, @description, @event_date, @start_time, @end_time); INSERT INTO playlists (playlist_name) VALUES ('@playlist_name');";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@dj_user_id", newEvent.DjUserId);
@@ -35,6 +35,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@event_date", newEvent.EventDate);
                     cmd.Parameters.AddWithValue("@start_time", newEvent.StartTime);
                     cmd.Parameters.AddWithValue("@end_time", newEvent.EndTime);
+                    cmd.Parameters.AddWithValue("@playlist_name", newEvent.EventName);
 
                     cmd.ExecuteNonQuery();
                 }

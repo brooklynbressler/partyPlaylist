@@ -9,6 +9,6 @@ namespace Capstone.DAO
     public interface ISongDAO
     {
         bool AddSongVote(SongVote songVote);
-
+        List<Song> GetAllPossibleSongs(List<string> excludedGenres);
     }
 }
