@@ -7,4 +7,12 @@ namespace Capstone.Models
         public string SongName { get; set; }
         public string ArtistName { get; set; }
     }
+
+    public class SongVote
+    {
+        public int PlaylistId { get; set; }
+        public int SongId { get; set; }
+        public int VoteValue { get; set; }
+
+    }
 }

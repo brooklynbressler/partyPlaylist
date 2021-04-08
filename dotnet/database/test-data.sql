@@ -57,6 +57,7 @@ CREATE TABLE songs (
 CREATE TABLE playlist_songs (
 	playlist_id int NOT NULL,
 	song_id int NOT NULL,
+	song_score int DEFAULT 0,
 	CONSTRAINT PK_playlist_song PRIMARY KEY (playlist_id, song_id),
 	CONSTRAINT FK_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id),
 	CONSTRAINT FK_song_id FOREIGN KEY (song_id) REFERENCES songs(song_id)
