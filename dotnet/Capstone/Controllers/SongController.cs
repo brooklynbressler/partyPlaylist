@@ -36,6 +36,7 @@ namespace Capstone.Controllers
                 return BadRequest("Incomplete or missing vote data");
             }
         }
+
         [HttpGet("/possible-songs")]
         public ActionResult<List<Song>> GetPossibleSongs(List<string> excludedGenres)
         {
@@ -47,6 +48,69 @@ namespace Capstone.Controllers
             else
             {
                 return BadRequest("This did not work because you are a loser");
+            }
+        }
+
+        [HttpGet("/playlist/{playlistId}")]
+        public ActionResult<List<PlaylistSong>> GetPlaylist(int playlistId)
+        {
+            List<PlaylistSong> playlist = songDAO.GetPlaylistSongs(playlistId);
+            if (playlist != null)
+            {
+                return Ok(playlist);
+            }
+            else
+            {
+                return BadRequest("Playlist not found");
+            }
+        }
+
+        [HttpPost("/add-new-song")]
+        public ActionResult AddNewSongToDb(Song newSong)
+        {
+            if (newSong != null)
+            {
+                bool wasCreated = songDAO.AddNewSong(newSong);
+                if (wasCreated)
+                {
+                    return Created("Song added", newSong);
+                }
+                else
+                {
+                    return Conflict("Song not added due to a server error");
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("/add-to-playlist")]
+        public ActionResult AddToPlaylist(AddRemoveSong addSong)
+        {
+            bool songAdded = songDAO.AddSongToPlaylist(addSong.PlaylistId, addSong.SongId);
+            if (songAdded)
+            {
+                return Created("Song added to playlist", addSong);
+            }
+            else
+            {
+                return BadRequest("Unable to add song to playlist");
+            }
+        }
+
+        [HttpDelete("/remove-from-playlist")]
+        public ActionResult RemoveFromPlaylist(AddRemoveSong removeSong)
+        {
+            bool songRemoved = songDAO.RemoveSongFromPlaylist(removeSong.PlaylistId, removeSong.SongId);
+            if (songRemoved)
+            {
+                return Ok("Song removed from playlist");
+            }
+            else
+            {
+                return BadRequest("Unable to remove song from playlist");
             }
         }
     }

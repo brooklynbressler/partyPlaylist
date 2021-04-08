@@ -9,6 +9,10 @@ namespace Capstone.DAO
     public interface ISongDAO
     {
         bool AddSongVote(SongVote songVote);
+        bool AddNewSong(Song newSong);
+        bool AddSongToPlaylist(int playlistId, int songId);
+        bool RemoveSongFromPlaylist(int playlistId, int songId);
+        List<PlaylistSong> GetPlaylistSongs(int playlistId);
         List<Song> GetAllPossibleSongs(List<string> excludedGenres);
     }
 }

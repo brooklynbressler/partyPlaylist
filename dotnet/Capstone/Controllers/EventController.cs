@@ -44,6 +44,10 @@ namespace Capstone.Controllers
             List<Event> allEvents = eventDAO.getEvents();
             if (allEvents != null)
             {
+                foreach (Event e in allEvents)
+                {
+                    e.LoggedInUser = int.Parse(User.FindFirst("sub")?.Value);
+                }
                 return Ok(allEvents);
             }
             else

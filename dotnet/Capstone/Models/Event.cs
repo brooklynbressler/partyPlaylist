@@ -16,5 +16,6 @@ namespace Capstone.Models
         public string EndTime { get; set; }
         public string? DjName { get; set; }
         public string? HostName { get; set; }
+        public int? LoggedInUser { get; set; }
     }
 }
