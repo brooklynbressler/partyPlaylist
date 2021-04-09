@@ -91,14 +91,6 @@ const router = new Router({
       }
     },    
     {
-      path: "/song-voting",
-      name: "songVoting",
-      component: songVoting,
-      meta: {
-        requiresAuth: false
-      }
-    },
-    {
       path: "/table",
       name: "table",
       component: SongVotingTable,
