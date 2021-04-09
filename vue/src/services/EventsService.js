@@ -12,4 +12,8 @@ export default {
     addEvent(newEvent) {
         return axios.post('/create-event', newEvent)
     },
+
+    updateEvent(id, updatedEvent) {
+        return axios.put(`/events/${id}`, updatedEvent)
+    }
 }

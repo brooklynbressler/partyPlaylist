@@ -9,6 +9,7 @@ import EventDescription from '../views/EventDescription.vue'
 import CreateEvent from '../views/CreateEvent.vue'
 import songVoting from '../components/songVoting.vue'
 import SongVotingTable from '../components/SongVotingTable.vue'
+import Update from '../views/Update.vue' 
 import store from '../store/index'
 
 Vue.use(Router)
@@ -78,6 +79,14 @@ const router = new Router({
       path: "/create-event",
       name: "createEvent",
       component: CreateEvent, 
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/update-event/:id",
+      name: "updateEvent",
+      component: Update, 
       meta: {
         requiresAuth: true
       }
