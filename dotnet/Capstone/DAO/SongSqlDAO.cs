@@ -199,9 +199,34 @@ namespace Capstone.DAO
 
             return playlist;
         }
-        public List<Song> GetAllPossibleSongs(List<string> excludedGenres)
+        public List<Song> GetAllPossibleSongs(int eventId)
         {
+            List<string> excludedGenres = new List<string>();
             List<Song> allPossibleSongs = new List<Song>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT genre FROM excluded_genres WHERE event_id = @event_id;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@event_id", eventId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        excludedGenres.Add(Convert.ToString(reader["genre"]));
+                    }
+                }
+
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e + " - PC Load Letter");
+                throw;
+            }
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))

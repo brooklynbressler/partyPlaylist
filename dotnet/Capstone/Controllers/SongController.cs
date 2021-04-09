@@ -37,10 +37,10 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpGet("/possible-songs")]
-        public ActionResult<List<Song>> GetPossibleSongs(List<string> excludedGenres)
+        [HttpGet("/possible-songs/{eventId}")]
+        public ActionResult<List<Song>> GetPossibleSongs(int eventId)
         {
-            List<Song> allPossibleSongs = songDAO.GetAllPossibleSongs(excludedGenres);
+            List<Song> allPossibleSongs = songDAO.GetAllPossibleSongs(eventId);
             if (allPossibleSongs != null)
             {
                 return Ok(allPossibleSongs);

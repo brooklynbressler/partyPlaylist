@@ -47,6 +47,12 @@ CREATE TABLE events (
 	CONSTRAINT FK_event_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id)
 );
 
+CREATE TABLE excluded_genres (
+	event_id int NOT NULL,
+	genre varchar(50) NOT NULL
+	CONSTRAINT PK_excluded_genres PRIMARY KEY (event_id, genre)
+);
+
 CREATE TABLE songs (
 	song_id int IDENTITY(1,1) NOT NULL,
 	song_name varchar(255) NOT NULL,
