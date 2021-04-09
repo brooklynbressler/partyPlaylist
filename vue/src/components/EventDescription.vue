@@ -67,16 +67,18 @@
 
         <v-list class="playlist">
           <v-list-item v-for="song in possibleSongs" :key="song.songId">
+            <!--
             <v-list-item-avatar rounded size="60">
               <v-img :alt="`${song.songName} avatar`" :src="chat.albumCover"></v-img>
             </v-list-item-avatar>
+            -->
 
             <v-list-item-content>
-              <v-list-item-title v-text="`${song.songName} - ${song.artist}`"></v-list-item-title>
+              <v-list-item-title v-text="`${song.songName} - ${song.artistName}`"></v-list-item-title>
             </v-list-item-content>
 
             <v-list-item-icon>
-              <v-icon :color="chat.active ? 'deep-purple accent-4' : 'grey'">
+              <v-icon :color="song.active ? 'deep-purple accent-4' : 'grey'">
                 mdi-music-note-plus
               </v-icon>
             </v-list-item-icon>
@@ -168,35 +170,16 @@ export default {
         },
       ],
       possibleSongs: [],
-      // excludedGenres: {},
     };
   },
   created() {
-    const excludedGenres = ["rock", "country"];
     this.event = this.$store.state.events.find((event) => {
       return event.eventId == this.$route.params.id;
     });
     console.log(this.event.eventId);
-    console.log(excludedGenres);
-    SongsService.getPossibleSongs(excludedGenres).then((response) => {
+    SongsService.getPossibleSongs(this.event.eventId).then((response) => {
       this.possibleSongs = response.data;
     });
-    // SongsService.getSongs().then(
-    //   songs => {
-    //     if (songs.status == 200) {
-    //       this.possiblePlaylist = songs;
-    //     }
-    //   }
-    // ).catch(error => {
-    //     alert(`Error: ${error.response.status} - ${error.response.statusText}`)
-    // });
-
-    // created() {
-    //     SongsService.getSongByEvent(this.eventId).then((response) => {
-    //         this.$store.commit("SET_EVENT_PLAYLIST", response.data);
-    //     });
-    // }
-
   },
 };
 </script>
