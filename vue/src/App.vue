@@ -30,10 +30,10 @@
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>turbotrax</v-toolbar-title>
+      <v-toolbar-title class="toolbar-title">TurboTrax</v-toolbar-title>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="v-main">
       <div id="app">
         <router-view />
       </div>
@@ -48,8 +48,20 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka+One&display=swap');
+
 .nav-button {
+
   margin-top: 40px;
-  
+
 }
+
+.toolbar-title{
+
+  font-family: 'Bebas Neue', cursive;
+  font-family: 'Fredoka One', cursive;
+  color: rgb(49, 118, 223);
+  margin-top: 17px;
+}
+
 </style>
