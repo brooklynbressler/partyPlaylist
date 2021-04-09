@@ -155,11 +155,4 @@ VALUES (6, 4, 1, 'Party with Brooklyn', 'Aint no party like a Brooklyn party cau
 	   (6, 3, 2, 'Zak Shack', 'Zak loves Toto!!!!', '2021-04-08', '19:00', '20:00');
 
 INSERT INTO excluded_genres (event_id, genre)
-<<<<<<< HEAD
 VALUES (2, 'Country'), (2, 'Alternative');
-
-=======
-VALUES
-	(2, 'Country'),
-	(2, 'Alternative');
->>>>>>> 5dfd0761f28f12b8c121146604eceed5e338b7b7
