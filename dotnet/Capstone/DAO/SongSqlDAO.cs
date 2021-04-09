@@ -93,7 +93,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@song_name", newSong.SongName);
                     cmd.Parameters.AddWithValue("@artist_name", newSong.ArtistName);
                     cmd.Parameters.AddWithValue("@genre", newSong.Genre);
-                    cmd.Parameters.Add("@img_url", newSong.ImgUrl);
+                    cmd.Parameters.AddWithValue("@img_url", newSong.ImgUrl);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
