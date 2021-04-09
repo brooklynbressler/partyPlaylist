@@ -17,13 +17,20 @@
           </td>
           <td id="song-artist-info">{{song.songName}} - {{song.artistName}}</td>
           <td>
-            <v-btn small id="likebtn" class="mx-2" icon outlined fab dark color="green darken-3" v-model="totalVotes" v-on:click="toggleUpvote">
+            <v-btn small v-if="upVoteBool === true" id="likebtn" class="mx-2" icon outlined fab dark color="green darken-3" v-model="totalVotes" v-on:click="toggleUpvote">
               <v-icon dark> mdi-thumb-up </v-icon>
             </v-btn>
 
-            <v-btn small id="dislikebtn" class="mx-2" icon outlined fab dark color="red darken-2" v-model="totalVotes" v-on:click="toggleDownvote">
+            <v-btn small v-if="upVoteBool === false" id="likebtn" class="mx-2" icon outlined fab dark color="grey darken-2">
+              <v-icon dark> mdi-thumb-up </v-icon>
+            </v-btn>          
+
+            <v-btn small v-if="downVoteBool === true" id="dislikebtn" class="mx-2" icon outlined fab dark color="red darken-2" v-model="totalVotes" v-on:click="toggleDownvote">
               <v-icon dark> mdi-thumb-down </v-icon>
             </v-btn>
+          <v-btn small v-if="downVoteBool === false" id="likebtn" class="mx-2" icon outlined fab dark color="grey darken-2">
+              <v-icon dark> mdi-thumb-down </v-icon>
+          </v-btn>
           </td>            
         </tr>
       </tbody>
@@ -98,6 +105,16 @@ export default {
             }
         ]
     }
+  },
+  methods: {
+    toggleUpvote() {
+          this.upVoteBool = !this.upVoteBool;
+          this.downVoteBool = true;
+      },
+      toggleDownvote() {
+          this.downVoteBool = !this.downVoteBool;
+          this.upVoteBool = true;
+      },
   }
 };
 </script>

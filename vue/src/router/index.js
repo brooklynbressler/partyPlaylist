@@ -7,7 +7,6 @@ import Register from '../views/Register.vue'
 import Events from '../views/Events.vue'
 import EventDescription from '../views/EventDescription.vue'
 import CreateEvent from '../views/CreateEvent.vue'
-import songVoting from '../components/songVoting.vue'
 import SongVotingTable from '../components/SongVotingTable.vue'
 import store from '../store/index'
 
@@ -80,14 +79,6 @@ const router = new Router({
       component: CreateEvent, 
       meta: {
         requiresAuth: true
-      }
-    },    
-    {
-      path: "/song-voting",
-      name: "songVoting",
-      component: songVoting,
-      meta: {
-        requiresAuth: false
       }
     },
     {
