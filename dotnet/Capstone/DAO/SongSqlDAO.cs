@@ -234,7 +234,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "SELECT song_id, song_name, artist_name, genre FROM songs;";
+                    string sql = "SELECT song_id, song_name, artist_name, genre, img_url FROM songs;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
