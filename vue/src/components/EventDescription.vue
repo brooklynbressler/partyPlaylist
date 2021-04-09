@@ -17,6 +17,7 @@
     <div class="playlist-display">
     <div class="playlist-div">
       <v-card class="mx-auto" max-width="500">
+        <!-- Tool bar -->
         <v-toolbar color="deep-purple accent-4" dark>
           <v-toolbar-title>DJ's Current Playlist</v-toolbar-title>
 
@@ -27,16 +28,22 @@
           </v-btn>
         </v-toolbar>
 
+        <!-- List -->
         <v-list class="playlist">
+          <!-- loop through data source -->
           <v-list-item v-for="chat in recent" :key="chat.title">
+
+            <!-- Image -->
             <v-list-item-avatar rounded size="60">
-              <v-img :alt="`${chat.title} avatar`" :src="chat.avatar"></v-img>
+              <v-img :alt="`${chat.title} avatar`" :src="chat.albumCover"></v-img>
             </v-list-item-avatar>
 
+            <!-- Title -->
             <v-list-item-content>
-              <v-list-item-title v-text="chat.title"></v-list-item-title>
+              <v-list-item-title v-text="`${chat.title} - ${chat.artist}`"></v-list-item-title>
             </v-list-item-content>
 
+            <!-- Icon -->
             <v-list-item-icon>
               <v-icon :color="chat.active ? 'deep-purple accent-4' : 'grey'">
                 mdi-music-note-plus
@@ -44,7 +51,7 @@
             </v-list-item-icon>
           </v-list-item>
         </v-list>
-      </v-card>
+      </v-card>      
     </div>
         <div class="playlist-div">
       <v-card class="mx-auto" max-width="500">
@@ -61,11 +68,11 @@
         <v-list class="playlist">
           <v-list-item v-for="chat in recent" :key="chat.title">
             <v-list-item-avatar rounded size="60">
-              <v-img :alt="`${chat.title} avatar`" :src="chat.avatar"></v-img>
+              <v-img :alt="`${chat.title} avatar`" :src="chat.albumCover"></v-img>
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title v-text="chat.title"></v-list-item-title>
+              <v-list-item-title v-text="`${chat.title} - ${chat.artist}`"></v-list-item-title>
             </v-list-item-content>
 
             <v-list-item-icon>
@@ -77,53 +84,103 @@
         </v-list>
       </v-card>
     </div>
-
+      
     </div>
   </div>
 </template>
 
 <script>
+//import SongsService from "../services/SongsService.js"
+
 export default {
   data() {
     return {
+      /* the possible playlist needs to be set when a user clicks on an event. 
+      A get method needs to run that retrieves the playlist by its id. */ 
+      possiblePlaylist: [
+        {
+          songId: 1,
+          albumCover: 'https://images-na.ssl-images-amazon.com/images/I/51uC0yguxEL.jpg',
+          songName: 'Friends in Low Places',
+          artistName: 'Garth Brooks',          
+        },
+        {
+          songId: 2,
+          albumCover: 'https://images-na.ssl-images-amazon.com/images/I/51uC0yguxEL.jpg',
+          songName: 'The Thunder Rolls',
+          artistName: 'Garth Brooks',          
+        },
+        {
+          songId: 3,
+          albumCover: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Garth_Brooks-Ropin%27_the_Wind_%28album_cover%29.jpg',
+          songName: 'The River',
+          artistName: 'Garth Brooks',          
+        },
+        {
+          songId: 4,
+          albumCover: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/BrandNewMan.jpg/220px-BrandNewMan.jpg',
+          songName: 'Boot Scootin Boogie',
+          artistName: 'Brooks & Dunn',          
+        },
+        {
+          songId: 5,
+          albumCover: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/BrandNewMan.jpg/220px-BrandNewMan.jpg',
+          songName: 'Neon Moon',
+          artistName: 'Brooks & Dunn',          
+        }
+      ],
+      activePlaylist: [], 
       event: {},
       recent: [
         {
           active: true,
-          avatar:
+          albumCover:
             "https://images-na.ssl-images-amazon.com/images/I/71NT9ty1FNL._SL1500_.jpg",
-          title: "Africa - TOTO",
+          title: "Africa",
+          artist: 'TOTO'
         },
         {
           active: true,
-          avatar:
+          albumCover:
             "https://upload.wikimedia.org/wikipedia/en/thumb/0/07/The_Clash_-_Combat_Rock.jpg/220px-The_Clash_-_Combat_Rock.jpg",
-          title: "Rock the Casbah - The Clash",
+          title: "Rock the Casbah",
+          artist: 'The Clash'
         },
         {
-          avatar:
+          albumCover:
             "https://upload.wikimedia.org/wikipedia/en/1/17/LikeAVirgin1984.png",
-          title: "Material Girl - Madonna",
+          title: "Material Girl",
+          artist: 'Madonna'
         },
         {
-          avatar:
+          albumCover:
             "https://upload.wikimedia.org/wikipedia/en/4/42/Tina_Turner_Private_Dancer_US_CD_cover_art_1984_original.jpg",
-          title: "What's Love Got to Do With It - Tina Turner",
+          title: "What's Love Got to Do With It",
+          artist: 'Tina Turner'
         },
         {
           active: true,
-          avatar:
+          albumCover:
             "https://img.discogs.com/MCcPigiGvOGxXXisER-AjWAr1OQ=/fit-in/600x602/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-621396-1474406704-8024.jpeg.jpg",
-          title: "Melt With You - Modern English",
+          title: "Melt With You",
+          artist: 'Modern English'
         },
       ],
     };
   },
-
   created() {
     this.event = this.$store.state.events.find((event) => {
       return event.eventId == this.$route.params.id;
     });
+    // SongsService.getSongs().then(
+    //   songs => {
+    //     if (songs.status == 200) {
+    //       this.possiblePlaylist = songs;
+    //     }
+    //   }
+    // ).catch(error => {
+    //     alert(`Error: ${error.response.status} - ${error.response.statusText}`)
+    // });
   },
 };
 </script>
@@ -153,12 +210,9 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
 }
-
-
 .media-player > img {
   width: 20%;
 }
-
 .playlist-div {
   width: 90%;
   margin: auto;

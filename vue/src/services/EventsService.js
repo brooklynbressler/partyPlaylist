@@ -11,5 +11,5 @@ export default {
 
     addEvent(newEvent) {
         return axios.post('/create-event', newEvent)
-    }
+    },
 }

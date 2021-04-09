@@ -22,9 +22,7 @@ export default new Vuex.Store({
     token: currentToken || '',
     user: currentUser || {},
     users: [],
-    events: [],
-    possiblePlaylist: [],
-    activePlaylist: [],
+    events: [],   
   },
   mutations: {
     GET_ALL_USERS(state, users) {

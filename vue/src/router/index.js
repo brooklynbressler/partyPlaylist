@@ -7,6 +7,8 @@ import Register from '../views/Register.vue'
 import Events from '../views/Events.vue'
 import EventDescription from '../views/EventDescription.vue'
 import CreateEvent from '../views/CreateEvent.vue'
+import songVoting from '../components/songVoting.vue'
+import SongVotingTable from '../components/SongVotingTable.vue'
 import store from '../store/index'
 
 Vue.use(Router)
@@ -80,6 +82,22 @@ const router = new Router({
         requiresAuth: true
       }
     },    
+    {
+      path: "/song-voting",
+      name: "songVoting",
+      component: songVoting,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/table",
+      name: "table",
+      component: SongVotingTable,
+      meta: {
+        requiresAuth: false
+      }
+    }
   ]
 })
 
