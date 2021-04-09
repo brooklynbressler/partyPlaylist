@@ -87,12 +87,13 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "INSERT INTO songs(song_name, artist_name, genre) VALUES (@song_name, @artist_name, @genre);";
+                    string sql = "INSERT INTO songs(song_name, artist_name, genre, img_url) VALUES (@song_name, @artist_name, @genre, @img_url);";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@song_name", newSong.SongName);
                     cmd.Parameters.AddWithValue("@artist_name", newSong.ArtistName);
                     cmd.Parameters.AddWithValue("@genre", newSong.Genre);
+                    cmd.Parameters.AddWithValue("@img_url", newSong.ImgUrl);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
@@ -199,8 +200,9 @@ namespace Capstone.DAO
 
             return playlist;
         }
-        public List<Song> GetAllPossibleSongs(List<string> excludedGenres)
+        public List<Song> GetAllPossibleSongs(int eventId)
         {
+            List<string> excludedGenres = new List<string>();
             List<Song> allPossibleSongs = new List<Song>();
             try
             {
@@ -208,7 +210,31 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "SELECT song_id, song_name, artist_name, genre FROM songs;";
+                    string sql = "SELECT genre FROM excluded_genres WHERE event_id = @event_id;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@event_id", eventId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        excludedGenres.Add(Convert.ToString(reader["genre"]));
+                    }
+                }
+
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e + " - PC Load Letter");
+                throw;
+            }
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT song_id, song_name, artist_name, genre, img_url FROM songs;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -255,7 +281,8 @@ namespace Capstone.DAO
                 SongId = Convert.ToInt32(reader["song_id"]),
                 SongName = Convert.ToString(reader["song_name"]),
                 ArtistName = Convert.ToString(reader["artist_name"]),
-                Genre = Convert.ToString(reader["genre"])
+                Genre = Convert.ToString(reader["genre"]),
+                ImgUrl = Convert.ToString(reader["img_url"])
             };
             return s;
         }

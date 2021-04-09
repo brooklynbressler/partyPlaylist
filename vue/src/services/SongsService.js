@@ -6,5 +6,11 @@ export default {
     },
     vote(newVote) {
         return axios.post('/vote', newVote);
+    },
+    getPlaylistByEvent(eventId){
+        return axios.get(`/playlist/${eventId}`)
+    },
+    getPossibleSongs(eventId){
+        return axios.get(`/possible-songs/${eventId}`)
     }
 }

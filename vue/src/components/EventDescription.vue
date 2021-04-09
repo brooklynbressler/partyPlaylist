@@ -64,7 +64,7 @@
       </v-card>      
     </div>
         <div class="playlist-div">
-      <v-card class="mx-auto" max-width="500">
+      <v-card class="mx-auto" max-width="700">
         <v-toolbar color="deep-purple accent-4" dark>
           <v-toolbar-title>Available Songs To Pick</v-toolbar-title>
 
@@ -75,23 +75,42 @@
           </v-btn>
         </v-toolbar>
 
-        <v-list class="playlist">
-          <v-list-item v-for="chat in recent" :key="chat.title">
-            <v-list-item-avatar rounded size="60">
-              <v-img :alt="`${chat.title} avatar`" :src="chat.albumCover"></v-img>
-            </v-list-item-avatar>
+        <!-- songs table -->
+        <table>
+          <thead>
+            <tr>
+              <th>Song Title</th>
+              <th>Artist</th>
+              <th>Vote Buttons</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="song in possibleSongs" v-bind:key="song.songId">
+              <td>
+                <v-avatar rounded size="60">
+                  <img v-bind:src="song.imgUrl" alt="">
+                </v-avatar>
+              </td>
+              <td id="song-artist-info">{{song.songName}} - {{song.artistName}}</td>
+              <td>
+                <v-btn small v-if="!song.hasUpvoted" id="likebtn" class="mx-2" icon outlined fab dark color="green darken-3" v-model="totalVotes" v-on:click="upVote">
+                  <v-icon dark> mdi-thumb-up </v-icon>
+                </v-btn>
 
-            <v-list-item-content>
-              <v-list-item-title v-text="`${chat.title} - ${chat.artist}`"></v-list-item-title>
-            </v-list-item-content>
+                <v-btn small v-if="song.hasUpvoted" id="likebtn" class="mx-2" icon outlined fab dark color="grey darken-2">
+                  <v-icon dark> mdi-thumb-up </v-icon>
+                </v-btn>          
 
-            <v-list-item-icon>
-              <v-icon :color="chat.active ? 'deep-purple accent-4' : 'grey'">
-                mdi-music-note-plus
-              </v-icon>
-            </v-list-item-icon>
-          </v-list-item>
-        </v-list>
+                <v-btn small v-if="!song.hasDownvoted" id="dislikebtn" class="mx-2" icon outlined fab dark color="red darken-2" v-model="totalVotes" v-on:click="downVote">
+                  <v-icon dark> mdi-thumb-down </v-icon>
+                </v-btn>
+              <v-btn small v-if="song.hasDownvoted" id="likebtn" class="mx-2" icon outlined fab dark color="grey darken-2">
+                  <v-icon dark> mdi-thumb-down </v-icon>
+              </v-btn>
+              </td>            
+            </tr>
+          </tbody>
+        </table>
       </v-card>
     </div>
       
@@ -100,98 +119,67 @@
 </template>
 
 <script>
-//import SongsService from "../services/SongsService.js"
+import SongsService from "../services/SongsService.js";
+
 
 export default {
   data() {
     return {
       /* the possible playlist needs to be set when a user clicks on an event. 
       A get method needs to run that retrieves the playlist by its id. */ 
-      possiblePlaylist: [
-        {
-          songId: 1,
-          albumCover: 'https://images-na.ssl-images-amazon.com/images/I/51uC0yguxEL.jpg',
-          songName: 'Friends in Low Places',
-          artistName: 'Garth Brooks',          
-        },
-        {
-          songId: 2,
-          albumCover: 'https://images-na.ssl-images-amazon.com/images/I/51uC0yguxEL.jpg',
-          songName: 'The Thunder Rolls',
-          artistName: 'Garth Brooks',          
-        },
-        {
-          songId: 3,
-          albumCover: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Garth_Brooks-Ropin%27_the_Wind_%28album_cover%29.jpg',
-          songName: 'The River',
-          artistName: 'Garth Brooks',          
-        },
-        {
-          songId: 4,
-          albumCover: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/BrandNewMan.jpg/220px-BrandNewMan.jpg',
-          songName: 'Boot Scootin Boogie',
-          artistName: 'Brooks & Dunn',          
-        },
-        {
-          songId: 5,
-          albumCover: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/BrandNewMan.jpg/220px-BrandNewMan.jpg',
-          songName: 'Neon Moon',
-          artistName: 'Brooks & Dunn',          
-        }
-      ],
       activePlaylist: [], 
       event: {},
-      recent: [
-        {
-          active: true,
-          albumCover:
-            "https://images-na.ssl-images-amazon.com/images/I/71NT9ty1FNL._SL1500_.jpg",
-          title: "Africa",
-          artist: 'TOTO'
-        },
-        {
-          active: true,
-          albumCover:
-            "https://upload.wikimedia.org/wikipedia/en/thumb/0/07/The_Clash_-_Combat_Rock.jpg/220px-The_Clash_-_Combat_Rock.jpg",
-          title: "Rock the Casbah",
-          artist: 'The Clash'
-        },
-        {
-          albumCover:
-            "https://upload.wikimedia.org/wikipedia/en/1/17/LikeAVirgin1984.png",
-          title: "Material Girl",
-          artist: 'Madonna'
-        },
-        {
-          albumCover:
-            "https://upload.wikimedia.org/wikipedia/en/4/42/Tina_Turner_Private_Dancer_US_CD_cover_art_1984_original.jpg",
-          title: "What's Love Got to Do With It",
-          artist: 'Tina Turner'
-        },
-        {
-          active: true,
-          albumCover:
-            "https://img.discogs.com/MCcPigiGvOGxXXisER-AjWAr1OQ=/fit-in/600x602/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-621396-1474406704-8024.jpeg.jpg",
-          title: "Melt With You",
-          artist: 'Modern English'
-        },
-      ],
+      possibleSongs: [],
+      songVote: {
+        PlaylistId: '',
+        SongId: '',
+        VoteValue: ''
+      },
     };
   },
   created() {
     this.event = this.$store.state.events.find((event) => {
       return event.eventId == this.$route.params.id;
     });
-    // SongsService.getSongs().then(
-    //   songs => {
-    //     if (songs.status == 200) {
-    //       this.possiblePlaylist = songs;
-    //     }
-    //   }
-    // ).catch(error => {
-    //     alert(`Error: ${error.response.status} - ${error.response.statusText}`)
-    // });
+    console.log(this.event.eventId);
+    SongsService.getPossibleSongs(this.event.eventId).then((response) => {
+      this.possibleSongs = response.data;
+    });
   },
+  methods: {
+    upVote() {
+        this.song.hasUpvoted = true;
+        this.song.hasDownvoted = false;
+        this.songVote.PlaylistId = this.event.eventId;
+        this.songVote.SongId = this.song.songId;
+        this.songVote.VoteValue = 1;        
+        SongsService.vote(this.songVote).then(
+            response => {
+                if (response.status == 200) {
+                    console.log(response);
+                }
+            }
+        ).catch(error => {
+        alert(`Error: ${error.response.status} - ${error.response.statusText}`)
+      })
+    }
+      },
+      downVote() {
+            this.song.hasDownvoted = true;
+            this.song.hasUpvoted = false;
+            this.songVote.PlaylistId = this.event.eventId;
+            this.songVote.SongId = this.song.songId;
+            this.songVote.VoteValue = -1;
+            SongsService.vote(this.songVote).then(
+            response => {
+                if (response.status == 200) {
+                    console.log(response);
+                }
+            }
+        ).catch(error => {
+        alert(`Error: ${error.response.status} - ${error.response.statusText}`)
+      })
+    }  
 };
 </script>
 

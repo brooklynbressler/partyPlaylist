@@ -47,11 +47,18 @@ CREATE TABLE events (
 	CONSTRAINT FK_event_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id)
 );
 
+CREATE TABLE excluded_genres (
+	event_id int NOT NULL,
+	genre varchar(50) NOT NULL
+	CONSTRAINT PK_excluded_genres PRIMARY KEY (event_id, genre)
+);
+
 CREATE TABLE songs (
 	song_id int IDENTITY(1,1) NOT NULL,
 	song_name varchar(255) NOT NULL,
 	artist_name varchar(255) NOT NULL,
 	genre varchar(50) NOT NULL,
+	img_url varchar(255),
 	CONSTRAINT PK_song PRIMARY KEY (song_id)
 );
 
@@ -147,3 +154,5 @@ INSERT INTO events (dj_user_id, host_user_id, playlist_id, event_name, descripti
 VALUES (6, 4, 1, 'Party with Brooklyn', 'Aint no party like a Brooklyn party cause a Brooklyn party dont stop!', '2021-04-07', '17:00', '18:00'),
 	   (6, 3, 2, 'Zak Shack', 'Zak loves Toto!!!!', '2021-04-08', '19:00', '20:00');
 
+INSERT INTO excluded_genres (event_id, genre)
+VALUES (2, 'Country'), (2, 'Alternative');

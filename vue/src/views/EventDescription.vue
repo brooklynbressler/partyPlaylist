@@ -5,12 +5,13 @@
 </template>
 
 <script>
-import EventDescription from "../components/EventDescription"
+import EventDescription from "../components/EventDescription";
 
 export default {
     components: {
         EventDescription
-    }
+    },
+
 }
 </script>
 
