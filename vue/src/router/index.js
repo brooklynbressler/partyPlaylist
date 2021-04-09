@@ -89,7 +89,11 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+<<<<<<< HEAD
     },    
+=======
+    },
+>>>>>>> 178766a8aee2675d2ddcab4761eb2ca1e69d0feb
     {
       path: "/table",
       name: "table",
