@@ -87,12 +87,13 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "INSERT INTO songs(song_name, artist_name, genre) VALUES (@song_name, @artist_name, @genre);";
+                    string sql = "INSERT INTO songs(song_name, artist_name, genre, img_url) VALUES (@song_name, @artist_name, @genre, @img_url);";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@song_name", newSong.SongName);
                     cmd.Parameters.AddWithValue("@artist_name", newSong.ArtistName);
                     cmd.Parameters.AddWithValue("@genre", newSong.Genre);
+                    cmd.Parameters.Add("@img_url", newSong.ImgUrl);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
@@ -280,7 +281,8 @@ namespace Capstone.DAO
                 SongId = Convert.ToInt32(reader["song_id"]),
                 SongName = Convert.ToString(reader["song_name"]),
                 ArtistName = Convert.ToString(reader["artist_name"]),
-                Genre = Convert.ToString(reader["genre"])
+                Genre = Convert.ToString(reader["genre"]),
+                ImgUrl = Convert.ToString(reader["img_url"])
             };
             return s;
         }

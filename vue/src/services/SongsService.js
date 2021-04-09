@@ -10,10 +10,7 @@ export default {
     getPlaylistByEvent(eventId){
         return axios.get(`/playlist/${eventId}`)
     },
-    getPossibleSongs(excludedGenres){
-        console.log("excluded genres");
-        console.log(excludedGenres);
-
-        return axios.get(`/possible-songs`, excludedGenres)
+    getPossibleSongs(eventId){
+        return axios.get(`/possible-songs/${eventId}`)
     }
 }
