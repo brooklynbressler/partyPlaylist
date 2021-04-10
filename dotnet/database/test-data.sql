@@ -44,7 +44,7 @@ CREATE TABLE events (
 	end_time time,
 	CONSTRAINT PK_event PRIMARY KEY (event_id),
 	CONSTRAINT FK_event_dj FOREIGN KEY (dj_user_id) REFERENCES users(user_id),
-	CONSTRAINT FK_event_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id)
+	--CONSTRAINT FK_event_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id)
 );
 
 CREATE TABLE excluded_genres (
@@ -65,7 +65,6 @@ CREATE TABLE songs (
 CREATE TABLE playlist_songs (
 	playlist_id int NOT NULL,
 	song_id int NOT NULL,
-	song_score int DEFAULT 0,
 	CONSTRAINT PK_playlist_song PRIMARY KEY (playlist_id, song_id),
 	CONSTRAINT FK_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id),
 	CONSTRAINT FK_song_id FOREIGN KEY (song_id) REFERENCES songs(song_id)
@@ -79,6 +78,15 @@ CREATE TABLE playlist_songs_shoutouts (
 	CONSTRAINT PK_playlist_song_shoutouts PRIMARY KEY (playlist_id, song_id, shoutout_id),
 	CONSTRAINT FK_playlist_id_shoutouts FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id),
 	CONSTRAINT FK_song_id_shoutouts FOREIGN KEY (song_id) REFERENCES songs(song_id)
+);
+
+CREATE TABLE potential_playlist_songs (
+	playlist_id int NOT NULL,
+	song_id int NOT NULL,
+	song_score int DEFAULT 0,
+	CONSTRAINT PK_potential_playlist_song PRIMARY KEY (playlist_id, song_id),
+	CONSTRAINT FK_potential_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id),
+	CONSTRAINT FK_potential_song_id FOREIGN KEY (song_id) REFERENCES songs(song_id)
 );
 
 /* All data above this line must match capstone.sql */
