@@ -47,6 +47,37 @@ namespace Capstone.DAO
             }
         }
 
+        public void updateEvent(int id, Event updatedEvent)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "UPDATE events SET dj_user_id = @dj_user_id, host_user_id = @host_user_id, playlist_id = @playlist_id, event_name = @event_name, description = @description, event_date = @event_date, start_time = @start_time, end_time = @end_time WHERE event_id = @event_id;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@dj_user_id", updatedEvent.DjUserId);
+                    cmd.Parameters.AddWithValue("@host_user_id", updatedEvent.HostUserId);
+                    cmd.Parameters.AddWithValue("@playlist_id", updatedEvent.PlaylistId);
+                    cmd.Parameters.AddWithValue("@event_name", updatedEvent.EventName);
+                    cmd.Parameters.AddWithValue("@description", updatedEvent.EventDescription);
+                    cmd.Parameters.AddWithValue("@event_date", updatedEvent.EventDate);
+                    cmd.Parameters.AddWithValue("@start_time", updatedEvent.StartTime);
+                    cmd.Parameters.AddWithValue("@end_time", updatedEvent.EndTime);
+                    cmd.Parameters.AddWithValue("@event_id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+        }
+
         public List<Event> getEvents()
         {
             List<Event> allEvents = new List<Event>();
@@ -134,6 +165,5 @@ namespace Capstone.DAO
             }
             return $"{hours}:{minutes} {tT}";
         }
-
     }
 }

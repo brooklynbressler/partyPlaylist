@@ -25,7 +25,7 @@ namespace Capstone.Controllers
         [HttpPost("/create-event")]
         public ActionResult CreateEvent(Event newEvent)
         {
-            
+
             if (newEvent != null)
             {
                 newEvent.DjUserId = int.Parse(User.FindFirst("sub")?.Value);
@@ -55,14 +55,14 @@ namespace Capstone.Controllers
                 return BadRequest();
             }
         }
-    
+
         [Authorize]
         [HttpGet("/users")]
         public ActionResult<List<ReturnUser>> GetAllUsers()
         {
 
             List<ReturnUser> allUsers = userDAO.ReturnUserList();
-            if(allUsers != null)
+            if (allUsers != null)
             {
                 return Ok(allUsers);
             }
@@ -71,6 +71,21 @@ namespace Capstone.Controllers
                 return BadRequest("User list is empty");
             }
 
+        }
+
+        [Authorize]
+        [HttpPut("/update-event/{id}")]
+        public ActionResult<Event> UpdateEvent(int id, Event updatedEvent)
+        {
+            if (updatedEvent != null)
+            {
+                eventDAO.updateEvent(id, updatedEvent);
+                return Created("created", updatedEvent);
+            }
+            else
+            {
+                return BadRequest("Incomplete or missing event data");
+            }
         }
     }
 }
