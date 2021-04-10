@@ -11,27 +11,36 @@
         This event will go from {{ event.startTime }} to {{ event.endTime }}
       </p>
       <div class="button-spacing">
-      <router-link
-        :to="{
-          name: 'eventDescription',
-          params: { id: event.eventId },
-        }"
-        class="addMessage"
-      >
-        <v-btn color="primary" elevation="6" raised rounded x-small
-          >details</v-btn
+        <router-link
+          :to="{
+            name: 'eventDescription',
+            params: { id: event.eventId },
+          }"
+          class="addMessage"
         >
-      </router-link>
-      <router-link
-        class="update-event"
-        v-if="$store.state.user.userId == 0"
-        :to="{ name: 'updateEvent', params: { id: event.eventId } }"
-      >
-        <v-btn elevation="2" icon medium rounded>
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-      </router-link>
-      <p>DJ user ID is: {{ event.djUserId }}</p>
+          <v-btn color="primary" elevation="6" raised rounded x-small>
+            details
+          </v-btn>
+        </router-link>
+        <router-link
+          class="update-event"
+          v-if="$store.state.user.userId == event.djUserId"
+          :to="{ name: 'updateEvent', params: { id: event.eventId } }"
+        >
+          <v-btn color="primary" elevation="6" raised rounded x-small>
+            edit event
+          </v-btn>
+        </router-link>
+                <router-link
+          class="setup-event"
+          v-if="$store.state.user.userId == event.hostUserId"
+          :to="{ name: 'setupEvent', params: { id: event.eventId } }"
+        >
+          <v-btn color="primary" elevation="6" raised rounded x-small>
+            event setup
+          </v-btn>
+        </router-link>
+
       </div>
     </div>
   </div>
