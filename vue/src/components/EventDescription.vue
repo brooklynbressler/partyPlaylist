@@ -1,15 +1,5 @@
 <template>
   <div class="main-description">
-    <router-link class="update-event" :to="{name: 'updateEvent', params:{id: $route.params.id}}">
-    <v-btn
-    elevation="2"
-    icon
-    medium
-    rounded
-    >
-    <v-icon>mdi-pencil</v-icon>
-    </v-btn>
-    </router-link>
     <h1>{{ event.eventName }}</h1>
     <h3>Hosted by: {{ event.hostName }}</h3>
     <h4>{{ event.eventDate }} from {{ event.startTime }} until {{ event.endTime }}</h4>
@@ -17,13 +7,14 @@
     <div class="event-description">
       <p>{{ event.eventDescription }}</p>
     </div>
-
+    <!--
     <div class="media-player">
       <img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtX9WajqXXqPsS2GK24YylCqfKrLRJLsdhvQ&usqp=CAU"
         alt="a media player"
       />
     </div>
+    -->
     <div class="playlist-display">
     <div class="playlist-div">
       <v-card class="mx-auto" max-width="500">
