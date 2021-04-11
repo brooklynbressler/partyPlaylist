@@ -32,6 +32,7 @@ CREATE TABLE genres (
 	CONSTRAINT PK_genre PRIMARY KEY (genre_id)
 );
 
+--Table to hold event playlists
 CREATE TABLE playlists (
 	playlist_id int IDENTITY(1,1) NOT NULL,
 	playlist_name varchar(50) NOT NULL,
@@ -68,6 +69,7 @@ CREATE TABLE songs (
 	CONSTRAINT PK_song PRIMARY KEY (song_id)
 );
 
+--Table of event playlist songs
 CREATE TABLE playlist_songs (
 	playlist_id int NOT NULL,
 	song_id int NOT NULL,
