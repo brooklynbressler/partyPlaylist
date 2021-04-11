@@ -26,6 +26,12 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+CREATE TABLE genres (
+	genre_id int IDENTITY(1,1) NOT NULL,
+	genre_name varchar(20) NOT NULL,
+	CONSTRAINT PK_genre PRIMARY KEY (genre_id)
+);
+
 CREATE TABLE playlists (
 	playlist_id int IDENTITY(1,1) NOT NULL,
 	playlist_name varchar(50) NOT NULL,
@@ -98,6 +104,19 @@ VALUES ('tester', 'Bob', 'Testerson', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2
 ('bressler', 'Brooklyn', 'Bressler', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj'),
 ('morgan', 'David', 'Morgan', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj'),
 ('davis', 'Brian', 'Davis', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj');
+
+SET IDENTITY_INSERT genres ON;
+
+INSERT INTO genres(genre_id, genre_name)
+VALUES
+	(1,'Country'),
+	(2, 'Pop'),
+	(3, 'Rock'),
+	(4, 'Metal'),
+	(5, 'Alternative'),
+	(6, 'Hip Hop');
+
+SET IDENTITY_INSERT genres OFF;
 
 INSERT INTO songs(song_name, artist_name, genre)
 VALUES ('Friends In Low Places', 'Garth Brooks', 'Country'),
