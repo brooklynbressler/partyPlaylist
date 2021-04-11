@@ -113,5 +113,19 @@ namespace Capstone.Controllers
                 return BadRequest("Unable to remove song from playlist");
             }
         }
+
+        [HttpPost("/add-shoutout")]
+        public ActionResult AddNewSongShoutOut(SongShoutOut songShoutOut)
+        {
+            bool shoutOutAdded = songDAO.AddSongShoutOut(songShoutOut);
+            if (shoutOutAdded)
+            {
+                return Created("Shoutout was added", shoutOutAdded);
+            }
+            else
+            {
+                return BadRequest("Unable to add shoutout");
+            }
+        }
     }
 }

@@ -261,6 +261,38 @@ namespace Capstone.DAO
             }
             return allPossibleSongs;
         }
+
+        public bool AddSongShoutOut(SongShoutOut songShoutOut)
+        {
+            bool shoutOutSongWasAdded = false;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "INSERT INTO playlist_songs_shoutouts(playlist_id, song_id, shoutout_message) VALUES (@playlist_id, @song_id, @shoutout_message);";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@playlist_id", songShoutOut.PlaylistId);
+                    cmd.Parameters.AddWithValue("@song_id", songShoutOut.SongId);
+                    cmd.Parameters.AddWithValue("@shoutout_message", songShoutOut.ShoutOutMessage);
+
+                    int rowsAdded = cmd.ExecuteNonQuery();
+                    if (rowsAdded > 0)
+                    {
+                        shoutOutSongWasAdded = true;
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            return shoutOutSongWasAdded;
+        }
+
         private PlaylistSong GetPlaylistSongFromReader(SqlDataReader reader)
         {
             PlaylistSong pls = new PlaylistSong()

@@ -14,5 +14,6 @@ namespace Capstone.DAO
         bool RemoveSongFromPlaylist(int playlistId, int songId);
         List<PlaylistSong> GetPlaylistSongs(int playlistId);
         List<Song> GetAllPossibleSongs(int eventId);
+        bool AddSongShoutOut(SongShoutOut songWithShoutOut);
     }
 }
