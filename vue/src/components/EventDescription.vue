@@ -9,7 +9,6 @@
     <div class="event-description">
       <p>{{ event.eventDescription }}</p>
     </div>
-  
 
     <div class="media-player">
       <img
@@ -40,128 +39,23 @@
                 <th>Add ShoutOut</th>
               </tr>
             </thead>
+
             <tr v-for="song in activePlaylist" v-bind:key="song.songId">
               <td>
                 <v-avatar rounded size="60">
                   <img v-bind:src="song.imgUrl" alt="" />
                 </v-avatar>
               </td>
-              <td id="song-artist-info">{{ song.songName }} - {{ song.artistName }}</td>
-              <td>
-<v-row justify="center">
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="600px"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-          Open Dialog
-        </v-btn>
-      </template>
-      <v-card>
-        <v-card-title>
-          <span class="headline">User Profile</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal first name*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal middle name"
-                  hint="example of helper text only on focus"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal last name*"
-                  hint="example of persistent helper text"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Email*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Password*"
-                  type="password"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Age*"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-autocomplete
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                  label="Interests"
-                  multiple
-                ></v-autocomplete>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-row>              </td>
-            </tr>
 
+              <td id="song-artist-info">
+                {{ song.songName }} - {{ song.artistName }}
+              </td>
+
+              <td>
+                <v-btn color="primary" elevation="6" raised rounded x-small v-on:click="showShoutout(song.songId)">add shoutout</v-btn>
+                <input type="text" v-show="song.songId == showShoutoutIndex" placeholder="enter shoutout" v-model="songShoutout.ShoutOutMessage">
+              </td>
+            </tr>
           </table>
         </v-card>
       </div>
@@ -201,7 +95,7 @@
                 <td>
                   <v-btn
                     small
-                    v-if="!song.hasUpvoted"
+                    v-if="!song.hasUpvoted && ($store.state.user.userId != event.djUserId)"
                     id="likebtn"
                     class="mx-2"
                     icon
@@ -210,14 +104,14 @@
                     dark
                     color="green darken-3"
                     v-model="totalVotes"
-                    v-on:click="upVote"
+                    v-on:click="upVote(song.songId)"
                   >
                     <v-icon dark> mdi-thumb-up </v-icon>
                   </v-btn>
 
                   <v-btn
                     small
-                    v-if="song.hasUpvoted"
+                    v-if="song.hasUpvoted && ($store.state.user.userId != event.djUserId)"
                     id="likebtn"
                     class="mx-2"
                     icon
@@ -232,7 +126,7 @@
                 <td>
                   <v-btn
                     small
-                    v-if="!song.hasDownvoted"
+                    v-if="!song.hasDownvoted && ($store.state.user.userId != event.djUserId)"
                     id="dislikebtn"
                     class="mx-2"
                     icon
@@ -247,7 +141,7 @@
                   </v-btn>
                   <v-btn
                     small
-                    v-if="song.hasDownvoted"
+                    v-if="song.hasDownvoted && ($store.state.user.userId != event.djUserId)"
                     id="likebtn"
                     class="mx-2"
                     icon
@@ -270,6 +164,7 @@
 
 <script>
 import SongsService from "../services/SongsService.js";
+import EventsService from "../services/EventsService.js";
 
 export default {
   data() {
@@ -278,33 +173,43 @@ export default {
       A get method needs to run that retrieves the playlist by its id. */
       dialog: false,
       activePlaylist: [],
-      event: {},
       possibleSongs: [],
       songVote: {
         PlaylistId: "",
         SongId: "",
         VoteValue: "",
       },
+      songShoutout: {
+        PlaylistId: 0,
+        SongId: 0,
+        ShoutOutMessage: ""
+      },
+      totalVotes: 0,
+      event: {},
+      showShoutoutIndex: -1,
+      shoutoutText: ""
     };
   },
   created() {
-    this.event = this.$store.state.events.find((event) => {
+    EventsService.getEvents().then((resp) => {
+      this.$store.commit("SET_EVENTS", resp.data);
+      this.event = this.$store.state.events.find((event) => {
       return event.eventId == this.$route.params.id;
     });
-    console.log(this.event.eventId);
-    SongsService.getPossibleSongs(this.event.eventId).then((response) => {
+    });
+    SongsService.getPossibleSongs(this.$route.params.id).then((response) => {
       this.possibleSongs = response.data;
     });
-    SongsService.getPlaylistByEvent(this.event.eventId).then((resp) => {
+    SongsService.getPlaylistByEvent(this.$route.params.id).then((resp) => {
       this.activePlaylist = resp.data;
     });
   },
   methods: {
-    upVote() {
+    upVote(currentSong) {
       this.song.hasUpvoted = true;
       this.song.hasDownvoted = false;
-      this.songVote.PlaylistId = this.event.eventId;
-      this.songVote.SongId = this.song.songId;
+      this.songVote.PlaylistId = this.$route.params.id;
+      this.songVote.SongId = currentSong;
       this.songVote.VoteValue = 1;
       SongsService.vote(this.songVote)
         .then((response) => {
@@ -318,7 +223,6 @@ export default {
           );
         });
     },
-  },
   downVote() {
     this.song.hasDownvoted = true;
     this.song.hasUpvoted = false;
@@ -335,6 +239,28 @@ export default {
         alert(`Error: ${error.response.status} - ${error.response.statusText}`);
       });
   },
+  showShoutout(songId) {
+    if (songId != this.showShoutoutIndex){
+      this.showShoutoutIndex = songId;
+    }
+    else{
+      // call method to save text & reset index value to -1
+      console.log("trying to add shoutout")
+      this.songShoutout.PlaylistId = this.event.eventId;
+      this.songShoutout.songId = songId;
+      SongsService.addSongShoutout(this.songShoutout).then((response) => {
+        if (response.status == 201){
+            this.showShoutoutIndex = -1;
+            this.songShoutout.ShoutOutMessage = "";
+        }
+      })
+      .catch((error) => {
+        alert(`Error: ${error.response.status} - ${error.response.statusText}`);
+      });
+    }
+}
+
+},
 };
 </script>
 
@@ -374,4 +300,5 @@ export default {
 a {
   text-decoration: none;
 }
+
 </style>

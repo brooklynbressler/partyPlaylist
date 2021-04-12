@@ -22,6 +22,7 @@ namespace Capstone.DAO
         {
             int currentSongVoteValue = 0;
             bool transactionCompleted = false;
+            PossibleSong ps = new PossibleSong();
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -29,7 +30,7 @@ namespace Capstone.DAO
                     conn.Open();
 
                     // sql statements
-                    string sql = "SELECT song_score FROM playlist_songs WHERE playlist_id = @playlistId AND song_id = @songId;";
+                    string sql = "SELECT playlist_id, song_id, song_name, artist_name, genre, img_url, song_score FROM potential_playlist_songs WHERE playlist_id = @playlistId AND song_id = @songId;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@playlistId", songVote.PlaylistId);
@@ -39,7 +40,8 @@ namespace Capstone.DAO
 
                     if (reader.Read())
                     {
-                        currentSongVoteValue = Convert.ToInt32(reader["song_score"]);
+                        ps = GetPossibleSongFromReader(reader);
+                        currentSongVoteValue = ps.SongScore;
                     }
                 }
 
@@ -57,12 +59,16 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "UPDATE playlist_songs SET song_score = @songScore WHERE playlist_id = @playlistId AND song_id = @songId;";
+                    string sql = "UPDATE potential_playlist_songs SET song_name = @song_name, artist_name = @artist_name, genre = @genre, img_url = @img_url, song_score = @song_score WHERE playlist_id = @playlist_id AND song_id = @song_id;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@songScore", currentSongVoteValue);
-                    cmd.Parameters.AddWithValue("@playlistId", songVote.PlaylistId);
-                    cmd.Parameters.AddWithValue("@songId", songVote.SongId);
+                    cmd.Parameters.AddWithValue("@song_name", ps.SongName);
+                    cmd.Parameters.AddWithValue("@artist_name", ps.ArtistName);
+                    cmd.Parameters.AddWithValue("@genre", ps.Genre);
+                    cmd.Parameters.AddWithValue("@img_url", ps.ImgUrl);
+                    cmd.Parameters.AddWithValue("@song_score", currentSongVoteValue);
+                    cmd.Parameters.AddWithValue("@playlist_id", songVote.PlaylistId);
+                    cmd.Parameters.AddWithValue("@song_id", songVote.SongId);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected > 0)
@@ -302,7 +308,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "SELECT playlist_id, song_id, song_name, artist_name, genre, img_url, song_score FROM potential_playlist_songs WHERE playlist_id = @event_id;";
+                    string sql = "SELECT playlist_id, song_id, song_name, artist_name, genre, img_url, song_score FROM potential_playlist_songs WHERE playlist_id = @playlist_id ORDER BY song_score DESC;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@playlist_id", eventId);
