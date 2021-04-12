@@ -37,7 +37,21 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpGet("/create-possible-songs/{eventId}")]
+        [HttpGet("/possible-songs/${eventId}")]
+        public ActionResult<List<PossibleSong>> GetAllPossibleSongs(int eventId)
+        {
+            List<PossibleSong> allPossibleSongs = songDAO.GetPossibleSongs(eventId);
+            if (allPossibleSongs != null)
+            {
+                return Ok(allPossibleSongs);
+            }
+            else
+            {
+                return BadRequest("So so sad...");
+            }
+        }
+
+        [HttpPost("/create-possible-songs/{eventId}")]
         public ActionResult CreateAllPossibleSongs(int eventId)
         {
             bool created = songDAO.CreatePossibleSongs(eventId);
