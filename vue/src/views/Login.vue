@@ -1,75 +1,86 @@
 <template>
   <div id="login" class="text-center">
-    <div class="logo-div-show">
-      <router-link :to="{name: 'home'}" >
+    <!-- <div class="logo-div-show">
+      <router-link :to="{ name: 'home' }">
         <img
           id="logo-img-show"
           src="https://lh3.googleusercontent.com/proxy/TmUJlkAgW9smBxoN-4h2D9lLq3tylyJJomxwgihwwlvrf4J8FKrOMjTOxvKaNDS6gjqY_8xrP8Q9oqSVC9hhmXHRPnxgnaUM1mFSJRY74EpN"
           alt=""
         />
       </router-link>
+    </div> -->
+    <!-- Sign in div -->
+    <div class="signin-div">
+      <div class="logo-div-show">
+        <router-link :to="{ name: 'home' }">
+          <img
+            id="logo-img-show"
+            src="https://lh3.googleusercontent.com/proxy/TmUJlkAgW9smBxoN-4h2D9lLq3tylyJJomxwgihwwlvrf4J8FKrOMjTOxvKaNDS6gjqY_8xrP8Q9oqSVC9hhmXHRPnxgnaUM1mFSJRY74EpN"
+            alt=""
+          />
+        </router-link>
+      </div>
+      <v-form id="signin-form" class="form-signin" @submit.prevent="login">
+        <v-container>
+          <p>Please sign in</p>
+          <v-row>
+            <v-col cols="12" sm="6">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                v-if="invalidCredentials"
+              >
+                Invalid username and password!
+              </div>
+              <div
+                class="alert alert-success"
+                role="alert"
+                v-if="this.$route.query.registration"
+              >
+                Thank you for registering, please sign in.
+              </div>
+              <v-text-field
+                id="username"
+                label="Username"
+                outlined
+                v-model="user.username"
+                required
+                autofocus
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col cols="12" sm="6">
+              <v-text-field
+                id="password"
+                label="Password"
+                outlined
+                v-model="user.password"
+                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show1 ? 'text' : 'password'"
+                @click:append="show1 = !show1"
+                required
+                autofocus
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col cols="6" sm="3">
+              <v-btn
+                large
+                block
+                class="btn btn-lg btn-primary btn-block"
+                @click="login"
+              >
+                Login
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
     </div>
-    <h1>Please Sign In</h1>
-
-    <v-form class="form-signin" @submit.prevent="login">
-      <v-container>
-        <v-row>
-          <v-col cols="12" sm="6">
-            <div
-              class="alert alert-danger"
-              role="alert"
-              v-if="invalidCredentials"
-            >
-              Invalid username and password!
-            </div>
-            <div
-              class="alert alert-success"
-              role="alert"
-              v-if="this.$route.query.registration"
-            >
-              Thank you for registering, please sign in.
-            </div>
-            <v-text-field
-              id="username"
-              label="Username"
-              outlined
-              v-model="user.username"
-              required
-              autofocus
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-text-field
-              id="password"
-              label="Password"
-              outlined
-              v-model="user.password"
-              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="show1 ? 'text' : 'password'"
-              @click:append="show1 = !show1"
-              required
-              autofocus
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col cols="6" sm="3">
-            <v-btn
-              large
-              block
-              class="btn btn-lg btn-primary btn-block"
-              @click="login"
-            >
-              Login
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-form>
   </div>
 </template>
 
@@ -116,11 +127,18 @@ export default {
 <style scoped>
 .logo-div-show {
   position: fixed;
-  top: 65px;
+  top: 160px;
   right: 0;
 }
 
 #logo-img-show {
   width: 6em;
+}
+
+.signin-div {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  padding: 200px 0;
+  transform: skew(0deg, -10deg);
 }
 </style>

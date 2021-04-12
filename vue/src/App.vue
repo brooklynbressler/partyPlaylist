@@ -157,6 +157,11 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap");
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .nav-button {
   margin-top: 40px;
 }
