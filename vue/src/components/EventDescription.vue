@@ -184,7 +184,8 @@
               <tr>
                 <th>Song Title</th>
                 <th>Artist</th>
-                <th>Vote Buttons</th>
+                <th>Up Vote</th>
+                <th>Down Vote</th>
               </tr>
             </thead>
             <tbody>
@@ -227,7 +228,8 @@
                   >
                     <v-icon dark> mdi-thumb-up </v-icon>
                   </v-btn>
-
+                </td>
+                <td>
                   <v-btn
                     small
                     v-if="!song.hasDownvoted"

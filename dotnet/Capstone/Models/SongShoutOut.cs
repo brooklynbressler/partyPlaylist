@@ -11,6 +11,5 @@ namespace Capstone.Models
         public int SongId { get; set; }
         public int ShoutOutId { get; set; }
         public string ShoutOutMessage { get; set; }
-
     }
 }
