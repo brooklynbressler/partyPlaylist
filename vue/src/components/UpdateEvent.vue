@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>{{ eventToEdit }}</p>
     <form class="form-add-event" v-on:submit.prevent="updateEvent">
       <h1 class="h3 mb-3 font-weight-normal">Create An Event</h1>
       <div>
