@@ -93,6 +93,10 @@ CREATE TABLE playlist_songs_shoutouts (
 CREATE TABLE potential_playlist_songs (
 	playlist_id int NOT NULL,
 	song_id int NOT NULL,
+	song_name varchar(255) NOT NULL,
+	artist_name varchar(255) NOT NULL,
+	genre varchar(50) NOT NULL,
+	img_url varchar(255),
 	song_score int DEFAULT 0,
 	CONSTRAINT PK_potential_playlist_song PRIMARY KEY (playlist_id, song_id),
 	CONSTRAINT FK_potential_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id),
