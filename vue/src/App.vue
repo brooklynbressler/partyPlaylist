@@ -42,7 +42,7 @@
         </div>  
         <div class="description-div">
           <h1>Get your Party started with TurboTrax</h1>
-          <h3>Let your friends control the music at your party.</h3>
+          <h3 class="how-to">Let your friends control the music at your party.</h3>
           <h3>TurboTrax is a free app that let's your guests choose which music should be played.</h3>
         </div>  
         <div class=" grid-container instructions-div">
@@ -100,16 +100,21 @@ main {
   text-align: center;
   width: 50%;
   margin: auto;
-  margin-top: 5em;
+  margin-top: 4em;
   font-family: 'Titillium Web', sans-serif;
 }
 
 #logo-img {
   width: 25%;
+  margin-bottom: -1.5em;
 }
 
 .logo-div {  
   text-align: center;
+}
+
+.how-to {
+  margin-top: .2em;
 }
 
 .description-div {
