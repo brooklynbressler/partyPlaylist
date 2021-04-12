@@ -53,7 +53,7 @@
 
               <td>
                 <v-btn color="primary" elevation="6" raised rounded x-small v-on:click="showShoutout(song.songId)">add shoutout</v-btn>
-                <input type="text" v-show="song.songId == showShoutoutIndex" placeholder="enter shoutout" v-model="shoutoutText">
+                <input type="text" v-show="song.songId == showShoutoutIndex" placeholder="enter shoutout" v-model="songShoutout.ShoutOutMessage">
               </td>
             </tr>
           </table>
@@ -179,7 +179,11 @@ export default {
         SongId: "",
         VoteValue: "",
       },
-      songShoutout: {},
+      songShoutout: {
+        PlaylistId: 0,
+        SongId: 0,
+        ShoutOutMessage: ""
+      },
       totalVotes: 0,
       event: {},
       showShoutoutIndex: -1,
@@ -235,16 +239,24 @@ export default {
         alert(`Error: ${error.response.status} - ${error.response.statusText}`);
       });
   },
-  showShoutout(index) {
-    console.log(index);
-    if (index != this.showShoutoutIndex){
-      this.showShoutoutIndex = index;
+  showShoutout(songId) {
+    if (songId != this.showShoutoutIndex){
+      this.showShoutoutIndex = songId;
     }
     else{
       // call method to save text & reset index value to -1
-      this.showShoutoutIndex = -1;
-      this.shoutoutText = "";
-
+      console.log("trying to add shoutout")
+      this.songShoutout.PlaylistId = this.event.eventId;
+      this.songShoutout.songId = songId;
+      SongsService.addSongShoutout(this.songShoutout).then((response) => {
+        if (response.status == 201){
+            this.showShoutoutIndex = -1;
+            this.songShoutout.ShoutOutMessage = "";
+        }
+      })
+      .catch((error) => {
+        alert(`Error: ${error.response.status} - ${error.response.statusText}`);
+      });
     }
 }
 
