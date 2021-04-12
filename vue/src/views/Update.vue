@@ -10,7 +10,12 @@ import UpdateEvent from '../components/UpdateEvent.vue'
 export default {
     components: {
         UpdateEvent,
-    }
+    },
+    data() {
+        return {
+            event: {},
+        }
+    },
 }
 </script>
 

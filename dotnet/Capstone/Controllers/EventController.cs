@@ -69,7 +69,7 @@ namespace Capstone.Controllers
 
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut("/update-event/{id}")]
         public ActionResult<Event> UpdateEvent(int id, Event updatedEvent)
         {

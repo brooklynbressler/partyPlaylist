@@ -200,8 +200,10 @@ namespace Capstone.DAO
 
             return playlist;
         }
-        public List<Song> GetAllPossibleSongs(int eventId)
+        public bool CreatePossibleSongs(int eventId)
         {
+            bool createSuccess = false;
+            int rowsAffected = 0;
             List<string> excludedGenres = new List<string>();
             List<Song> allPossibleSongs = new List<Song>();
             try
@@ -259,9 +261,66 @@ namespace Capstone.DAO
                 Console.WriteLine(e + " - PC Load Letter");
                 throw;
             }
-            return allPossibleSongs;
-        }
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
 
+                    foreach (Song song in allPossibleSongs)
+                    {
+                        string sql = "INSERT INTO potential_playlist_songs (playlist_id, song_id, song_name, artist_name, genre, img_url) VALUES (@playlist_id, @song_id, @song_name, @artist_name, @genre, @img_url);";
+
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@playlist_id", eventId);
+                        cmd.Parameters.AddWithValue("@song_id", song.SongId);
+                        cmd.Parameters.AddWithValue("@song_name", song.SongName);
+                        cmd.Parameters.AddWithValue("@artist_name", song.ArtistName);
+                        cmd.Parameters.AddWithValue("@genre", song.Genre);
+                        cmd.Parameters.AddWithValue("@img_url", song.ImgUrl);
+                        int rowCreated = cmd.ExecuteNonQuery();
+                        rowsAffected += rowCreated;
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            if (rowsAffected == allPossibleSongs.Count)
+            {
+                createSuccess = true;
+            }
+            return createSuccess;
+        }
+        public List<PossibleSong> GetPossibleSongs(int eventId)
+        {
+            List<PossibleSong> possibleSongs = new List<PossibleSong>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT playlist_id, song_id, song_name, artist_name, genre, img_url, song_score FROM potential_playlist_songs WHERE playlist_id = @event_id;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@playlist_id", eventId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        possibleSongs.Add(GetPossibleSongFromReader(reader));
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e + " - PC Load Letter");
+                throw;
+            }
+            return possibleSongs;
+        }
         public bool AddSongShoutOut(SongShoutOut songShoutOut)
         {
             bool shoutOutSongWasAdded = false;
@@ -317,6 +376,20 @@ namespace Capstone.DAO
                 ImgUrl = Convert.ToString(reader["img_url"])
             };
             return s;
+        }
+        private PossibleSong GetPossibleSongFromReader(SqlDataReader reader)
+        {
+            PossibleSong ps = new PossibleSong()
+            {
+                PlaylistId = Convert.ToInt32(reader["playlist_id"]),
+                SongId = Convert.ToInt32(reader["song_id"]),
+                SongName = Convert.ToString(reader["song_name"]),
+                ArtistName = Convert.ToString(reader["artist_name"]),
+                Genre = Convert.ToString(reader["genre"]),
+                ImgUrl = Convert.ToString(reader["img_url"]),
+                SongScore = Convert.ToInt32(reader["song_score"])
+            };
+            return ps;
         }
     }
 }
