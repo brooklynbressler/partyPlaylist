@@ -86,7 +86,7 @@ export default {
       event: {
         DjUserId: 0,
         HostUserId: "",
-        PlaylistId: 0,
+        PlaylistId: 2,
         EventName: "",
         EventDescription: "",
         EventDate: "",
