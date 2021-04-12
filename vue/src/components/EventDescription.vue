@@ -204,12 +204,10 @@ export default {
     upVote(currentSong) {
       this.song.hasUpvoted = true;
       this.song.hasDownvoted = false;
-      let songVote = {
-        PlaylistId: this.$route.params.id,
-        SongId: currentSong,
-        VoteValue: 1
-      }
-      SongsService.vote(songVote)
+      this.songVote.PlaylistId = this.$route.params.id;
+      this.songVote.SongId = currentSong;
+      this.songVote.VoteValue = 1;
+      SongsService.vote(this.songVote)
         .then((response) => {
           if (response.status == 200) {
             console.log(response);
