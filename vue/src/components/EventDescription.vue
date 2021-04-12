@@ -9,7 +9,6 @@
     <div class="event-description">
       <p>{{ event.eventDescription }}</p>
     </div>
-  
 
     <div class="media-player">
       <img
@@ -40,128 +39,19 @@
                 <th>Add ShoutOut</th>
               </tr>
             </thead>
+
             <tr v-for="song in activePlaylist" v-bind:key="song.songId">
               <td>
                 <v-avatar rounded size="60">
                   <img v-bind:src="song.imgUrl" alt="" />
                 </v-avatar>
               </td>
-              <td id="song-artist-info">{{ song.songName }} - {{ song.artistName }}</td>
-              <td>
-<v-row justify="center">
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="600px"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-          Open Dialog
-        </v-btn>
-      </template>
-      <v-card>
-        <v-card-title>
-          <span class="headline">User Profile</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal first name*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal middle name"
-                  hint="example of helper text only on focus"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal last name*"
-                  hint="example of persistent helper text"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Email*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Password*"
-                  type="password"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Age*"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-autocomplete
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                  label="Interests"
-                  multiple
-                ></v-autocomplete>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-row>              </td>
-            </tr>
 
+              <td id="song-artist-info">
+                {{ song.songName }} - {{ song.artistName }}
+              </td>
+
+            </tr>
           </table>
         </v-card>
       </div>
@@ -270,6 +160,7 @@
 
 <script>
 import SongsService from "../services/SongsService.js";
+import EventsService from "../services/EventsService.js";
 
 export default {
   data() {
@@ -278,26 +169,33 @@ export default {
       A get method needs to run that retrieves the playlist by its id. */
       dialog: false,
       activePlaylist: [],
-      event: {},
       possibleSongs: [],
       songVote: {
         PlaylistId: "",
         SongId: "",
         VoteValue: "",
       },
+      songShoutout: {},
+      totalVotes: 0
     };
   },
   created() {
-    this.event = this.$store.state.events.find((event) => {
-      return event.eventId == this.$route.params.id;
+    EventsService.getEvents().then((resp) => {
+      this.$store.commit("SET_EVENTS", resp.data);
     });
-    console.log(this.event.eventId);
-    SongsService.getPossibleSongs(this.event.eventId).then((response) => {
+    SongsService.getPossibleSongs(this.$route.params.id).then((response) => {
       this.possibleSongs = response.data;
     });
-    SongsService.getPlaylistByEvent(this.event.eventId).then((resp) => {
+    SongsService.getPlaylistByEvent(this.$route.params.id).then((resp) => {
       this.activePlaylist = resp.data;
     });
+  },
+  computed: {
+    event: function() {
+      return this.$store.state.events.find((event) => {
+      return event.eventId == this.$route.params.id;
+    });
+    }
   },
   methods: {
     upVote() {
@@ -318,7 +216,6 @@ export default {
           );
         });
     },
-  },
   downVote() {
     this.song.hasDownvoted = true;
     this.song.hasUpvoted = false;
@@ -335,6 +232,7 @@ export default {
         alert(`Error: ${error.response.status} - ${error.response.statusText}`);
       });
   },
+}
 };
 </script>
 
@@ -374,4 +272,5 @@ export default {
 a {
   text-decoration: none;
 }
+
 </style>
