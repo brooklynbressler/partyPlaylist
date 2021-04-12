@@ -142,6 +142,30 @@ namespace Capstone.DAO
                 Console.WriteLine(e.Message);
                 throw;
             }
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "DELETE FROM potential_playlist_songs WHERE playlist_id = @playlist_id AND song_id = @song_id;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@playlist_id", playlistId);
+                    cmd.Parameters.AddWithValue("@song_id", songId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        wasAdded = true;
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
             return wasAdded;
 
         }
@@ -184,7 +208,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "SELECT ps.playlist_id, ps.song_id, ps.song_score, s.song_name, s.artist_name, s.genre FROM playlist_songs ps JOIN songs s ON s.song_id = ps.song_id WHERE ps.playlist_id = @playlist_id;";
+                    string sql = "SELECT ps.playlist_id, ps.song_id, s.song_name, s.artist_name, s.genre, s.img_url FROM playlist_songs ps JOIN songs s ON s.song_id = ps.song_id WHERE ps.playlist_id = @playlist_id;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@playlist_id", playlistId);
@@ -364,10 +388,10 @@ namespace Capstone.DAO
             {
                 PlaylistId = Convert.ToInt32(reader["playlist_id"]),
                 SongId = Convert.ToInt32(reader["song_id"]),
-                SongScore = Convert.ToInt32(reader["song_score"]),
                 SongName = Convert.ToString(reader["song_name"]),
                 ArtistName = Convert.ToString(reader["artist_name"]),
-                Genre = Convert.ToString(reader["genre"])
+                Genre = Convert.ToString(reader["genre"]),
+                ImgUrl = Convert.ToString(reader["img_url"])
             };
             return pls;
         }

@@ -18,5 +18,8 @@ export default {
     },
     addSongShoutout(songShoutout){
         return axios.post(`/add-shoutout`, songShoutout)
+    },
+    addSongToPlaylist(addRemoveSong){
+        return axios.post(`/add-to-playlist`, addRemoveSong)
     }
 }

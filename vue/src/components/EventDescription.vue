@@ -122,6 +122,20 @@
                   >
                     <v-icon dark> mdi-thumb-up </v-icon>
                   </v-btn>
+
+                  <v-btn
+                    small
+                    v-if="$store.state.user.userId == event.djUserId"
+                    class="mx-2"
+                    fab
+                    dark
+                    color="indigo"
+                    v-on:click="addToPlaylist(song)"
+                  >
+                    <v-icon dark>
+                      mdi-plus
+                    </v-icon>
+                  </v-btn>
                 </td>
                 <td>
                   <v-btn
@@ -152,6 +166,9 @@
                   >
                     <v-icon dark> mdi-thumb-down </v-icon>
                   </v-btn>
+                  <div v-if="$store.state.user.userId == event.djUserId">
+                    <h3>{{song.songScore}}</h3>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -178,6 +195,10 @@ export default {
         PlaylistId: 0,
         SongId: 0,
         VoteValue: 0,
+      },
+      addRemoveSong: {
+        PlaylistId: 0,
+        SongId: 0
       },
       songShoutout: {
         PlaylistId: 0,
@@ -258,7 +279,24 @@ export default {
         alert(`Error: ${error.response.status} - ${error.response.statusText}`);
       });
     }
-}
+  },
+  addToPlaylist(song){
+    this.addRemoveSong.PlaylistId = this.event.eventId;
+    this.addRemoveSong.SongId = song.songId;
+    this.activePlaylist.push(song);
+    this.possibleSongs = this.possibleSongs.filter((s) =>
+    s.songId != song.songId);
+    SongsService.addSongToPlaylist(this.addRemoveSong)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        alert(`Error: ${error.response.status} - ${error.response.statusText}`);
+      });
+    
+  }
 
 },
 };
