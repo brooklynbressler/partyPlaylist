@@ -10,6 +10,7 @@ namespace Capstone.Models
         public string ImgUrl { get; set; }
         public bool HasUpVoted { get; set; } = false;
         public bool HasDownVoted { get; set; } = false;
+        public int? SongScore { get; set; }
     }
 
     public class SongVote

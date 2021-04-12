@@ -200,8 +200,10 @@ namespace Capstone.DAO
 
             return playlist;
         }
-        public List<Song> GetAllPossibleSongs(int eventId)
+        public bool CreatePossibleSongs(int eventId)
         {
+            bool createSuccess = false;
+            int rowsAffected = 0;
             List<string> excludedGenres = new List<string>();
             List<Song> allPossibleSongs = new List<Song>();
             try
@@ -259,7 +261,37 @@ namespace Capstone.DAO
                 Console.WriteLine(e + " - PC Load Letter");
                 throw;
             }
-            return allPossibleSongs;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    foreach (Song song in allPossibleSongs)
+                    {
+                        string sql = "INSERT INTO potential_playlist_songs (playlist_id, song_id, song_name, artist_name, genre, img_url) VALUES (@playlist_id, @song_id, @song_name, @artist_name, @genre, @img_url);";
+
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@playlist_id", eventId);
+                        cmd.Parameters.AddWithValue("@song_id", song.SongId);
+                        cmd.Parameters.AddWithValue("@song_name", song.SongName);
+                        cmd.Parameters.AddWithValue("@artist_name", song.ArtistName);
+                        cmd.Parameters.AddWithValue("@genre", song.Genre);
+                        cmd.Parameters.AddWithValue("@img_url", song.ImgUrl);
+                        int rowCreated = cmd.ExecuteNonQuery();
+                        rowsAffected += rowCreated;
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            if (rowsAffected == allPossibleSongs.Count)
+            {
+                createSuccess = true;
+            }
+            return createSuccess;
         }
 
         public bool AddSongShoutOut(SongShoutOut songShoutOut)
