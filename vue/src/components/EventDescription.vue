@@ -18,7 +18,7 @@
     </div>
 
     <div class="playlist-display">
-      <div class="playlist-div">
+      <div class="playlist-div-left">
         <v-card class="mx-auto" max-width="500">
           <!-- Tool bar -->
           <v-toolbar color="deep-purple accent-4" dark>
@@ -288,6 +288,8 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
+  max-height: 100%;
+
 }
 .media-player > img {
   width: 20%;
@@ -295,7 +297,15 @@ export default {
 .playlist-div {
   width: 90%;
   margin: auto;
+  height:auto;
+  max-height:150%;
+  overflow:auto;
 }
+.playlist-div-left {
+
+}
+
+
 
 a {
   text-decoration: none;
