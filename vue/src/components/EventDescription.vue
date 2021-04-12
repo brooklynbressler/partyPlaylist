@@ -104,7 +104,7 @@
                     dark
                     color="green darken-3"
                     v-model="totalVotes"
-                    v-on:click="upVote(song.songId)"
+                    v-on:click="upVote(song)"
                   >
                     <v-icon dark> mdi-thumb-up </v-icon>
                   </v-btn>
@@ -135,7 +135,7 @@
                     dark
                     color="red darken-2"
                     v-model="totalVotes"
-                    v-on:click="downVote"
+                    v-on:click="downVote(song)"
                   >
                     <v-icon dark> mdi-thumb-down </v-icon>
                   </v-btn>
@@ -175,9 +175,9 @@ export default {
       activePlaylist: [],
       possibleSongs: [],
       songVote: {
-        PlaylistId: "",
-        SongId: "",
-        VoteValue: "",
+        PlaylistId: 0,
+        SongId: 0,
+        VoteValue: 0,
       },
       songShoutout: {
         PlaylistId: 0,
@@ -205,11 +205,11 @@ export default {
     });
   },
   methods: {
-    upVote(currentSong) {
-      this.song.hasUpvoted = true;
-      this.song.hasDownvoted = false;
-      this.songVote.PlaylistId = this.$route.params.id;
-      this.songVote.SongId = currentSong;
+    upVote(song) {
+      song.hasUpvoted = true;
+      song.hasDownvoted = false;
+      this.songVote.PlaylistId = this.event.eventId;
+      this.songVote.SongId = song.songId;
       this.songVote.VoteValue = 1;
       SongsService.vote(this.songVote)
         .then((response) => {
@@ -223,11 +223,11 @@ export default {
           );
         });
     },
-  downVote() {
-    this.song.hasDownvoted = true;
-    this.song.hasUpvoted = false;
+  downVote(song) {
+    song.hasDownvoted = true;
+    song.hasUpvoted = false;
     this.songVote.PlaylistId = this.event.eventId;
-    this.songVote.SongId = this.song.songId;
+    this.songVote.SongId = song.songId;
     this.songVote.VoteValue = -1;
     SongsService.vote(this.songVote)
       .then((response) => {

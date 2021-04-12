@@ -4,8 +4,8 @@ export default {
     getSongs() {
         return axios.get('/songs');
     },
-    vote(newVote) {
-        return axios.post('/vote', newVote);
+    vote(songVote) {
+        return axios.post('/vote', songVote);
     },
     getPlaylistByEvent(eventId){
         return axios.get(`/playlist/${eventId}`)
