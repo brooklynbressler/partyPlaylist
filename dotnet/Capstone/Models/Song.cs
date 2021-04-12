@@ -17,6 +17,5 @@ namespace Capstone.Models
         public int PlaylistId { get; set; }
         public int SongId { get; set; }
         public int VoteValue { get; set; }
-
     }
 }
