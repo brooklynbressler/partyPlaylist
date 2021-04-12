@@ -26,6 +26,7 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+--Table of available genres for any event
 CREATE TABLE genres (
 	genre_id int IDENTITY(1,1) NOT NULL,
 	genre_name varchar(20) NOT NULL,
@@ -73,6 +74,7 @@ CREATE TABLE songs (
 CREATE TABLE playlist_songs (
 	playlist_id int NOT NULL,
 	song_id int NOT NULL,
+	song_score int DEFAULT 0,
 	CONSTRAINT PK_playlist_song PRIMARY KEY (playlist_id, song_id),
 	CONSTRAINT FK_playlist_id FOREIGN KEY (playlist_id) REFERENCES playlists(playlist_id),
 	CONSTRAINT FK_song_id FOREIGN KEY (song_id) REFERENCES songs(song_id)
@@ -175,13 +177,13 @@ VALUES ('Friends In Low Places', 'Garth Brooks', 'Country'),
 INSERT INTO playlists (playlist_name)
 VALUES ('Party with Brooklyn'), ('Zak Shack');
 
-INSERT INTO playlist_songs (playlist_id, song_id)
-VALUES (1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18),
-(2, 48);
-
 INSERT INTO events (dj_user_id, host_user_id, playlist_id, event_name, description, event_date, start_time, end_time)
 VALUES (6, 4, 1, 'Party with Brooklyn', 'Aint no party like a Brooklyn party cause a Brooklyn party dont stop!', '2021-04-07', '17:00', '18:00'),
 	   (6, 3, 2, 'Zak Shack', 'Zak loves Toto!!!!', '2021-04-08', '19:00', '20:00');
+
+INSERT INTO playlist_songs (playlist_id, song_id, song_score)
+VALUES (1, 9, 1), (1, 10, 2), (1, 11, 0), (1, 12, 3), (1, 13, 2), (1, 14, 4), (1, 15, 5), (1, 16, 2), (1, 17, 0), (1, 18, 0),
+(2, 48, 10);
 
 INSERT INTO excluded_genres (event_id, genre)
 VALUES (2, 'Country'), (2, 'Alternative');
