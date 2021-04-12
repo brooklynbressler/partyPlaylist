@@ -21,5 +21,8 @@ export default {
     },
     addSongToPlaylist(addRemoveSong){
         return axios.post(`/add-to-playlist`, addRemoveSong)
+    },
+    removeSongFromPlaylist(addRemoveSong){
+        return axios.post(`/remove-from-playlist`, addRemoveSong)
     }
 }

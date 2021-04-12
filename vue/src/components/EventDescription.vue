@@ -52,8 +52,22 @@
               </td>
 
               <td>
-                <v-btn color="primary" elevation="6" raised rounded x-small v-on:click="showShoutout(song.songId)">add shoutout</v-btn>
-                <input type="text" v-show="song.songId == showShoutoutIndex" placeholder="enter shoutout" v-model="songShoutout.ShoutOutMessage">
+                <v-btn v-if="$store.state.user.userId != event.djUserId" color="primary" elevation="6" raised rounded x-small v-on:click="showShoutout(song.songId)">add shoutout</v-btn>
+                <input v-if="$store.state.user.userId != event.djUserId" type="text" v-show="song.songId == showShoutoutIndex" placeholder="enter shoutout" v-model="songShoutout.ShoutOutMessage">
+                <v-btn
+                  v-if="$store.state.user.userId == event.djUserId"
+                  class="mx-2"
+                  fab
+                  dark
+                  small
+                  color="primary"
+                  v-on:click="removeFromThePlaylist(song)"
+                >
+                  <v-icon dark>
+                    mdi-minus
+                  </v-icon>
+                </v-btn>
+                <!-- REFERENCE SONG SHOUTOUTS HERE SOMETHING LIKE: <h4>{{songShoutoutMessage}}</h4> -->
               </td>
             </tr>
           </table>
@@ -287,6 +301,22 @@ export default {
     this.possibleSongs = this.possibleSongs.filter((s) =>
     s.songId != song.songId);
     SongsService.addSongToPlaylist(this.addRemoveSong)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        alert(`Error: ${error.response.status} - ${error.response.statusText}`);
+      });
+    
+  },
+  removeFromThePlaylist(song){
+    this.addRemoveSong.PlaylistId = this.event.eventId;
+    this.addRemoveSong.SongId = song.songId;
+    this.activePlaylist = this.activePlaylist.filter((s) =>
+    s.songId != song.songId);
+    SongsService.removeSongFromPlaylist(this.addRemoveSong)
       .then((response) => {
         if (response.status == 200) {
           console.log(response);

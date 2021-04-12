@@ -114,7 +114,7 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpDelete("/remove-from-playlist")]
+        [HttpPost("/remove-from-playlist")]
         public ActionResult RemoveFromPlaylist(AddRemoveSong removeSong)
         {
             bool songRemoved = songDAO.RemoveSongFromPlaylist(removeSong.PlaylistId, removeSong.SongId);
