@@ -95,15 +95,14 @@
     <v-main class="v-main">
       <div id="app">
         <router-view />
-        <div class="logo-div">
-          <img src="" alt="" />
-          <img
-            id="logo-img"
-            src="https://lh3.googleusercontent.com/proxy/TmUJlkAgW9smBxoN-4h2D9lLq3tylyJJomxwgihwwlvrf4J8FKrOMjTOxvKaNDS6gjqY_8xrP8Q9oqSVC9hhmXHRPnxgnaUM1mFSJRY74EpN"
-            alt=""
-          />
-        </div>
         <div v-if="$route.path === '/'">
+          <div class="logo-div">
+            <img
+              id="logo-img"
+              src="https://lh3.googleusercontent.com/proxy/TmUJlkAgW9smBxoN-4h2D9lLq3tylyJJomxwgihwwlvrf4J8FKrOMjTOxvKaNDS6gjqY_8xrP8Q9oqSVC9hhmXHRPnxgnaUM1mFSJRY74EpN"
+              alt=""
+            />
+          </div>
           <div class="description-div">
             <h1>Get your Party started with TurboTrax</h1>
             <h3 class="how-to">
