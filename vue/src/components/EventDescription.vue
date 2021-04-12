@@ -51,6 +51,10 @@
                 {{ song.songName }} - {{ song.artistName }}
               </td>
 
+              <td>
+                <v-btn color="primary" elevation="6" raised rounded x-small v-on:click="showShoutout(song.songId)">add shoutout</v-btn>
+                <input type="text" v-show="song.songId == showShoutoutIndex" placeholder="enter shoutout" v-model="shoutoutText">
+              </td>
             </tr>
           </table>
         </v-card>
@@ -176,12 +180,18 @@ export default {
         VoteValue: "",
       },
       songShoutout: {},
-      totalVotes: 0
+      totalVotes: 0,
+      event: {},
+      showShoutoutIndex: -1,
+      shoutoutText: ""
     };
   },
   created() {
     EventsService.getEvents().then((resp) => {
       this.$store.commit("SET_EVENTS", resp.data);
+      this.event = this.$store.state.events.find((event) => {
+      return event.eventId == this.$route.params.id;
+    });
     });
     SongsService.getPossibleSongs(this.$route.params.id).then((response) => {
       this.possibleSongs = response.data;
@@ -189,13 +199,6 @@ export default {
     SongsService.getPlaylistByEvent(this.$route.params.id).then((resp) => {
       this.activePlaylist = resp.data;
     });
-  },
-  computed: {
-    event: function() {
-      return this.$store.state.events.find((event) => {
-      return event.eventId == this.$route.params.id;
-    });
-    }
   },
   methods: {
     upVote(currentSong) {
@@ -234,7 +237,20 @@ export default {
         alert(`Error: ${error.response.status} - ${error.response.statusText}`);
       });
   },
+  showShoutout(index) {
+    console.log(index);
+    if (index != this.showShoutoutIndex){
+      this.showShoutoutIndex = index;
+    }
+    else{
+      // call method to save text & reset index value to -1
+      this.showShoutoutIndex = -1;
+      this.shoutoutText = "";
+
+    }
 }
+
+},
 };
 </script>
 
