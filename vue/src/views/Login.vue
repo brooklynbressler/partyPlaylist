@@ -1,5 +1,14 @@
 <template>
   <div id="login" class="text-center">
+    <div class="logo-div-show">
+      <router-link :to="{name: 'home'}" >
+        <img
+          id="logo-img-show"
+          src="https://lh3.googleusercontent.com/proxy/TmUJlkAgW9smBxoN-4h2D9lLq3tylyJJomxwgihwwlvrf4J8FKrOMjTOxvKaNDS6gjqY_8xrP8Q9oqSVC9hhmXHRPnxgnaUM1mFSJRY74EpN"
+          alt=""
+        />
+      </router-link>
+    </div>
     <h1>Please Sign In</h1>
 
     <v-form class="form-signin" @submit.prevent="login">
@@ -54,12 +63,11 @@
               block
               class="btn btn-lg btn-primary btn-block"
               @click="login"
-              >
+            >
               Login
             </v-btn>
           </v-col>
         </v-row>
-
       </v-container>
     </v-form>
   </div>
@@ -104,3 +112,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.logo-div-show {
+  position: fixed;
+  top: 65px;
+  right: 0;
+}
+
+#logo-img-show {
+  width: 6em;
+}
+</style>
