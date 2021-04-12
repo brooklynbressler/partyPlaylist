@@ -1,7 +1,7 @@
 <template>
   <div>
     <form class="form-add-event" v-on:submit.prevent="updateEvent">
-      <h1 class="h3 mb-3 font-weight-normal">Create An Event</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Update Event</h1>
       <div>
         <label for="eventname">New Event Name: </label>
         <input
@@ -68,7 +68,8 @@
         </v-col>
       </div>
       <div>
-        <button type="submit">Save Event</button>
+        <v-btn type="submit" elevation="2" rounded small>Update Event</v-btn>
+        <!-- <button type="submit">Update Event</button> -->
       </div>
     </form>
   </div>
@@ -141,7 +142,7 @@ export default {
       EventsService.updateEvent(this.$route.params.id, this.updatedEvent)
         .then((response) => {
           if (response.status === 201) {
-            this.$router.push({ name: 'events' });
+            this.$router.push({ name: "events" });
           }
         })
         .catch((error) => {
