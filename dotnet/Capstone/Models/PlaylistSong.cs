@@ -13,6 +13,7 @@ namespace Capstone.Models
         public string SongName { get; set; }
         public string ArtistName { get; set; }
         public string Genre { get; set; }
+        public string ImgUrl { get; set; }
     }
     public class AddRemoveSong
     {
