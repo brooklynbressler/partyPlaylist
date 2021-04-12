@@ -100,7 +100,7 @@
                     dark
                     color="green darken-3"
                     v-model="totalVotes"
-                    v-on:click="upVote"
+                    v-on:click="upVote(song.songId)"
                   >
                     <v-icon dark> mdi-thumb-up </v-icon>
                   </v-btn>
@@ -198,13 +198,15 @@ export default {
     }
   },
   methods: {
-    upVote() {
+    upVote(currentSong) {
       this.song.hasUpvoted = true;
       this.song.hasDownvoted = false;
-      this.songVote.PlaylistId = this.event.eventId;
-      this.songVote.SongId = this.song.songId;
-      this.songVote.VoteValue = 1;
-      SongsService.vote(this.songVote)
+      let songVote = {
+        PlaylistId: this.$route.params.id,
+        SongId: currentSong,
+        VoteValue: 1
+      }
+      SongsService.vote(songVote)
         .then((response) => {
           if (response.status == 200) {
             console.log(response);
