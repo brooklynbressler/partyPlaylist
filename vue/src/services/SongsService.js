@@ -12,5 +12,8 @@ export default {
     },
     getPossibleSongs(eventId){
         return axios.get(`/possible-songs/${eventId}`)
+    },
+    addSongShoutout(){
+        return axios.post(`/add-shoutout`)
     }
 }
