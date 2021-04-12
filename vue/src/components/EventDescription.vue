@@ -91,7 +91,7 @@
                 <td>
                   <v-btn
                     small
-                    v-if="!song.hasUpvoted"
+                    v-if="!song.hasUpvoted && ($store.state.user.userId != event.djUserId)"
                     id="likebtn"
                     class="mx-2"
                     icon
@@ -107,7 +107,7 @@
 
                   <v-btn
                     small
-                    v-if="song.hasUpvoted"
+                    v-if="song.hasUpvoted && ($store.state.user.userId != event.djUserId)"
                     id="likebtn"
                     class="mx-2"
                     icon
@@ -122,7 +122,7 @@
                 <td>
                   <v-btn
                     small
-                    v-if="!song.hasDownvoted"
+                    v-if="!song.hasDownvoted && ($store.state.user.userId != event.djUserId)"
                     id="dislikebtn"
                     class="mx-2"
                     icon
@@ -137,7 +137,7 @@
                   </v-btn>
                   <v-btn
                     small
-                    v-if="song.hasDownvoted"
+                    v-if="song.hasDownvoted && ($store.state.user.userId != event.djUserId)"
                     id="likebtn"
                     class="mx-2"
                     icon
