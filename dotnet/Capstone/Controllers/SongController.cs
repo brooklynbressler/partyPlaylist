@@ -37,7 +37,7 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpGet("/possible-songs/${eventId}")]
+        [HttpGet("/possible-songs/{eventId}")]
         public ActionResult<List<PossibleSong>> GetAllPossibleSongs(int eventId)
         {
             List<PossibleSong> allPossibleSongs = songDAO.GetPossibleSongs(eventId);
