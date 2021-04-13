@@ -394,9 +394,10 @@ namespace Capstone.DAO
 
                     foreach (string genre in genres)
                     {
-                        string sql = "INSERT INTO excluded_genres (event_id, genre) VALUES (@event_id, @genre);";
+                        string sql = "DELETE FROM excluded_genres WHERE event_id = @thisId; INSERT INTO excluded_genres (event_id, genre) VALUES (@event_id, @genre);";
 
                         SqlCommand cmd = new SqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@thisId", eventId);
                         cmd.Parameters.AddWithValue("@event_id", eventId);
                         cmd.Parameters.AddWithValue("@genre", genre);
 
