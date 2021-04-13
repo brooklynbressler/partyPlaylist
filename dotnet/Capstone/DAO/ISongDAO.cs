@@ -16,5 +16,6 @@ namespace Capstone.DAO
         bool CreatePossibleSongs(int eventId);
         List<PossibleSong> GetPossibleSongs(int eventId);
         bool AddSongShoutOut(SongShoutOut songWithShoutOut);
+        bool ExcludeGenres(int eventId, string[] genres);
     }
 }
