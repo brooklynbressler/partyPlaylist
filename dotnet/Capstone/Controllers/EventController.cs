@@ -83,5 +83,22 @@ namespace Capstone.Controllers
                 return BadRequest("Incomplete or missing event data");
             }
         }
+    
+        [HttpGet("/song-shoutouts/{eventId}")]
+        public ActionResult<List<SongShoutOut>> ListShoutouts(int eventId)
+        {
+
+            List<SongShoutOut> allShoutouts = eventDAO.getShoutouts(eventId);
+
+            if (allShoutouts != null)
+            {
+                return Ok(allShoutouts);
+            }
+            else
+            {
+                return BadRequest("Shoutout list is empty");
+            }
+
+        }
     }
 }
