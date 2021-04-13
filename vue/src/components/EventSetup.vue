@@ -83,8 +83,8 @@ export default {
       console.log(this.event);
       console.log(this.genres);
 
-      SongsService.genres(this.$route.params.id, this.genres).then(
-        (response) => {
+      SongsService.genres(this.$route.params.id, this.genres)
+        .then((response) => {
           if (response.status === 200) {
             SongsService.createPossibleSongs(this.$route.params.id).then(
               (response) => {
@@ -94,8 +94,12 @@ export default {
               }
             );
           }
-        }
-      );
+        })
+        .catch((error) => {
+          alert(
+            `Error: ${error.response.status} - ${error.response.statusText}`
+          );
+        })
     },
   },
 };

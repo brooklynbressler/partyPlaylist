@@ -128,11 +128,10 @@ export default {
 }
 
 .signin-div {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
   padding: 200px 0;
   transform: skew(0deg, -10deg);
-  border: thin solid black;
 }
 
 #signin-form {
