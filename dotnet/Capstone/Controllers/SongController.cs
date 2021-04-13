@@ -141,5 +141,20 @@ namespace Capstone.Controllers
                 return BadRequest("Unable to add shoutout");
             }
         }
+
+        [HttpPost("/genres/{eventId}")]
+        public ActionResult AddGenresToExclude(int eventId, string[] genres)
+        {
+            bool wasSuccessful = songDAO.ExcludeGenres(eventId, genres);
+
+            if (wasSuccessful)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Server did not receive excluded genres");
+            }
+        }
     }
 }
