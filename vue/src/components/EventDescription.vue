@@ -10,11 +10,8 @@
       <p>{{ event.eventDescription }}</p>
     </div>
 
-    <div class="media-player">
-      <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtX9WajqXXqPsS2GK24YylCqfKrLRJLsdhvQ&usqp=CAU"
-        alt="a media player"
-      />
+    <div>
+      <iframe src="https://open.spotify.com/embed/playlist/6L6CG4GP8xINEizIW0erbh" width="800" height="240" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     </div>
 
     <div class="playlist-display">
@@ -449,6 +446,7 @@ export default {
   max-height: 150%;
   overflow: auto;
 }
+
 .playlist-div-left {
 }
 

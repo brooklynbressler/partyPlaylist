@@ -385,7 +385,25 @@ namespace Capstone.DAO
         {
             bool wasSuccessful = false;
             int rowsAffected = 0;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
 
+                    string sql = "DELETE FROM excluded_genres WHERE event_id = @thisId;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@thisId", eventId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -397,13 +415,14 @@ namespace Capstone.DAO
                         string sql = "INSERT INTO excluded_genres (event_id, genre) VALUES (@event_id, @genre);";
 
                         SqlCommand cmd = new SqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@thisId", eventId);
                         cmd.Parameters.AddWithValue("@event_id", eventId);
                         cmd.Parameters.AddWithValue("@genre", genre);
 
                         int rowAffected = cmd.ExecuteNonQuery();
                         rowsAffected += rowAffected;
                     }
-                    
+
                     if (rowsAffected == genres.Length)
                     {
                         wasSuccessful = true;

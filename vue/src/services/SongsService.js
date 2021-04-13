@@ -24,5 +24,8 @@ export default {
     },
     removeSongFromPlaylist(addRemoveSong){
         return axios.post(`/remove-from-playlist`, addRemoveSong)
+    },
+    genres(eventId, genreList) {
+        return axios.post(`/genres/${eventId}`, genreList)
     }
 }

@@ -11,5 +11,6 @@ namespace Capstone.DAO
         void addEvent(Event newEvent);
         List<Event> getEvents();
         void updateEvent(int id, Event eventToUpdate);
+        public List<SongShoutOut> getShoutouts(int eventId);
     }
 }
