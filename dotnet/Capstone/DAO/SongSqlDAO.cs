@@ -381,7 +381,42 @@ namespace Capstone.DAO
             }
             return shoutOutSongWasAdded;
         }
+        public bool ExcludeGenres(int eventId, string[] genres)
+        {
+            bool wasSuccessful = false;
+            int rowsAffected = 0;
 
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    foreach (string genre in genres)
+                    {
+                        string sql = "INSERT INTO excluded_genres (event_id, genre) VALUES (@event_id, @genre);";
+
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@event_id", eventId);
+                        cmd.Parameters.AddWithValue("@genre", genre);
+
+                        int rowAffected = cmd.ExecuteNonQuery();
+                        rowsAffected += rowAffected;
+                    }
+                    
+                    if (rowsAffected == genres.Length)
+                    {
+                        wasSuccessful = true;
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            return wasSuccessful;
+        }
         private PlaylistSong GetPlaylistSongFromReader(SqlDataReader reader)
         {
             PlaylistSong pls = new PlaylistSong()
