@@ -109,6 +109,50 @@ namespace Capstone.DAO
             return allEvents;
         }
 
+        public List<SongShoutOut> getShoutouts(int eventId)
+        {
+            List<SongShoutOut> allShoutouts = new List<SongShoutOut>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+
+                    conn.Open();
+                    
+                    string sql = "SELECT pss.playlist_id, pss.song_id, pss.shoutout_id, pss.shoutout_message FROM playlist_songs_shoutouts pss JOIN songs s ON s.song_id = pss.song_id JOIN events e ON pss.playlist_id = e.event_id WHERE e.event_id = @event_id;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@event_id", eventId);
+                    SqlDataReader reader = cmd.ExecuteReader();                    
+
+                    while (reader.Read())
+                    {
+                        allShoutouts.Add(GetSongShoutOutFromReader(reader));
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return allShoutouts;
+        }
+
+        private SongShoutOut GetSongShoutOutFromReader(SqlDataReader reader)
+        {
+            SongShoutOut sso = new SongShoutOut()
+            {
+                PlaylistId = Convert.ToInt32(reader["playlist_id"]),
+                SongId = Convert.ToInt32(reader["song_id"]),
+                ShoutOutId = Convert.ToInt32(reader["shoutout_id"]),
+                ShoutOutMessage = Convert.ToString(reader["shoutout_message"])
+            };
+
+            return sso;
+        }
+
         private Event GetEventFromReader(SqlDataReader reader)
         {
             Event e = new Event()

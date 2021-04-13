@@ -369,11 +369,10 @@ export default {
   max-height:150%;
   overflow:auto;
 }
+
 .playlist-div-left {
 
 }
-
-
 
 a {
   text-decoration: none;
