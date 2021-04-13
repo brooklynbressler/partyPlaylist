@@ -1,11 +1,9 @@
 <template>
   <div id="register" class="text-center">
-    <h1>Create Account</h1>
-
     <v-form class="form-register" @submit.prevent="register">
       <v-container>
         <v-row>
-          <v-col cols="12" sm="6">
+          <v-col class="ma-0 pa-0" cols="12" sm="6">
             <div
               class="alert alert-danger"
               role="alert"
@@ -20,11 +18,12 @@
               v-model="user.firstname"
               required
               autofocus
+              dark              
             ></v-text-field>
           </v-col>
         </v-row>
           <v-row>
-          <v-col cols="12" sm="6">
+          <v-col class="ma-0 pa-0" cols="12" sm="6">
             <v-text-field
               id="lastname"
               label="Last Name"
@@ -32,22 +31,24 @@
               v-model="user.lastname"
               required
               autofocus
+              dark
             ></v-text-field>
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" sm="6">
+          <v-col class="ma-0 pa-0" cols="12" sm="6">
             <v-text-field
               id="username"
               label="Username"
               outlined
               v-model="user.username"
               required
+              dark
             ></v-text-field>
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" sm="6">
+          <v-col class="ma-0 pa-0" cols="12" sm="6">
             <v-text-field
               id="password"
               label="Password"
@@ -57,11 +58,12 @@
               :type="show1 ? 'text' : 'password'"
               @click:append="show1 = !show1"
               required
+              dark
             ></v-text-field>
           </v-col>
         </v-row>
           <v-row>
-          <v-col cols="12" sm="6">
+          <v-col class="ma-0 pa-0" cols="12" sm="6">
             <v-text-field
               id="confirmPassword"
               label="Confirm Password"
@@ -71,16 +73,18 @@
               :type="show2 ? 'text' : 'password'"
               @click:append="show2 = !show2"
               required
+              dark
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="6" sm="3">
+        <v-row id="account-row">
+          <v-col id="account-column" class="ma-0 pa-0" cols="6" sm="3">
           <v-btn
             large
-            block
-            class="btn btn-lg btn-primary btn-block"
+            text
+            class="create-account-button btn btn-lg btn-primary btn-block"
             @click="register"
+            dark
           >
             Create Account
           </v-btn>
@@ -146,5 +150,25 @@ export default {
 </script>
 
 <style>
-
+#register {
+  background: rgba(0, 0, 0, 0.4);;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+  padding: 180px 0;
+  transform: skew(0deg, -10deg);
+}
+.form-register {
+  transform: skew(0deg, 10deg);
+}
+.alert {
+  color: white;
+}
+#account-row {
+  display: flex;
+  text-align: left;
+  
+}
+.create-account-button {
+  font-weight: bold;
+  font-size: 2em;
+}
 </style>

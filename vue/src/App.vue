@@ -99,7 +99,7 @@
           <div class="logo-div">
             <img
               id="logo-img"
-              src="https://lh3.googleusercontent.com/proxy/TmUJlkAgW9smBxoN-4h2D9lLq3tylyJJomxwgihwwlvrf4J8FKrOMjTOxvKaNDS6gjqY_8xrP8Q9oqSVC9hhmXHRPnxgnaUM1mFSJRY74EpN"
+              src="https://i.pinimg.com/originals/02/62/f4/0262f4dd643e39d3a8a5376b08d51125.png"
               alt=""
             />
           </div>
@@ -148,7 +148,12 @@
 </template>
 
 <script>
+//import Navbar from "./components/Navbar.vue"
+
 export default {
+  // components: {
+  //   Navbar
+  // },
   data: () => ({ drawer: false }),
 };
 </script>

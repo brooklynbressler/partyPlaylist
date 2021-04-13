@@ -16,6 +16,7 @@
       ></v-text-field>
 
       <v-textarea
+        id="text-area"
         v-model="event.EventDescription"
         :rules="rules.description"
         :counter="145"
@@ -114,10 +115,13 @@ export default {
   margin: auto;
   padding: 10em 3em 3em 3em;
   text-align: center;
-  font-weight: bold;
 }
 
 .form-button {
   color: white;
+}
+
+#text-area {
+    resize: none;
 }
 </style>

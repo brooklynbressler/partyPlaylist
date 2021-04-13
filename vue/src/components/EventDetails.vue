@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="main-div">
     <div
       class="event-div"
       v-for="event in $store.state.events"
@@ -18,7 +18,7 @@
           }"
           class="addMessage"
         >
-          <v-btn color="primary" elevation="6" raised rounded x-small>
+          <v-btn id="setup-button" color="white" rounded outlined medium>
             details
           </v-btn>
         </router-link>
@@ -27,8 +27,8 @@
           v-if="$store.state.user.userId == event.djUserId"
           :to="{ name: 'updateEvent', params: { id: event.eventId } }"
         >
-          <v-btn color="primary" elevation="6" raised rounded x-small>
-            edit event
+          <v-btn id="setup-button" color="white" rounded outlined medium>
+            edit
           </v-btn>
         </router-link>
         <router-link
@@ -36,8 +36,8 @@
           v-if="$store.state.user.userId == event.hostUserId"
           :to="{ name: 'setup', params: { id: event.eventId } }"
         >
-          <v-btn color="primary" elevation="6" raised rounded x-small>
-            event setup
+          <v-btn id="setup-button" color="white" rounded outlined medium>
+            setup
           </v-btn>
         </router-link>
       </div>
@@ -54,17 +54,35 @@ export default {};
 </script>
 
 <style>
+#main-div {
+  margin: auto;
+  width: 75%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+  padding-top: 30px;
+  color: rgb(252, 249, 249);
+  font-family: "Titillium Web", sans-serif;
+}
 .event-div {
   text-align: center;
   margin: auto;
-  margin-top: 15px;
+  margin-top: 25px;
   padding: 10px;
   border: solid black;
   border-radius: 10px;
-  width: 60%;
+  width: 75%;
 }
 .button-spacing {
   display: flex;
   justify-content: space-around;
+}
+.container {
+  padding: 0;
+}
+
+#setup-button {
+  font-size: 1em;
+  font-weight: bold;
 }
 </style>

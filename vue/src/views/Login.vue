@@ -42,7 +42,7 @@
           </v-row>
 
           <v-row>
-            <v-col cols="12" sm="6">
+            <v-col class="password-div" cols="12" sm="6">
               <v-text-field
                 dark
                 id="password"
@@ -57,12 +57,12 @@
               ></v-text-field>
             </v-col>
           </v-row>
-
           <v-row>
-            <v-col cols="6" sm="3">
+            <v-col class="login-button"  cols="6" sm="0">
               <v-btn
-                large
-                rounded
+                x-large
+                color="white"
+                text
                 class="btn btn-lg btn-primary btn-block"
                 @click="login"
               >
@@ -136,11 +136,13 @@ export default {
 
 #signin-form {
   transform: skew(0deg, 10deg);
-  font-weight: bold;
 }
 
-#form-container {
-  border: solid black;
-  
+.password-div {
+  height: 6em;
+}
+
+.login-button {
+  text-align: left;
 }
 </style>
