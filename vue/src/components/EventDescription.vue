@@ -52,8 +52,23 @@
               </td>
 
               <td>
-                <v-btn v-if="$store.state.user.userId != event.djUserId" color="primary" elevation="6" raised rounded x-small v-on:click="showShoutout(song.songId)">add shoutout</v-btn>
-                <input v-if="$store.state.user.userId != event.djUserId" type="text" v-show="song.songId == showShoutoutIndex" placeholder="enter shoutout" v-model="songShoutout.ShoutOutMessage">
+                <v-btn
+                  v-if="$store.state.user.userId != event.djUserId"
+                  color="primary"
+                  elevation="6"
+                  raised
+                  rounded
+                  x-small
+                  v-on:click="showShoutout(song.songId)"
+                  >add shoutout</v-btn
+                >
+                <input
+                  v-if="$store.state.user.userId != event.djUserId"
+                  type="text"
+                  v-show="song.songId == showShoutoutIndex"
+                  placeholder="enter shoutout"
+                  v-model="songShoutout.ShoutOutMessage"
+                />
                 <v-btn
                   v-if="$store.state.user.userId == event.djUserId"
                   class="mx-2"
@@ -63,11 +78,26 @@
                   color="primary"
                   v-on:click="removeFromThePlaylist(song)"
                 >
-                  <v-icon dark>
-                    mdi-minus
-                  </v-icon>
+                  <v-icon dark> mdi-minus </v-icon>
                 </v-btn>
-                <!-- REFERENCE SONG SHOUTOUTS HERE SOMETHING LIKE: <h4>{{songShoutoutMessage}}</h4> -->
+              </td>
+              <td>
+                <!-- MAKE SHOUTOUT ICON VISIBLE IF SONG HAS SHOUTOUTS -->
+                <!-- CHANGE V-IF CONDITION -->
+                <!-- ADD V-ON:CLICK TO TRIGGER SHOUTOUT POPUP WINDOW -->
+                <v-btn
+                  small
+                  v-if="1 === 1"
+                  id="show-shoutout"
+                  class="mx-2"
+                  icon
+                  outlined
+                  fab
+                  dark
+                  color="blue darken-3"
+                >
+                  <v-icon dark> mdi-bullhorn </v-icon>
+                </v-btn>
               </td>
             </tr>
           </table>
@@ -109,7 +139,10 @@
                 <td>
                   <v-btn
                     small
-                    v-if="!song.hasUpvoted && ($store.state.user.userId != event.djUserId)"
+                    v-if="
+                      !song.hasUpvoted &&
+                      $store.state.user.userId != event.djUserId
+                    "
                     id="likebtn"
                     class="mx-2"
                     icon
@@ -125,7 +158,10 @@
 
                   <v-btn
                     small
-                    v-if="song.hasUpvoted && ($store.state.user.userId != event.djUserId)"
+                    v-if="
+                      song.hasUpvoted &&
+                      $store.state.user.userId != event.djUserId
+                    "
                     id="likebtn"
                     class="mx-2"
                     icon
@@ -146,15 +182,16 @@
                     color="indigo"
                     v-on:click="addToPlaylist(song)"
                   >
-                    <v-icon dark>
-                      mdi-plus
-                    </v-icon>
+                    <v-icon dark> mdi-plus </v-icon>
                   </v-btn>
                 </td>
                 <td>
                   <v-btn
                     small
-                    v-if="!song.hasDownvoted && ($store.state.user.userId != event.djUserId)"
+                    v-if="
+                      !song.hasDownvoted &&
+                      $store.state.user.userId != event.djUserId
+                    "
                     id="dislikebtn"
                     class="mx-2"
                     icon
@@ -169,7 +206,10 @@
                   </v-btn>
                   <v-btn
                     small
-                    v-if="song.hasDownvoted && ($store.state.user.userId != event.djUserId)"
+                    v-if="
+                      song.hasDownvoted &&
+                      $store.state.user.userId != event.djUserId
+                    "
                     id="likebtn"
                     class="mx-2"
                     icon
@@ -181,7 +221,7 @@
                     <v-icon dark> mdi-thumb-down </v-icon>
                   </v-btn>
                   <div v-if="$store.state.user.userId == event.djUserId">
-                    <h3>{{song.songScore}}</h3>
+                    <h3>{{ song.songScore }}</h3>
                   </div>
                 </td>
               </tr>
@@ -212,25 +252,25 @@ export default {
       },
       addRemoveSong: {
         PlaylistId: 0,
-        SongId: 0
+        SongId: 0,
       },
       songShoutout: {
         PlaylistId: 0,
         SongId: 0,
-        ShoutOutMessage: ""
+        ShoutOutMessage: "",
       },
       totalVotes: 0,
       event: {},
       showShoutoutIndex: -1,
-      shoutoutText: ""
+      shoutoutText: "",
     };
   },
   created() {
     EventsService.getEvents().then((resp) => {
       this.$store.commit("SET_EVENTS", resp.data);
       this.event = this.$store.state.events.find((event) => {
-      return event.eventId == this.$route.params.id;
-    });
+        return event.eventId == this.$route.params.id;
+      });
     });
     SongsService.getPossibleSongs(this.$route.params.id).then((response) => {
       this.possibleSongs = response.data;
@@ -258,77 +298,82 @@ export default {
           );
         });
     },
-  downVote(song) {
-    song.hasDownvoted = true;
-    song.hasUpvoted = false;
-    this.songVote.PlaylistId = this.event.eventId;
-    this.songVote.SongId = song.songId;
-    this.songVote.VoteValue = -1;
-    SongsService.vote(this.songVote)
-      .then((response) => {
-        if (response.status == 200) {
-          console.log(response);
-        }
-      })
-      .catch((error) => {
-        alert(`Error: ${error.response.status} - ${error.response.statusText}`);
-      });
+    downVote(song) {
+      song.hasDownvoted = true;
+      song.hasUpvoted = false;
+      this.songVote.PlaylistId = this.event.eventId;
+      this.songVote.SongId = song.songId;
+      this.songVote.VoteValue = -1;
+      SongsService.vote(this.songVote)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log(response);
+          }
+        })
+        .catch((error) => {
+          alert(
+            `Error: ${error.response.status} - ${error.response.statusText}`
+          );
+        });
+    },
+    showShoutout(songId) {
+      if (songId != this.showShoutoutIndex) {
+        this.showShoutoutIndex = songId;
+      } else {
+        this.songShoutout.PlaylistId = this.event.eventId;
+        this.songShoutout.songId = songId;
+        SongsService.addSongShoutout(this.songShoutout)
+          .then((response) => {
+            if (response.status == 201) {
+              this.showShoutoutIndex = -1;
+              this.songShoutout.ShoutOutMessage = "";
+            }
+          })
+          .catch((error) => {
+            alert(
+              `Error: ${error.response.status} - ${error.response.statusText}`
+            );
+          });
+      }
+    },
+    addToPlaylist(song) {
+      this.addRemoveSong.PlaylistId = this.event.eventId;
+      this.addRemoveSong.SongId = song.songId;
+      this.activePlaylist.push(song);
+      this.possibleSongs = this.possibleSongs.filter(
+        (s) => s.songId != song.songId
+      );
+      SongsService.addSongToPlaylist(this.addRemoveSong)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log(response);
+          }
+        })
+        .catch((error) => {
+          alert(
+            `Error: ${error.response.status} - ${error.response.statusText}`
+          );
+        });
+    },
+    removeFromThePlaylist(song) {
+      this.addRemoveSong.PlaylistId = this.event.eventId;
+      this.addRemoveSong.SongId = song.songId;
+      this.activePlaylist = this.activePlaylist.filter(
+        (s) => s.songId != song.songId
+      );
+      SongsService.removeSongFromPlaylist(this.addRemoveSong)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log(response);
+          }
+        })
+        .catch((error) => {
+          alert(
+            `Error: ${error.response.status} - ${error.response.statusText}`
+          );
+        });
+    },
   },
-  showShoutout(songId) {
-    if (songId != this.showShoutoutIndex){
-      this.showShoutoutIndex = songId;
-    }
-    else{
-      // call method to save text & reset index value to -1
-      console.log("trying to add shoutout")
-      this.songShoutout.PlaylistId = this.event.eventId;
-      this.songShoutout.songId = songId;
-      SongsService.addSongShoutout(this.songShoutout).then((response) => {
-        if (response.status == 201){
-            this.showShoutoutIndex = -1;
-            this.songShoutout.ShoutOutMessage = "";
-        }
-      })
-      .catch((error) => {
-        alert(`Error: ${error.response.status} - ${error.response.statusText}`);
-      });
-    }
-  },
-  addToPlaylist(song){
-    this.addRemoveSong.PlaylistId = this.event.eventId;
-    this.addRemoveSong.SongId = song.songId;
-    this.activePlaylist.push(song);
-    this.possibleSongs = this.possibleSongs.filter((s) =>
-    s.songId != song.songId);
-    SongsService.addSongToPlaylist(this.addRemoveSong)
-      .then((response) => {
-        if (response.status == 200) {
-          console.log(response);
-        }
-      })
-      .catch((error) => {
-        alert(`Error: ${error.response.status} - ${error.response.statusText}`);
-      });
-    
-  },
-  removeFromThePlaylist(song){
-    this.addRemoveSong.PlaylistId = this.event.eventId;
-    this.addRemoveSong.SongId = song.songId;
-    this.activePlaylist = this.activePlaylist.filter((s) =>
-    s.songId != song.songId);
-    SongsService.removeSongFromPlaylist(this.addRemoveSong)
-      .then((response) => {
-        if (response.status == 200) {
-          console.log(response);
-        }
-      })
-      .catch((error) => {
-        alert(`Error: ${error.response.status} - ${error.response.statusText}`);
-      });
-    
-  }
-
-},
 };
 </script>
 
@@ -357,7 +402,6 @@ export default {
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   max-height: 100%;
-
 }
 .media-player > img {
   width: 20%;
@@ -365,18 +409,14 @@ export default {
 .playlist-div {
   width: 90%;
   margin: auto;
-  height:auto;
-  max-height:150%;
-  overflow:auto;
+  height: auto;
+  max-height: 150%;
+  overflow: auto;
 }
 .playlist-div-left {
-
 }
-
-
 
 a {
   text-decoration: none;
 }
-
 </style>
