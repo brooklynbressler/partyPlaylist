@@ -1,5 +1,6 @@
 <template>
   <div class="main-description">
+    <popup />
     <h1>{{ event.eventName }}</h1>
     <h3>Hosted by: {{ event.hostName }}</h3>
     <h4>
@@ -79,10 +80,9 @@
                 </v-btn>
               </td>
               <td v-if="hasShoutout(song.songId)">
-                <!-- MAKE SHOUTOUT ICON VISIBLE IF SONG HAS SHOUTOUTS -->
-                <!-- CHANGE V-IF CONDITION -->
+                <shoutout />
                 <!-- ADD V-ON:CLICK TO TRIGGER SHOUTOUT POPUP WINDOW -->
-                <!-- v-if="hasShoutout(song.songId)" -->
+                <!--
                 <v-btn
                   small
                   id="show-shoutout"
@@ -95,6 +95,7 @@
                 >
                   <v-icon dark> mdi-bullhorn </v-icon>
                 </v-btn>
+                -->
               </td>
             </tr>
           </table>
@@ -233,8 +234,10 @@
 <script>
 import SongsService from "../services/SongsService.js";
 import EventsService from "../services/EventsService.js";
+import Shoutout from "../components/Shoutout.vue";
 
 export default {
+  components: { Shoutout, },
   data() {
     return {
       /* the possible playlist needs to be set when a user clicks on an event. 
