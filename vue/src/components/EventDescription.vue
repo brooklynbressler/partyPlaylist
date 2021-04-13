@@ -67,7 +67,7 @@
                   type="text"
                   v-show="song.songId == showShoutoutIndex"
                   placeholder="enter shoutout"
-                  v-model="songShoutout.ShoutOutMessage"
+                  v-model="newSongShoutout.ShoutOutMessage"
                 />
                 <v-btn
                   v-if="$store.state.user.userId == event.djUserId"
@@ -81,13 +81,13 @@
                   <v-icon dark> mdi-minus </v-icon>
                 </v-btn>
               </td>
-              <td>
+              <td v-if="hasShoutout(song.songId)">
                 <!-- MAKE SHOUTOUT ICON VISIBLE IF SONG HAS SHOUTOUTS -->
                 <!-- CHANGE V-IF CONDITION -->
                 <!-- ADD V-ON:CLICK TO TRIGGER SHOUTOUT POPUP WINDOW -->
+                <!-- v-if="hasShoutout(song.songId)" -->
                 <v-btn
                   small
-                  v-if="1 === 1"
                   id="show-shoutout"
                   class="mx-2"
                   icon
@@ -254,7 +254,7 @@ export default {
         PlaylistId: 0,
         SongId: 0,
       },
-      songShoutout: {
+      newSongShoutout: {
         PlaylistId: 0,
         SongId: 0,
         ShoutOutMessage: "",
@@ -263,6 +263,32 @@ export default {
       event: {},
       showShoutoutIndex: -1,
       shoutoutText: "",
+      eventShoutOuts: [
+        {
+        playlistId: 1,
+        songId: 9,
+        shoutoutId: 1,
+        shoutoutMessage: "Message 1"
+        },
+        {
+        playlistId: 1,
+        songId: 10,
+        shoutoutId: 2,
+        shoutoutMessage: "Message 2"
+        },
+        {
+        playlistId: 1,
+        songId: 11,
+        shoutoutId: 3,
+        shoutoutMessage: "Message 3"
+        },
+        {
+        playlistId: 1,
+        songId: 9,
+        shoutoutId: 4,
+        shoutoutMessage: "Message 42"
+        }
+      ]
     };
   },
   created() {
@@ -320,13 +346,13 @@ export default {
       if (songId != this.showShoutoutIndex) {
         this.showShoutoutIndex = songId;
       } else {
-        this.songShoutout.PlaylistId = this.event.eventId;
-        this.songShoutout.songId = songId;
-        SongsService.addSongShoutout(this.songShoutout)
+        this.newSongShoutout.PlaylistId = this.event.eventId;
+        this.newSongShoutout.songId = songId;
+        SongsService.addSongShoutout(this.newSongShoutout)
           .then((response) => {
             if (response.status == 201) {
               this.showShoutoutIndex = -1;
-              this.songShoutout.ShoutOutMessage = "";
+              this.newSongShoutout.ShoutOutMessage = "";
             }
           })
           .catch((error) => {
@@ -373,6 +399,16 @@ export default {
           );
         });
     },
+    hasShoutout(songId) {
+      console.log(songId);
+       let found = false;
+       this.eventShoutOuts.forEach((shoutout) => {
+         if (songId == shoutout.songId && shoutout.shoutoutMessage != ""){
+           found = true;
+         }
+      });
+      return found;
+    }
   },
 };
 </script>
