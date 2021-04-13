@@ -8,7 +8,8 @@ import Events from '../views/Events.vue'
 import EventDescription from '../views/EventDescription.vue'
 import CreateEvent from '../views/CreateEvent.vue'
 import SongVotingTable from '../components/SongVotingTable.vue'
-import Update from '../views/Update.vue' 
+import Update from '../views/Update.vue'
+import Setup from '../views/Setup.vue'
 import store from '../store/index'
 
 Vue.use(Router)
@@ -86,6 +87,14 @@ const router = new Router({
       path: "/update-event/:id",
       name: "updateEvent",
       component: Update, 
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/setup-event/:id",
+      name: "setup",
+      component: Setup,
       meta: {
         requiresAuth: true
       }

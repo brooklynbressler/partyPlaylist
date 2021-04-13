@@ -31,16 +31,15 @@
             edit event
           </v-btn>
         </router-link>
-                <router-link
+        <router-link
           class="setup-event"
           v-if="$store.state.user.userId == event.hostUserId"
-          :to="{ name: 'setupEvent', params: { id: event.eventId } }"
+          :to="{ name: 'setup', params: { id: event.eventId } }"
         >
           <v-btn color="primary" elevation="6" raised rounded x-small>
             event setup
           </v-btn>
         </router-link>
-
       </div>
     </div>
   </div>

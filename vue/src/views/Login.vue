@@ -1,15 +1,5 @@
 <template>
   <div id="login" class="text-center">
-    <!-- <div class="logo-div-show">
-      <router-link :to="{ name: 'home' }">
-        <img
-          id="logo-img-show"
-          src="https://lh3.googleusercontent.com/proxy/TmUJlkAgW9smBxoN-4h2D9lLq3tylyJJomxwgihwwlvrf4J8FKrOMjTOxvKaNDS6gjqY_8xrP8Q9oqSVC9hhmXHRPnxgnaUM1mFSJRY74EpN"
-          alt=""
-        />
-      </router-link>
-    </div> -->
-    <!-- Sign in div -->
     <div class="signin-div">
       <div class="logo-div-show">
         <router-link :to="{ name: 'home' }">
@@ -21,8 +11,7 @@
         </router-link>
       </div>
       <v-form id="signin-form" class="form-signin" @submit.prevent="login">
-        <v-container>
-          <p>Please sign in</p>
+        <v-container id="form-container">
           <v-row>
             <v-col cols="12" sm="6">
               <div
@@ -40,6 +29,8 @@
                 Thank you for registering, please sign in.
               </div>
               <v-text-field
+                dark
+                append-icon="mdi-login"
                 id="username"
                 label="Username"
                 outlined
@@ -53,6 +44,7 @@
           <v-row>
             <v-col cols="12" sm="6">
               <v-text-field
+                dark
                 id="password"
                 label="Password"
                 outlined
@@ -70,7 +62,7 @@
             <v-col cols="6" sm="3">
               <v-btn
                 large
-                block
+                rounded
                 class="btn btn-lg btn-primary btn-block"
                 @click="login"
               >
@@ -140,5 +132,16 @@ export default {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   padding: 200px 0;
   transform: skew(0deg, -10deg);
+  border: thin solid black;
+}
+
+#signin-form {
+  transform: skew(0deg, 10deg);
+  font-weight: bold;
+}
+
+#form-container {
+  border: solid black;
+  
 }
 </style>
