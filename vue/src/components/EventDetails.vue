@@ -28,7 +28,7 @@
           :to="{ name: 'updateEvent', params: { id: event.eventId } }"
         >
           <v-btn id="setup-button" color="white" rounded outlined medium>
-            edit
+            update
           </v-btn>
         </router-link>
         <router-link
@@ -50,7 +50,18 @@ $store.state.user.userId
 -->
 
 <script>
-export default {};
+import EventsService from "../services/EventsService.js"
+
+export default {
+  created() {
+  EventsService.getEvents().then((resp) => {
+      this.$store.commit("SET_EVENTS", resp.data);
+      this.event = this.$store.state.events.find((event) => {
+        return event.eventId == this.$route.params.id;
+      });
+    });
+}
+};
 </script>
 
 <style>
