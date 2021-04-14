@@ -89,7 +89,7 @@
                 </v-btn>
               </td>
               <td v-if="hasShoutout(song.songId) && $store.state.user.userId == event.djUserId">
-                <shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId"/>
+                <display-shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId"/>
               </td>
             </tr>
           </table>
@@ -228,10 +228,10 @@
 <script>
 import SongsService from "../services/SongsService.js";
 import EventsService from "../services/EventsService.js";
-import Shoutout from "../components/Shoutout.vue";
+import DisplayShoutout from "./DisplayShoutout.vue";
 
 export default {
-  components: { Shoutout, },
+  components: { DisplayShoutout, },
   data() {
     return {
       /* the possible playlist needs to be set when a user clicks on an event. 
