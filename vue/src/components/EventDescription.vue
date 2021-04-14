@@ -16,7 +16,7 @@
     </div>
 
     <div class="playlist-display">
-      <div class="playlist-div-left">
+      <div class="playlist-div-left" id="large-2">
         <v-card class="mx-auto" max-width="500">
           <!-- Tool bar -->
           <v-toolbar color="deep-purple accent-4" dark>
@@ -96,7 +96,7 @@
         </v-card>
       </div>
 
-      <div class="playlist-div">
+      <div class="playlist-div" id="large-1">
         <v-card class="mx-auto" max-width="700">
           <v-toolbar color="deep-purple accent-4" dark>
             <v-toolbar-title>Available Songs To Pick</v-toolbar-title>
@@ -429,18 +429,56 @@ export default {
 .media-player > img {
   width: 20%;
 }
-.playlist-div {
-  width: 90%;
+.playlist-div, .playlist-div-left {
+  width: auto;
   margin: auto;
   height: auto;
   max-height: 150%;
   overflow: auto;
 }
 
-.playlist-div-left {
-}
-
 a {
   text-decoration: none;
+}
+
+#large-2, #large-1 {
+  height: 100vh;
+  overflow-y: scroll;
+  margin-bottom: 25px;
+  background: #ccc;
+}
+
+#large-2::-webkit-scrollbar-track {
+  border: 1px solid #000;
+  padding: 2px 0;
+  background-color: #404040;
+}
+
+#large-2::-webkit-scrollbar {
+  width: 10px;
+}
+
+#large-2::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #737272;
+  border: 1px solid #000;
+}
+
+#large-1::-webkit-scrollbar-track {
+  border: 1px solid #000;
+  padding: 2px 0;
+  background-color: #404040;
+}
+
+#large-1::-webkit-scrollbar {
+  width: 10px;
+}
+
+#large-1::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #737272;
+  border: 1px solid #000;
 }
 </style>
