@@ -26,13 +26,6 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
---Table of available genres for any event
-CREATE TABLE genres (
-	genre_id int IDENTITY(1,1) NOT NULL,
-	genre_name varchar(20) NOT NULL,
-	CONSTRAINT PK_genre PRIMARY KEY (genre_id)
-);
-
 --Table to hold event playlists
 CREATE TABLE playlists (
 	playlist_id int IDENTITY(1,1) NOT NULL,
@@ -112,70 +105,54 @@ VALUES ('tester', 'Bob', 'Testerson', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2
 ('morgan', 'David', 'Morgan', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj'),
 ('davis', 'Brian', 'Davis', 'sPsfjtTKoQW18nwCVVXlFoxbGjI=', 'Gbup072H2/M=', 'dj');
 
-SET IDENTITY_INSERT genres ON;
-
-INSERT INTO genres(genre_id, genre_name)
-VALUES
-	(1,'Country'),
-	(2, 'Pop'),
-	(3, 'Rock'),
-	(4, 'Metal'),
-	(5, 'Alternative'),
-	(6, 'Hip Hop');
-
-SET IDENTITY_INSERT genres OFF;
-
 INSERT INTO songs(song_name, artist_name, genre, img_url)
-VALUES ('Friends In Low Places', 'Garth Brooks', 'Country', 'https://upload.wikimedia.org/wikipedia/en/5/5a/Garth_Brooks-Ropin%27_the_Wind_%28album_cover%29.jpg'),
-('The Thunder Rolls', 'Garth Brooks', 'Country','https://upload.wikimedia.org/wikipedia/en/5/5a/Garth_Brooks-Ropin%27_the_Wind_%28album_cover%29.jpg'),
-('The River', 'Garth Brooks', 'Country', 'https://upload.wikimedia.org/wikipedia/en/5/5a/Garth_Brooks-Ropin%27_the_Wind_%28album_cover%29.jpg'),
-('Boot Scootin Boogie', 'Brooks & Dunn', 'Country', 'https://upload.wikimedia.org/wikipedia/en/3/33/BD-GreatestHitsCollection.jpg'),
-('Neon Moon', 'Brooks & Dunn', 'Country', 'https://upload.wikimedia.org/wikipedia/en/3/33/BD-GreatestHitsCollection.jpg'),
-('My Maria', 'Brooks & Dunn', 'Country', 'https://upload.wikimedia.org/wikipedia/en/3/33/BD-GreatestHitsCollection.jpg'),
-('Drinkin Problem', 'Midland', 'Country', 'https://i.pinimg.com/originals/a6/14/56/a6145635a4298c7e2b339d3f8ca4f728.jpg'),
-('Fourteen Gears', 'Midland', 'Country', 'https://i.pinimg.com/originals/a6/14/56/a6145635a4298c7e2b339d3f8ca4f728.jpg'),
-('Thriller', 'Michael Jackson', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png'),
-('Billie Jean', 'Michael Jackson', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png'),
-('Beat It', 'Michael Jackson', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png'),
-('Man In The Mirror', 'Michael Jackson', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png'),
-('Smells Like Teen Spirit', 'Nirvana', 'Alternative', 'https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg'),
-('Come As You Are', 'Nirvana', 'Alternative', 'https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg'),
-('Lithium', 'Nirvana', 'Alternative', 'https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg'),
-('I Want It That Way', 'Backstreet Boys', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/c/c2/Albumus.jpg'),
-('Everybody', 'Backstreet Boys', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/c/c2/Albumus.jpg'),
-('As Long As You Love Me', 'Backstreet Boys', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/c/c2/Albumus.jpg'),
-('Wonderwall', 'Oasis', 'Alternative', 'https://upload.wikimedia.org/wikipedia/en/b/b1/Oasis_-_%28What%27s_The_Story%29_Morning_Glory_album_cover.jpg'),
-('Champagne Supernova', 'Oasis', 'Alternative', 'https://upload.wikimedia.org/wikipedia/en/b/b1/Oasis_-_%28What%27s_The_Story%29_Morning_Glory_album_cover.jpg'),
-('Dont Look Back In Anger', 'Oasis', 'Alternative', 'https://upload.wikimedia.org/wikipedia/en/b/b1/Oasis_-_%28What%27s_The_Story%29_Morning_Glory_album_cover.jpg'),
-('My Heart Will Go On', 'Celine Dion', 'Pop', 'https://i.pinimg.com/236x/6f/39/5a/6f395a560665bea1cc744e85f8e825a4--music-heart-love-you-more.jpg'),
-('All By Myself', 'Celine Dion', 'Pop', 'https://i.pinimg.com/236x/6f/39/5a/6f395a560665bea1cc744e85f8e825a4--music-heart-love-you-more.jpg'),
-('Nothing Broken But My Heart', 'Celine Dion', 'Pop', 'https://i.pinimg.com/236x/6f/39/5a/6f395a560665bea1cc744e85f8e825a4--music-heart-love-you-more.jpg'),
-('You Shook Me All Night Long', 'AC/DC', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/a/ac/Acdc_Highway_to_Hell.JPG'),
-('Thunderstruck', 'AC/DC', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/a/ac/Acdc_Highway_to_Hell.JPG'),
-('Highway To Hell', 'AC/DC', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/a/ac/Acdc_Highway_to_Hell.JPG'),
-('Money', 'Pink Floyd', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png'),
-('Wish You Were Here', 'Pink Floyd', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png'),
-('Time', 'Pink Floyd', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png'),
-('Comfortably Numb', 'Pink Floyd', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png'),
-('Stairway To Heaven', 'Led Zeppelin', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/e/ef/Led_Zeppelin_-_Led_Zeppelin_%281969%29_front_cover.png'),
-('Whole Lotta Love', 'Led Zeppelin', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/e/ef/Led_Zeppelin_-_Led_Zeppelin_%281969%29_front_cover.png'),
-('Dazed And Confused', 'Led Zeppelin', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/e/ef/Led_Zeppelin_-_Led_Zeppelin_%281969%29_front_cover.png'),
-('Kashmir', 'Led Zeppelin', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/e/ef/Led_Zeppelin_-_Led_Zeppelin_%281969%29_front_cover.png'),
-('Ms. Jackson', 'Outkast', 'Hip Hop', 'https://upload.wikimedia.org/wikipedia/en/0/0b/OutKast_-_Stankonia.JPG'),
-('Hey Ya', 'Outkast', 'Hip Hop', 'https://upload.wikimedia.org/wikipedia/en/0/0b/OutKast_-_Stankonia.JPG'),
-('So Fresh, So Clean', 'Outkast', 'Hip Hop', 'https://upload.wikimedia.org/wikipedia/en/0/0b/OutKast_-_Stankonia.JPG'),
-('Baby Got Back', 'Sir Mix-a-Lot', 'Hip Hop', 'https://img.discogs.com/lLbLKfPQOLEnpBZfRx-sAQWDSqQ=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-388252-1143900857.jpeg.jpg'),
-('It Was A Good Day', 'Ice Cube', 'Hip Hop', 'https://img.discogs.com/84GiZIsueXirBySrofKfVHvHuSg=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-349388-1489891729-6218.jpeg.jpg'),
-('X Gon Give It To Ya', 'DMX', 'Hip Hop', 'https://upload.wikimedia.org/wikipedia/en/a/ad/ItsdarkDMX.jpg'),
-('Ruff Ryders Anthem', 'DMX', 'Hip Hop', 'https://upload.wikimedia.org/wikipedia/en/a/ad/ItsdarkDMX.jpg'),
-('Where The Hood At', 'DMX', 'Hip Hop', 'https://upload.wikimedia.org/wikipedia/en/a/ad/ItsdarkDMX.jpg'),
-('Dont Speak', 'No Doubt', 'Alternative', 'https://upload.wikimedia.org/wikipedia/en/9/9d/No_Doubt_-_Tragic_Kingdom.png'),
-('Creep', 'Radiohead', 'Alternative', 'https://upload.wikimedia.org/wikipedia/en/0/0f/Radiohead.pablohoney.albumart.jpg'),
-('Waterfalls', 'TLC', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/5/5b/TLC_-_CrazySexyCool_album_cover.png'),
-('No Scrubs', 'TLC', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/5/5b/TLC_-_CrazySexyCool_album_cover.png'),
-('Africa', 'Toto', 'Rock', 'https://upload.wikimedia.org/wikipedia/en/b/bd/Toto_Toto_IV.jpg'),
-('Material Girl', 'Madonna', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/7/75/Celebration_cover.png'),
-('Whats Love Got To Do With It', 'Tina Turner', 'Pop', 'https://upload.wikimedia.org/wikipedia/en/4/42/Tina_Turner_Private_Dancer_US_CD_cover_art_1984_original.jpg');
+VALUES ('Boot Scootin Boogie', 'Brooks & Dunn', 'Country', 'https://i.scdn.co/image/ab67616d0000b273941001e5ce6bc1272466de29'),
+('Neon Moon', 'Brooks & Dunn', 'Country', 'https://i.scdn.co/image/ab67616d0000b273941001e5ce6bc1272466de29'),
+('My Maria', 'Brooks & Dunn', 'Country', 'https://i.scdn.co/image/ab67616d0000b273941001e5ce6bc1272466de29'),
+('Drinkin Problem', 'Midland', 'Country', 'https://i.scdn.co/image/ab67616d0000b27308c3459da0ec44b7e790555d'),
+('Fourteen Gears', 'Midland', 'Country', 'https://i.scdn.co/image/ab67616d0000b273f7453f2aad02bad5cb1fd209'),
+('Thriller', 'Michael Jackson', 'Pop', 'https://i.scdn.co/image/ab67616d0000b273de437d960dda1ac0a3586d97'),
+('Billie Jean', 'Michael Jackson', 'Pop', 'https://i.scdn.co/image/ab67616d0000b2734121faee8df82c526cbab2be'),
+('Beat It', 'Michael Jackson', 'Pop', 'https://i.scdn.co/image/ab67616d0000b2734121faee8df82c526cbab2be'),
+('Man In The Mirror', 'Michael Jackson', 'Pop', 'https://i.scdn.co/image/ab67616d0000b27362e97ae5072de10850578af5'),
+('Smells Like Teen Spirit', 'Nirvana', 'Alternative', 'https://i.scdn.co/image/ab67616d0000b273e175a19e530c898d167d39bf'),
+('Come As You Are', 'Nirvana', 'Alternative', 'https://i.scdn.co/image/ab67616d0000b273e175a19e530c898d167d39bf'),
+('Lithium', 'Nirvana', 'Alternative', 'https://i.scdn.co/image/ab67616d0000b273e175a19e530c898d167d39bf'),
+('I Want It That Way', 'Backstreet Boys', 'Pop', 'https://i.scdn.co/image/ab67616d0000b2732160c02bc56f192df0f4986b'),
+('Everybody', 'Backstreet Boys', 'Pop', 'https://i.scdn.co/image/ab67616d0000b273dafd4b9261a1ab9acd53a53d'),
+('As Long As You Love Me', 'Backstreet Boys', 'Pop', 'https://i.scdn.co/image/ab67616d0000b273dafd4b9261a1ab9acd53a53d'),
+('Wonderwall', 'Oasis', 'Alternative', 'https://i.scdn.co/image/ab67616d0000b2732f2eeee9b405f4d00428d84c'),
+('Champagne Supernova', 'Oasis', 'Alternative', 'https://i.scdn.co/image/ab67616d0000b2732f2eeee9b405f4d00428d84c'),
+('Dont Look Back In Anger', 'Oasis', 'Alternative', 'https://i.scdn.co/image/ab67616d0000b2732f2eeee9b405f4d00428d84c'),
+('My Heart Will Go On', 'Celine Dion', 'Pop', 'https://i.scdn.co/image/ab67616d0000b273745adc3f697ea1ec79d66901'),
+('All By Myself', 'Celine Dion', 'Pop', 'https://i.scdn.co/image/ab67616d0000b273c6aebd89b2dcda3348649633'),
+('Nothing Broken But My Heart', 'Celine Dion', 'Pop', 'https://i.scdn.co/image/ab67616d00001e02fb23175eac76782881ed60ed'),
+('You Shook Me All Night Long', 'AC/DC', 'Rock', 'https://i.scdn.co/image/ab67616d00001e020b51f8d91f3a21e8426361ae'),
+('Thunderstruck', 'AC/DC', 'Rock', 'https://i.scdn.co/image/ab67616d0000b2738399047ff71200928f5b6508'),
+('Highway To Hell', 'AC/DC', 'Rock', 'https://i.scdn.co/image/ab67616d0000b27351c02a77d09dfcd53c8676d0'),
+('Money', 'Pink Floyd', 'Rock', 'https://i.scdn.co/image/ab67616d0000b273f05e5ac32fdd79d100315a20'),
+('Wish You Were Here', 'Pink Floyd', 'Rock', 'https://i.scdn.co/image/ab67616d0000b273d8fa5ac6259dba33127b398a'),
+('Time', 'Pink Floyd', 'Rock', 'https://i.scdn.co/image/ab67616d0000b273f05e5ac32fdd79d100315a20'),
+('Comfortably Numb', 'Pink Floyd', 'Rock', 'https://i.scdn.co/image/ab67616d0000b273288d32d88a616b9a278ddc07'),
+('Stairway To Heaven', 'Led Zeppelin', 'Rock', 'https://i.scdn.co/image/ab67616d0000b273c8a11e48c91a982d086afc69'),
+('Whole Lotta Love', 'Led Zeppelin', 'Rock', 'https://i.scdn.co/image/ab67616d0000b273471f26b2813a74764efc6a7d'),
+('Dazed And Confused', 'Led Zeppelin', 'Rock', 'https://i.scdn.co/image/ab67616d0000b273471f26b2813a74764efc6a7d'),
+('Kashmir', 'Led Zeppelin', 'Rock', 'https://i.scdn.co/image/ab67616d0000b273d7cc1ec30765505ab862b17d'),
+('Ms. Jackson', 'Outkast', 'Hip Hop', 'https://i.scdn.co/image/ab67616d0000b2732350e31bc346a6c20e9de166'),
+('Hey Ya', 'Outkast', 'Hip Hop', 'https://i.scdn.co/image/ab67616d0000b2736a6387ab37f64034cdc7b367'),
+('So Fresh, So Clean', 'Outkast', 'Hip Hop', 'https://i.scdn.co/image/ab67616d0000b2732350e31bc346a6c20e9de166'),
+('Baby Got Back', 'Sir Mix-a-Lot', 'Hip Hop', 'https://i.scdn.co/image/ab67616d0000b273f82c7e4376cf8267fb396b7d'),
+('It Was A Good Day', 'Ice Cube', 'Hip Hop', 'https://i.scdn.co/image/ab67616d0000b273994c319841a923465d62e271'),
+('X Gon Give It To Ya', 'DMX', 'Hip Hop', 'https://i.scdn.co/image/ab67616d0000b27301a6faf91e207748e8e32e0a'),
+('Ruff Ryders Anthem', 'DMX', 'Hip Hop', 'https://i.scdn.co/image/ab67616d0000b27311658b970e0518be491871df'),
+('Where The Hood At', 'DMX', 'Hip Hop', 'https://i.scdn.co/image/ab67616d0000b273b6afa5d2bfa63cb0eaa386b1'),
+('Dont Speak', 'No Doubt', 'Alternative', 'https://i.scdn.co/image/ab67616d0000b2736ebd5e789646a833b8f7d4ba'),
+('Creep', 'Radiohead', 'Alternative', 'https://i.scdn.co/image/ab67616d0000b273df55e326ed144ab4f5cecf95'),
+('Waterfalls', 'TLC', 'Pop', 'https://i.scdn.co/image/ab67616d0000b273a6125b1964a555892c49ea53'),
+('No Scrubs', 'TLC', 'Pop', 'https://i.scdn.co/image/ab67616d0000b27361ffafd5e31a37336531cf95'),
+('Africa', 'Toto', 'Rock', 'https://i.scdn.co/image/ab67616d0000b2734a052b99c042dc15f933145b'),
+('Material Girl', 'Madonna', 'Pop', 'https://i.scdn.co/image/ab67616d0000b2738f9f218b386e6aeb27184307'),
+('Whats Love Got To Do With It', 'Tina Turner', 'Pop', 'https://i.scdn.co/image/ab67616d0000b273e9c361da971c6e81b51ef06b');
 
 INSERT INTO playlists (playlist_name)
 VALUES ('Party with Brooklyn'), ('Zak Shack');
@@ -185,8 +162,8 @@ VALUES (6, 4, 1, 'Party with Brooklyn', 'Aint no party like a Brooklyn party cau
 	   (6, 3, 2, 'Zak Shack', 'Zak loves Toto!!!!', '2021-04-08', '19:00', '20:00');
 
 INSERT INTO playlist_songs (playlist_id, song_id)
-VALUES (1, 9), (1, 10), (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18),
-(2, 48);
+VALUES (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18), (1, 19), (1, 20), (1, 21),
+(2, 45);
 
-INSERT INTO excluded_genres (event_id, genre)
-VALUES (2, 'Country'), (2, 'Alternative');
+--INSERT INTO excluded_genres (event_id, genre)
+--VALUES (2, 'Country'), (2, 'Alternative');
