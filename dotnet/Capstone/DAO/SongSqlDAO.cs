@@ -93,12 +93,13 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "INSERT INTO songs(song_name, artist_name, genre, img_url) VALUES (@song_name, @artist_name, @genre, @img_url);";
+                    string sql = "INSERT INTO songs(song_name, artist_name, genre, spotify_id, img_url) VALUES (@song_name, @artist_name, @genre, @spotify_id, @img_url);";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@song_name", newSong.SongName);
                     cmd.Parameters.AddWithValue("@artist_name", newSong.ArtistName);
                     cmd.Parameters.AddWithValue("@genre", newSong.Genre);
+                    cmd.Parameters.AddWithValue("@spotify_id", newSong.SpotifyId);
                     cmd.Parameters.AddWithValue("@img_url", newSong.ImgUrl);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -208,7 +209,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "SELECT ps.playlist_id, ps.song_id, s.song_name, s.artist_name, s.genre, s.img_url FROM playlist_songs ps JOIN songs s ON s.song_id = ps.song_id WHERE ps.playlist_id = @playlist_id;";
+                    string sql = "SELECT ps.playlist_id, ps.song_id, s.song_name, s.artist_name, s.genre, s.spotify_id, s.img_url FROM playlist_songs ps JOIN songs s ON s.song_id = ps.song_id WHERE ps.playlist_id = @playlist_id;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@playlist_id", playlistId);
@@ -266,7 +267,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "SELECT song_id, song_name, artist_name, genre, img_url FROM songs;";
+                    string sql = "SELECT song_id, song_name, artist_name, genre, spotify_id, img_url FROM songs;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -299,7 +300,7 @@ namespace Capstone.DAO
 
                     foreach (Song song in allPossibleSongs)
                     {
-                        string sql = "INSERT INTO potential_playlist_songs (playlist_id, song_id, song_name, artist_name, genre, img_url) VALUES (@playlist_id, @song_id, @song_name, @artist_name, @genre, @img_url);";
+                        string sql = "INSERT INTO potential_playlist_songs (playlist_id, song_id, song_name, artist_name, genre, spotify_id, img_url) VALUES (@playlist_id, @song_id, @song_name, @artist_name, @genre, @spotify_id, @img_url);";
 
                         SqlCommand cmd = new SqlCommand(sql, conn);
                         cmd.Parameters.AddWithValue("@playlist_id", eventId);
@@ -307,6 +308,7 @@ namespace Capstone.DAO
                         cmd.Parameters.AddWithValue("@song_name", song.SongName);
                         cmd.Parameters.AddWithValue("@artist_name", song.ArtistName);
                         cmd.Parameters.AddWithValue("@genre", song.Genre);
+                        cmd.Parameters.AddWithValue("@spotify_id", song.SpotifyId);
                         cmd.Parameters.AddWithValue("@img_url", song.ImgUrl);
                         int rowCreated = cmd.ExecuteNonQuery();
                         rowsAffected += rowCreated;
@@ -332,7 +334,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    string sql = "SELECT playlist_id, song_id, song_name, artist_name, genre, img_url, song_score FROM potential_playlist_songs WHERE playlist_id = @playlist_id ORDER BY song_score DESC;";
+                    string sql = "SELECT playlist_id, song_id, song_name, artist_name, genre, spotify_id, img_url, song_score FROM potential_playlist_songs WHERE playlist_id = @playlist_id ORDER BY song_score DESC;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@playlist_id", eventId);
@@ -445,6 +447,7 @@ namespace Capstone.DAO
                 SongName = Convert.ToString(reader["song_name"]),
                 ArtistName = Convert.ToString(reader["artist_name"]),
                 Genre = Convert.ToString(reader["genre"]),
+                SpotifyId = Convert.ToString(reader["spotify_id"]),
                 ImgUrl = Convert.ToString(reader["img_url"])
             };
             return pls;
@@ -457,6 +460,7 @@ namespace Capstone.DAO
                 SongName = Convert.ToString(reader["song_name"]),
                 ArtistName = Convert.ToString(reader["artist_name"]),
                 Genre = Convert.ToString(reader["genre"]),
+                SpotifyId = Convert.ToString(reader["spotify_id"]),
                 ImgUrl = Convert.ToString(reader["img_url"])
             };
             return s;
@@ -470,6 +474,7 @@ namespace Capstone.DAO
                 SongName = Convert.ToString(reader["song_name"]),
                 ArtistName = Convert.ToString(reader["artist_name"]),
                 Genre = Convert.ToString(reader["genre"]),
+                SpotifyId = Convert.ToString(reader["spotify_id"]),
                 ImgUrl = Convert.ToString(reader["img_url"]),
                 SongScore = Convert.ToInt32(reader["song_score"])
             };
