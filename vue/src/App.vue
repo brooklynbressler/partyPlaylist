@@ -1,97 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
-      <!--  -->
-      <router-link :to="{ name: 'home' }">
-        <v-btn
-          class="nav-button"
-          block
-          color="primary"
-          depressed
-          elevation="6"
-          rounded
-          ><v-icon>mdi-home-outline</v-icon> HOME</v-btn
-        >
-      </router-link>
-
-      <router-link :to="{ name: 'events' }">
-        <v-btn
-          class="nav-button"
-          block
-          color="primary"
-          depressed
-          elevation="6"
-          rounded
-          ><v-icon>mdi-calendar-star</v-icon> SEE EVENTS</v-btn
-        >
-      </router-link>
-
-      <router-link
-        :to="{ name: 'register' }"
-        v-if="$store.state.isLoggedIn === false"
-      >
-        <v-btn
-          class="nav-button"
-          block
-          color="primary"
-          depressed
-          elevation="6"
-          rounded
-          ><v-icon>mdi-account-plus-outline</v-icon> NEED AN ACCOUNT?</v-btn
-        >
-      </router-link>
-
-      <router-link
-        :to="{ name: 'createEvent' }"
-        v-if="$store.state.isLoggedIn === true"
-      >
-        <v-btn
-          class="nav-button"
-          block
-          color="primary"
-          depressed
-          elevation="6"
-          rounded
-          ><v-icon>mdi-calendar-plus</v-icon> ADD AN EVENT</v-btn
-        >
-      </router-link>
-
-      <router-link
-        :to="{ name: 'login' }"
-        v-if="$store.state.isLoggedIn === false"
-      >
-        <v-btn
-          class="nav-button"
-          block
-          color="primary"
-          depressed
-          elevation="6"
-          rounded
-          ><v-icon>mdi-login</v-icon> SIGN IN</v-btn
-        >
-      </router-link>
-
-      <router-link
-        :to="{ name: 'logout' }"
-        v-if="$store.state.isLoggedIn === true"
-      >
-        <v-btn
-          class="nav-button"
-          block
-          color="primary"
-          depressed
-          elevation="6"
-          rounded
-          ><v-icon>mdi-logout</v-icon> SIGN OUT</v-btn
-        >
-      </router-link>
-    </v-navigation-drawer>
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title class="toolbar-title">TurboTrax</v-toolbar-title>
-    </v-app-bar>
-
+    <navbar />
     <v-main class="v-main">
       <div id="app">
         <router-view />
@@ -143,17 +52,17 @@
           </div>
         </div>
       </div>
-    </v-main>
+    </v-main> 
   </v-app>
 </template>
 
 <script>
-//import Navbar from "./components/Navbar.vue"
+import Navbar from "./components/Navbar.vue"
 
 export default {
-  // components: {
-  //   Navbar
-  // },
+  components: {
+    Navbar
+  },
   data: () => ({ drawer: false }),
 };
 </script>

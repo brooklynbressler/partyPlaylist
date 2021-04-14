@@ -153,7 +153,7 @@ export default {
 #register {
   background: rgba(0, 0, 0, 0.4);;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-  padding: 180px 0;
+  padding: 145px 0;
   transform: skew(0deg, -10deg);
 }
 .form-register {
