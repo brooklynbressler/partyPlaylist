@@ -32,21 +32,16 @@
           <table>
             <thead>
               <tr>
-                <th>Song Title</th>
-                <th>Artist</th>
+                <th>Embedded Player</th>
                 <th>Add ShoutOut</th>
               </tr>
             </thead>
 
             <tr v-for="song in activePlaylist" v-bind:key="song.songId">
-              <td>
-                <v-avatar rounded size="60">
-                  <img v-bind:src="song.imgUrl" alt="" />
-                </v-avatar>
-              </td>
 
-              <td id="song-artist-info">
-                {{ song.songName }} - {{ song.artistName }}
+
+              <td>
+                <iframe v-bind:src=(somethingElse+song.spotifyId) width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
               </td>
 
               <!--
@@ -119,8 +114,7 @@
           <table>
             <thead>
               <tr>
-                <th>Song Title</th>
-                <th>Artist</th>
+                <th>Embedded Player</th>
                 <th>Up Vote</th>
                 <th>Down Vote</th>
               </tr>
@@ -128,12 +122,7 @@
             <tbody>
               <tr v-for="song in possibleSongs" v-bind:key="song.songId">
                 <td>
-                  <v-avatar rounded size="60">
-                    <img v-bind:src="song.imgUrl" alt="" />
-                  </v-avatar>
-                </td>
-                <td id="song-artist-info">
-                  {{ song.songName }} - {{ song.artistName }}
+                  <iframe v-bind:src=(somethingElse+song.spotifyId) width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 </td>
                 <td>
                   <v-btn
@@ -274,6 +263,8 @@ export default {
       downVoted: [],
       upValue: 0,
       downValue: 0,
+      temp: '2374M0fQpWi3dLnB54qaLX',
+      somethingElse: 'https://open.spotify.com/embed/track/'
     };
   },
   created() {
