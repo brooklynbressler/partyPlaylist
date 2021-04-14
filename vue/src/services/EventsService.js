@@ -15,5 +15,9 @@ export default {
 
     updateEvent(id, updatedEvent) {
         return axios.put(`/update-event/${id}`, updatedEvent)
+    },
+
+    getEventShoutouts(eventId) {
+        return axios.get(`/song-shoutouts/${eventId}`)
     }
 }

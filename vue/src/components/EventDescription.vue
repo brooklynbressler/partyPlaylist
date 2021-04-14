@@ -79,23 +79,8 @@
                   <v-icon dark> mdi-minus </v-icon>
                 </v-btn>
               </td>
-              <td v-if="hasShoutout(song.songId)">
-                <shoutout />
-                <!-- ADD V-ON:CLICK TO TRIGGER SHOUTOUT POPUP WINDOW -->
-                <!--
-                <v-btn
-                  small
-                  id="show-shoutout"
-                  class="mx-2"
-                  icon
-                  outlined
-                  fab
-                  dark
-                  color="blue darken-3"
-                >
-                  <v-icon dark> mdi-bullhorn </v-icon>
-                </v-btn>
-                -->
+              <td v-if="hasShoutout(song.songId) && $store.state.user.userId == event.djUserId">
+                <shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId"/>
               </td>
             </tr>
           </table>
@@ -263,32 +248,7 @@ export default {
       event: {},
       showShoutoutIndex: -1,
       shoutoutText: "",
-      eventShoutOuts: [
-        {
-        playlistId: 1,
-        songId: 9,
-        shoutoutId: 1,
-        shoutoutMessage: "Message 1"
-        },
-        {
-        playlistId: 1,
-        songId: 10,
-        shoutoutId: 2,
-        shoutoutMessage: "Message 2"
-        },
-        {
-        playlistId: 1,
-        songId: 11,
-        shoutoutId: 3,
-        shoutoutMessage: "Message 3"
-        },
-        {
-        playlistId: 1,
-        songId: 9,
-        shoutoutId: 4,
-        shoutoutMessage: "Message 42"
-        }
-      ]
+      eventShoutOuts: []
     };
   },
   created() {
@@ -303,6 +263,10 @@ export default {
     });
     SongsService.getPlaylistByEvent(this.$route.params.id).then((resp) => {
       this.activePlaylist = resp.data;
+    });
+    EventsService.getEventShoutouts(this.$route.params.id).then((response) => {
+      this.eventShoutOuts = response.data;
+      console.log(response.data);
     });
   },
   methods: {

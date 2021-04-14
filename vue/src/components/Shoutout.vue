@@ -23,12 +23,12 @@
           <span class="headline">Party Shout Out!</span>
         </v-card-title>
         <v-card-text>
-            Shoutout Text Goes Here
+          <li v-for="item in shoutoutItems" v-bind:key="item.id">{{item.shoutOutMessage}}</li>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="green darken-1"
+            color="blue darken-3"
             text
             @click="dialog = false"
           >
@@ -42,10 +42,18 @@
 
 <script>
 export default {
+    props: ['shoutouts', 'songId'],
     data () {
         return {
             dialog: false,
+            shoutoutItems: []
         }
+    },
+    created () {
+      this.shoutoutItems = this.shoutouts.filter(
+        (s) => s.songId == this.songId
+      );
+
     }
 };
 </script>
