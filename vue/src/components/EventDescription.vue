@@ -271,7 +271,9 @@ export default {
       shoutoutText: "",
       eventShoutOuts: [],
       upVoted:[],
-      downVoted: []
+      downVoted: [],
+      upValue,
+      downValue,
     };
   },
   created() {
@@ -296,15 +298,17 @@ export default {
     upVote(song) {
       song.hasUpvoted = true;
       song.hasDownvoted = false;
+      this.upValue = 1;
       this.upVoted.push(song.songId);
       if (this.downVoted.includes(song.songId)){
         this.downVoted = this.downVoted.filter((vote) => {
           vote != song.songId;
-        })
+        });
+        this.upValue = 2;
       }
       this.songVote.PlaylistId = this.event.eventId;
       this.songVote.SongId = song.songId;
-      this.songVote.VoteValue = 1;
+      this.songVote.VoteValue = this.upValue;
       SongsService.vote(this.songVote)
         .then((response) => {
           if (response.status == 200) {
@@ -320,15 +324,17 @@ export default {
     downVote(song) {
       song.hasDownvoted = true;
       song.hasUpvoted = false;
+      this.downValue = 1;
       this.downVoted.push(song.songId);
       if (this.upVoted.includes(song.songId)){
         this.upVoted = this.upVoted.filter((vote) => {
           vote != song.songId;
-        })
+        });
+        this.downValue = 2;
       }
       this.songVote.PlaylistId = this.event.eventId;
       this.songVote.SongId = song.songId;
-      this.songVote.VoteValue = -1;
+      this.songVote.VoteValue = this.downValue;
       SongsService.vote(this.songVote)
         .then((response) => {
           if (response.status == 200) {
