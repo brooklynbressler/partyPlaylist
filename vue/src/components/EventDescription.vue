@@ -49,6 +49,13 @@
                 {{ song.songName }} - {{ song.artistName }}
               </td>
 
+              <!--
+              <td v-if="$store.state.user.userId != event.djUserId">
+                <enter-shoutout />
+
+              </td>
+              -->
+
               <td>
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
@@ -229,9 +236,14 @@
 import SongsService from "../services/SongsService.js";
 import EventsService from "../services/EventsService.js";
 import DisplayShoutout from "./DisplayShoutout.vue";
+// import EnterShoutout from "./EnterShoutout.vue";
 
 export default {
-  components: { DisplayShoutout, },
+  components:
+   { 
+     DisplayShoutout,
+     // EnterShoutout
+   },
   data() {
     return {
       /* the possible playlist needs to be set when a user clicks on an event. 
@@ -321,6 +333,7 @@ export default {
       } else {
         this.newSongShoutout.PlaylistId = this.event.eventId;
         this.newSongShoutout.songId = songId;
+        if (this.newSongShoutout.ShoutOutMessage != ""){
         SongsService.addSongShoutout(this.newSongShoutout)
           .then((response) => {
             if (response.status == 201) {
@@ -333,6 +346,7 @@ export default {
               `Error: ${error.response.status} - ${error.response.statusText}`
             );
           });
+      }
       }
     },
     addToPlaylist(song) {
