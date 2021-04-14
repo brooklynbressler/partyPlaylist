@@ -122,8 +122,8 @@
                 <td>
                   <v-btn
                     small
-                    v-if="
-                      !song.hasUpvoted &&
+                    v-show="
+                      (!upVoted.includes(song.songId)) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="likebtn"
@@ -141,8 +141,8 @@
 
                   <v-btn
                     small
-                    v-if="
-                      song.hasUpvoted &&
+                    v-show="
+                      (upVoted.includes(song.songId)) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="likebtn"
@@ -171,8 +171,8 @@
                 <td>
                   <v-btn
                     small
-                    v-if="
-                      !song.hasDownvoted &&
+                    v-show="
+                      (!downVoted.includes(song.songId)) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="dislikebtn"
@@ -189,8 +189,8 @@
                   </v-btn>
                   <v-btn
                     small
-                    v-if="
-                      song.hasDownvoted &&
+                    v-show="
+                      (downVoted.includes(song.songId)) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="likebtn"
@@ -248,7 +248,9 @@ export default {
       event: {},
       showShoutoutIndex: -1,
       shoutoutText: "",
-      eventShoutOuts: []
+      eventShoutOuts: [],
+      upVoted:[],
+      downVoted: []
     };
   },
   created() {
@@ -273,6 +275,12 @@ export default {
     upVote(song) {
       song.hasUpvoted = true;
       song.hasDownvoted = false;
+      this.upVoted.push(song.songId);
+      if (this.downVoted.includes(song.songId)){
+        this.downVoted = this.downVoted.filter((vote) => {
+          vote != song.songId;
+        })
+      }
       this.songVote.PlaylistId = this.event.eventId;
       this.songVote.SongId = song.songId;
       this.songVote.VoteValue = 1;
@@ -291,6 +299,12 @@ export default {
     downVote(song) {
       song.hasDownvoted = true;
       song.hasUpvoted = false;
+      this.downVoted.push(song.songId);
+      if (this.upVoted.includes(song.songId)){
+        this.upVoted = this.upVoted.filter((vote) => {
+          vote != song.songId;
+        })
+      }
       this.songVote.PlaylistId = this.event.eventId;
       this.songVote.SongId = song.songId;
       this.songVote.VoteValue = -1;
