@@ -8,21 +8,17 @@
     >
       <v-text-field
         v-model="event.EventName"
-        :rules="rules.name"
         :counter="60"
         label="Name"
-        required
         dark
       ></v-text-field>
 
       <v-textarea
         id="text-area"
         v-model="event.EventDescription"
-        :rules="rules.description"
         :counter="145"
         label="Description"
         height="50"
-        required
         dark
       >
       </v-textarea>
@@ -57,14 +53,11 @@ export default {
         EventDate: "",
         StartTime: "",
         EndTime: "",
+        DjName: "",
+        HostName: "",
+        LoggedInUser: "",
       },
       genres: [],
-      rules: {
-        name: [(val) => (val || "").length > 0 || "This field is required"],
-        description: [
-          (val) => (val || "").length > 0 || "This field is required",
-        ],
-      },
     };
   },
   created() {
@@ -73,35 +66,86 @@ export default {
     });
   },
   computed: {
-    eventToSetup() {
+    oldEvent() {
       return this.$store.state.events.find((event) => {
         return event.eventId == this.$route.params.id;
       });
     },
+    newEvent() {
+      return this.setupEvent(this.event);
+    },
   },
   methods: {
     submitEventSetup() {
-      console.log(this.event);
-      console.log(this.genres);
-
       SongsService.genres(this.$route.params.id, this.genres)
         .then((response) => {
           if (response.status === 200) {
-            SongsService.createPossibleSongs(this.$route.params.id).then(
-              (response) => {
-                if (response.status === 200) {
-                  this.$router.push({ name: "events" });
-                }
+            EventsService.updateEvent(
+              this.$route.params.id,
+              this.newEvent
+            ).then((response) => {
+              if (response.status === 200 || response.status === 201) {
+                console.log(this.newEvent)
+                this.$router.push({ name: "events" });
               }
-            );
+            });
           }
         })
         .catch((error) => {
           alert(
             `Error: ${error.response.status} - ${error.response.statusText}`
           );
-        })
+        });
     },
+    setupEvent(event) {
+      if (event.EventName === "" && event.EventDescription === "") {
+        return this.oldEvent;
+      }
+      else if (event.EventName === "" && event.EventDescription !== "") {
+        return {
+          DjUserId: this.oldEvent.djUserId,
+          HostUserId: this.oldEvent.hostUserId,
+          PlaylistId: this.oldEvent.playlistId,
+          EventName: this.oldEvent.eventName,
+          EventDescription: event.EventDescription,
+          EventDate: this.oldEvent.eventDate,
+          StartTime: this.oldEvent.startTime,
+          EndTime: this.oldEvent.endTime,
+          DjName: this.oldEvent.djName,
+          HostName: this.oldEvent.hostName,
+          LoggedInUser: this.oldEvent.loggedInUser,
+        };
+      } else if (event.EventDescription === "" && event.EventName !== "") 
+      {
+        return {
+          DjUserId: this.oldEvent.djUserId,
+          HostUserId: this.oldEvent.hostUserId,
+          PlaylistId: this.oldEvent.playlistId,
+          EventName: event.EventName,
+          EventDescription: this.oldEvent.eventDescription,
+          EventDate: this.oldEvent.eventDate,
+          StartTime: this.oldEvent.startTime,
+          EndTime: this.oldEvent.endTime,
+          DjName: this.oldEvent.djName,
+          HostName: this.oldEvent.hostName,
+          LoggedInUser: this.oldEvent.loggedInUser,
+        };
+      } else {
+        return {
+          DjUserId: this.oldEvent.djUserId,
+          HostUserId: this.oldEvent.hostUserId,
+          PlaylistId: this.oldEvent.playlistId,
+          EventName: event.EventName,
+          EventDescription: event.EventDescription,
+          EventDate: this.oldEvent.eventDate,
+          StartTime: this.oldEvent.startTime,
+          EndTime: this.oldEvent.endTime,
+          DjName: this.oldEvent.djName,
+          HostName: this.oldEvent.hostName,
+          LoggedInUser: this.oldEvent.loggedInUser,
+        };
+      }
+    }
   },
 };
 </script>
@@ -122,6 +166,6 @@ export default {
 }
 
 #text-area {
-    resize: none;
+  resize: none;
 }
 </style>

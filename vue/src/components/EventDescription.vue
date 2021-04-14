@@ -16,7 +16,7 @@
     </div>
 
     <div class="playlist-display">
-      <div class="playlist-div-left">
+      <div class="playlist-div-left" id="large-2">
         <v-card class="mx-auto" max-width="500">
           <!-- Tool bar -->
           <v-toolbar color="deep-purple accent-4" dark>
@@ -103,7 +103,7 @@
         </v-card>
       </div>
 
-      <div class="playlist-div">
+      <div class="playlist-div" id="large-1">
         <v-card class="mx-auto" max-width="700">
           <v-toolbar color="deep-purple accent-4" dark>
             <v-toolbar-title>Available Songs To Pick</v-toolbar-title>
@@ -138,8 +138,8 @@
                 <td>
                   <v-btn
                     small
-                    v-if="
-                      !song.hasUpvoted &&
+                    v-show="
+                      (!upVoted.includes(song.songId)) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="likebtn"
@@ -157,8 +157,8 @@
 
                   <v-btn
                     small
-                    v-if="
-                      song.hasUpvoted &&
+                    v-show="
+                      (upVoted.includes(song.songId)) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="likebtn"
@@ -187,8 +187,8 @@
                 <td>
                   <v-btn
                     small
-                    v-if="
-                      !song.hasDownvoted &&
+                    v-show="
+                      (!downVoted.includes(song.songId)) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="dislikebtn"
@@ -205,8 +205,8 @@
                   </v-btn>
                   <v-btn
                     small
-                    v-if="
-                      song.hasDownvoted &&
+                    v-show="
+                      (downVoted.includes(song.songId)) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="likebtn"
@@ -269,7 +269,9 @@ export default {
       event: {},
       showShoutoutIndex: -1,
       shoutoutText: "",
-      eventShoutOuts: []
+      eventShoutOuts: [],
+      upVoted:[],
+      downVoted: []
     };
   },
   created() {
@@ -294,6 +296,12 @@ export default {
     upVote(song) {
       song.hasUpvoted = true;
       song.hasDownvoted = false;
+      this.upVoted.push(song.songId);
+      if (this.downVoted.includes(song.songId)){
+        this.downVoted = this.downVoted.filter((vote) => {
+          vote != song.songId;
+        })
+      }
       this.songVote.PlaylistId = this.event.eventId;
       this.songVote.SongId = song.songId;
       this.songVote.VoteValue = 1;
@@ -312,6 +320,12 @@ export default {
     downVote(song) {
       song.hasDownvoted = true;
       song.hasUpvoted = false;
+      this.downVoted.push(song.songId);
+      if (this.upVoted.includes(song.songId)){
+        this.upVoted = this.upVoted.filter((vote) => {
+          vote != song.songId;
+        })
+      }
       this.songVote.PlaylistId = this.event.eventId;
       this.songVote.SongId = song.songId;
       this.songVote.VoteValue = -1;
@@ -429,18 +443,56 @@ export default {
 .media-player > img {
   width: 20%;
 }
-.playlist-div {
-  width: 90%;
+.playlist-div, .playlist-div-left {
+  width: auto;
   margin: auto;
   height: auto;
   max-height: 150%;
   overflow: auto;
 }
 
-.playlist-div-left {
-}
-
 a {
   text-decoration: none;
+}
+
+#large-2, #large-1 {
+  height: 100vh;
+  overflow-y: scroll;
+  margin-bottom: 25px;
+  background: #ccc;
+}
+
+#large-2::-webkit-scrollbar-track {
+  border: 1px solid #000;
+  padding: 2px 0;
+  background-color: #404040;
+}
+
+#large-2::-webkit-scrollbar {
+  width: 10px;
+}
+
+#large-2::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #737272;
+  border: 1px solid #000;
+}
+
+#large-1::-webkit-scrollbar-track {
+  border: 1px solid #000;
+  padding: 2px 0;
+  background-color: #404040;
+}
+
+#large-1::-webkit-scrollbar {
+  width: 10px;
+}
+
+#large-1::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #737272;
+  border: 1px solid #000;
 }
 </style>

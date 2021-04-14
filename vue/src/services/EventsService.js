@@ -19,5 +19,5 @@ export default {
 
     getEventShoutouts(eventId) {
         return axios.get(`/song-shoutouts/${eventId}`)
-    }
+    },
 }
