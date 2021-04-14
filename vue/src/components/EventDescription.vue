@@ -50,16 +50,25 @@
               </td>
 
               <td>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   v-if="$store.state.user.userId != event.djUserId"
-                  color="primary"
-                  elevation="6"
-                  raised
-                  rounded
-                  x-small
+                  small
+                  icon
+                  outlined
+                  fab
+                  dark
+                  color="blue darken-3"
+                  v-bind="attrs"
+                  v-on="on"
                   v-on:click="showShoutout(song.songId)"
-                  >add shoutout</v-btn
-                >
+                  >
+                   <v-icon dark> mdi-message-text </v-icon>
+                   </v-btn>
+                  </template>
+                  <span>Enter Shoutout</span>
+                </v-tooltip>
                 <input
                   v-if="$store.state.user.userId != event.djUserId"
                   type="text"
@@ -80,7 +89,7 @@
                 </v-btn>
               </td>
               <td v-if="hasShoutout(song.songId) && $store.state.user.userId == event.djUserId">
-                <shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId"/>
+                <display-shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId"/>
               </td>
             </tr>
           </table>
@@ -219,10 +228,10 @@
 <script>
 import SongsService from "../services/SongsService.js";
 import EventsService from "../services/EventsService.js";
-import Shoutout from "../components/Shoutout.vue";
+import DisplayShoutout from "./DisplayShoutout.vue";
 
 export default {
-  components: { Shoutout, },
+  components: { DisplayShoutout, },
   data() {
     return {
       /* the possible playlist needs to be set when a user clicks on an event. 
