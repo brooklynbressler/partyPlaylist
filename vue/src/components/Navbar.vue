@@ -44,7 +44,7 @@
     </router-link>
 
     <router-link
-      :to="{ name: 'createEvent' }"
+      :to="{ name: 'create' }"
       v-if="$store.state.isLoggedIn === true"
     >
       <v-tooltip bottom>

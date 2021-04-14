@@ -11,6 +11,7 @@ import SongVotingTable from '../components/SongVotingTable.vue'
 import Update from '../views/Update.vue'
 import Setup from '../views/Setup.vue'
 import store from '../store/index'
+import Create from '../components/Create.vue'
 
 Vue.use(Router)
 
@@ -106,6 +107,11 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: "/create",
+      name: "create",
+      component: Create
     }
   ]
 })
