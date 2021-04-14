@@ -10,8 +10,10 @@ import CreateEvent from '../views/CreateEvent.vue'
 import SongVotingTable from '../components/SongVotingTable.vue'
 import Update from '../views/Update.vue'
 import Setup from '../views/Setup.vue'
-import store from '../store/index'
 import Create from '../components/Create.vue'
+import Welcome from '../components/Welcome.vue'
+import store from '../store/index'
+
 
 Vue.use(Router)
 
@@ -32,6 +34,14 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/welcome",
+      name: "welcome",
+      component: Welcome,
       meta: {
         requiresAuth: false
       }
