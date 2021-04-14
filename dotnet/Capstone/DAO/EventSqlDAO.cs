@@ -89,8 +89,8 @@ namespace Capstone.DAO
 
                     conn.Open();
 
-                    //string sql = "SELECT event_id, dj_user_id, host_user_id, playlist_id, event_name, description, event_date, start_time, end_time, dj.first_name AS djfirstname, dj.last_name AS djlastname, host.first_name AS hostfirstname, host.last_name AS hostlastname FROM events JOIN users dj ON dj_user_id = dj.user_id JOIN users host ON host_user_id = host.user_id;";
-                    string sql = "SELECT event_id, dj_user_id, host_user_id, playlist_id, event_name, description, event_date, start_time, end_time FROM events;";
+                    string sql = "SELECT event_id, dj_user_id, host_user_id, playlist_id, event_name, description, event_date, start_time, end_time, dj.first_name AS djfirstname, dj.last_name AS djlastname, host.first_name AS hostfirstname, host.last_name AS hostlastname FROM events JOIN users dj ON dj_user_id = dj.user_id JOIN users host ON host_user_id = host.user_id;";
+                    //string sql = "SELECT event_id, dj_user_id, host_user_id, playlist_id, event_name, description, event_date, start_time, end_time FROM events;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -176,12 +176,12 @@ namespace Capstone.DAO
             e.EventDate = temp[0];
 
             // Dj and host names
-            //string djFirst = Convert.ToString(reader["djfirstname"]);
-            //string djLast = Convert.ToString(reader["djlastname"]).Substring(0, 1);
-            //e.DjName = $"{djFirst} {djLast}";
-            //string hostFirst = Convert.ToString(reader["hostfirstname"]);
-            //string hostLast = Convert.ToString(reader["hostlastname"]).Substring(0, 1);
-            //e.HostName = $"{hostFirst} {hostLast}";
+            string djFirst = Convert.ToString(reader["djfirstname"]);
+            string djLast = Convert.ToString(reader["djlastname"]).Substring(0, 1);
+            e.DjName = $"{djFirst} {djLast}";
+            string hostFirst = Convert.ToString(reader["hostfirstname"]);
+            string hostLast = Convert.ToString(reader["hostlastname"]).Substring(0, 1);
+            e.HostName = $"{hostFirst} {hostLast}";
 
             return e;
         }
