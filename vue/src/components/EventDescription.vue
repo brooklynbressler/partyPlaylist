@@ -50,16 +50,25 @@
               </td>
 
               <td>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   v-if="$store.state.user.userId != event.djUserId"
-                  color="primary"
-                  elevation="6"
-                  raised
-                  rounded
-                  x-small
+                  small
+                  icon
+                  outlined
+                  fab
+                  dark
+                  color="blue darken-3"
+                  v-bind="attrs"
+                  v-on="on"
                   v-on:click="showShoutout(song.songId)"
-                  >add shoutout</v-btn
-                >
+                  >
+                   <v-icon dark> mdi-message-text </v-icon>
+                   </v-btn>
+                  </template>
+                  <span>Enter Shoutout</span>
+                </v-tooltip>
                 <input
                   v-if="$store.state.user.userId != event.djUserId"
                   type="text"
