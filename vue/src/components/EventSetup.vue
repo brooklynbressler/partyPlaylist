@@ -86,7 +86,12 @@ export default {
             ).then((response) => {
               if (response.status === 200 || response.status === 201) {
                 console.log(this.newEvent)
-                this.$router.push({ name: "events" });
+                SongsService.createPossibleSongs(this.$route.params.id)
+                .then((resp) => {
+                  if (resp.status === 200){
+                    this.$router.push({ name: "events" });
+                  }
+                })
               }
             });
           }
