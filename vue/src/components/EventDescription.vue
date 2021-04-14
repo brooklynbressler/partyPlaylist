@@ -272,8 +272,8 @@ export default {
       eventShoutOuts: [],
       upVoted:[],
       downVoted: [],
-      upValue,
-      downValue,
+      upValue: 0,
+      downValue: 0,
     };
   },
   created() {
