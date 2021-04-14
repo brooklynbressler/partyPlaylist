@@ -17,7 +17,7 @@
 
     <div class="playlist-display">
       <div class="playlist-div-left" id="large-2">
-        <v-card class="mx-auto" max-width="500">
+        <v-card class="mx-auto" max-width="800">
           <!-- Tool bar -->
           <v-toolbar color="deep-purple accent-4" dark>
             <v-toolbar-title>DJ's Current Playlist</v-toolbar-title>
@@ -94,6 +94,9 @@
                 >
                   <v-icon dark> mdi-minus </v-icon>
                 </v-btn>
+              </td>
+              <td v-if="1 === 1">
+                <enter-shoutout v-bind:songId="song.songId" />
               </td>
               <td v-if="hasShoutout(song.songId) && $store.state.user.userId == event.djUserId">
                 <display-shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId"/>
@@ -236,13 +239,13 @@
 import SongsService from "../services/SongsService.js";
 import EventsService from "../services/EventsService.js";
 import DisplayShoutout from "./DisplayShoutout.vue";
-// import EnterShoutout from "./EnterShoutout.vue";
+import EnterShoutout from "./EnterShoutout.vue";
 
 export default {
   components:
    { 
      DisplayShoutout,
-     // EnterShoutout
+     EnterShoutout
    },
   data() {
     return {

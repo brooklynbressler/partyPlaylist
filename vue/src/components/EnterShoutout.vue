@@ -1,6 +1,9 @@
 <template>
-  <v-dialog max-width="600px">
-    <v-tooltip bottom>
+  <v-row justify="center">
+  <v-dialog 
+    max-width="600px"
+    v-model="dialog"
+    >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           small
@@ -14,9 +17,7 @@
         >
           <v-icon dark> mdi-bullhorn </v-icon>
         </v-btn>
-        <span>Enter Shoutout</span>
       </template>
-    </v-tooltip>
 
     <v-card>
       <v-card-title>
@@ -44,6 +45,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  </v-row>
 </template>
 
 
@@ -54,6 +56,12 @@ export default {
     return {
       dialog: false,
       shoutout: "",
+      newSongShoutout: {
+        PlaylistId: 0,
+        SongId: 0,
+        ShoutOutMessage: "",
+      },
+
     };
   },
   methods: {
