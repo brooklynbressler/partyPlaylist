@@ -130,14 +130,14 @@ p {
 .v-application{
   background: transparent !important; 
 }
-.v-main {
+body {
   overflow-y: auto;
 }
-.v-main::-webkit-scrollbar {
-  width: 3px;
-  background-color: rgb(185, 177, 177); 
+body::-webkit-scrollbar {
+  width: 0px;
+  background-color: #444; 
 }
-.v-main::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
   background-color: #444;
 }
 </style>
