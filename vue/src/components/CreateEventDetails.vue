@@ -92,7 +92,7 @@ export default {
         EventDate: "",
         StartTime: "",
         EndTime: "",
-      },
+      }
     };
   },
   created() {
@@ -103,11 +103,16 @@ export default {
   },
   computed: {
     allItems() {
-      return this.$store.state.users.data.map(
-        user => {
-          return {value: user.userId, name: `${user.firstName} ${user.lastName}`} 
-        }
-      )
+      if(this.$store.state.users.data){
+        return this.$store.state.users.data.map(
+          user => {
+            return {value: user.userId, name: `${user.firstName} ${user.lastName}`} 
+          }
+        )
+      }
+      else{
+        return 0;
+      }
     }
   },
   methods: {
