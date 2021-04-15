@@ -414,7 +414,6 @@ export default {
   text-align: center;
   width: 60%;
   margin: auto;
-<<<<<<< HEAD
   margin-bottom: -50px;
   background: rgba(0, 0, 0, 0.4);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
@@ -428,15 +427,6 @@ export default {
 }
 .event-description {
   text-align: center;
-=======
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.4);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-}
-.event-description {
-  text-align: center;
-  border-radius: 3px;
->>>>>>> 70b8ae4025a8105566470e1e2f79b4ee512f3198
   width: 50%;
   margin: auto;
   margin-top: 5px;
@@ -463,10 +453,6 @@ export default {
 a {
   text-decoration: none;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 70b8ae4025a8105566470e1e2f79b4ee512f3198
 #large-2,
 #large-1 {
   height: 100vh;
