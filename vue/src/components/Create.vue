@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <v-form
       id="create-event-form"
       ref="form"
@@ -201,18 +201,28 @@ export default {
 
 <style>
 #create-event-form {
-  width: 25%;
+  width: 26%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.4);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
   margin: auto;
   padding: 4em 3em 3em 3em;
   text-align: center;
+  overflow-y: auto;
 }
 .form-button {
   color: white;
 }
 #text-area {
-  resize: none;
+  resize: none;  
+}
+
+#create-event-form::-webkit-scrollbar {
+  width: 3px;
+  background-color: rgb(185, 177, 177); 
+}
+
+#create-event-form::-webkit-scrollbar-thumb {
+  background-color: #444;
 }
 </style>
