@@ -44,40 +44,7 @@
                 <iframe v-bind:src=(somethingElse+song.spotifyId) width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
               </td>
 
-              <!--
-              <td v-if="$store.state.user.userId != event.djUserId">
-                <enter-shoutout />
-
-              </td>
-              -->
-
               <td>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  v-if="$store.state.user.userId != event.djUserId"
-                  small
-                  icon
-                  outlined
-                  fab
-                  dark
-                  color="blue darken-3"
-                  v-bind="attrs"
-                  v-on="on"
-                  v-on:click="showShoutout(song.songId)"
-                  >
-                   <v-icon dark> mdi-message-text </v-icon>
-                   </v-btn>
-                  </template>
-                  <span>Enter Shoutout</span>
-                </v-tooltip>
-                <input
-                  v-if="$store.state.user.userId != event.djUserId"
-                  type="text"
-                  v-show="song.songId == showShoutoutIndex"
-                  placeholder="enter shoutout"
-                  v-model="newSongShoutout.ShoutOutMessage"
-                />
                 <v-btn
                   v-if="$store.state.user.userId == event.djUserId"
                   class="mx-2"
@@ -90,12 +57,25 @@
                   <v-icon dark> mdi-minus </v-icon>
                 </v-btn>
               </td>
+
               <td v-if="$store.state.user.userId != event.djUserId">
-                <enter-shoutout v-bind:songId="song.songId" v-bind:playlistId="event.eventId"/>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <span v-bind="attrs" v-on="on"><enter-shoutout v-bind:songId="song.songId" v-bind:playlistId="event.eventId"/></span>
+                  </template>
+                  <span>Enter Shoutout</span>
+                </v-tooltip>
               </td>
+
               <td v-if="hasShoutout(song.songId) && $store.state.user.userId == event.djUserId">
-                <display-shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId"/>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <span v-bind="attrs" v-on="on"><display-shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId" /></span>
+                  </template>
+                  <span>View Shoutout</span>
+                </v-tooltip>
               </td>
+
             </tr>
           </table>
         </v-card>
@@ -259,8 +239,6 @@ export default {
       },
       totalVotes: 0,
       event: {},
-      showShoutoutIndex: -1,
-      shoutoutText: "",
       eventShoutOuts: [],
       upVoted:[],
       downVoted: [],
@@ -341,28 +319,6 @@ export default {
           );
         });
     },
-    showShoutout(songId) {
-      if (songId != this.showShoutoutIndex) {
-        this.showShoutoutIndex = songId;
-      } else {
-        this.newSongShoutout.PlaylistId = this.event.eventId;
-        this.newSongShoutout.songId = songId;
-        if (this.newSongShoutout.ShoutOutMessage != ""){
-        SongsService.addSongShoutout(this.newSongShoutout)
-          .then((response) => {
-            if (response.status == 201) {
-              this.showShoutoutIndex = -1;
-              this.newSongShoutout.ShoutOutMessage = "";
-            }
-          })
-          .catch((error) => {
-            alert(
-              `Error: ${error.response.status} - ${error.response.statusText}`
-            );
-          });
-      }
-      }
-    },
     addToPlaylist(song) {
       this.addRemoveSong.PlaylistId = this.event.eventId;
       this.addRemoveSong.SongId = song.songId;
@@ -417,8 +373,6 @@ export default {
 <style>
 .main-description {
   text-align: center;
-  border: solid black;
-  border-radius: 3px;
   width: 75%;
   margin: auto;
   margin-top: 30px;

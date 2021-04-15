@@ -60,8 +60,8 @@ export default {
       dialog: false,
       shoutout: "",
       newSongShoutout: {
-        PlaylistId: 0,
-        SongId: 0,
+        PlaylistId: this.playlistId,
+        SongId: this.songId,
         ShoutOutMessage: "",
       },
 
@@ -73,8 +73,6 @@ export default {
       this.shoutout = "";
     },
     submitNewShoutout() {
-      this.newSongShoutout.PlaylistId = this.playlistId;
-      this.newSongShoutout.SongId = this.songId;
       this.newSongShoutout.ShoutOutMessage = this.shoutout;
       if (this.shoutout != "") {
         SongsService.addSongShoutout(this.newSongShoutout).then((response) => {
