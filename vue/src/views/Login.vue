@@ -1,15 +1,6 @@
 <template>
   <div id="login" class="text-center">
-    <div class="signin-div">
-      <div class="logo-div-show">
-        <router-link :to="{ name: 'home' }">
-          <img
-            id="logo-img-show"
-            src="https://lh3.googleusercontent.com/proxy/TmUJlkAgW9smBxoN-4h2D9lLq3tylyJJomxwgihwwlvrf4J8FKrOMjTOxvKaNDS6gjqY_8xrP8Q9oqSVC9hhmXHRPnxgnaUM1mFSJRY74EpN"
-            alt=""
-          />
-        </router-link>
-      </div>
+    <div class="signin-div">      
       <v-form id="signin-form" class="form-signin" @submit.prevent="login">
         <v-container id="form-container">
           <v-row>
@@ -136,6 +127,8 @@ export default {
 
 #signin-form {
   transform: skew(0deg, 10deg);
+  padding-top: 7em;
+  margin-bottom: -6em;
 }
 
 .password-div {

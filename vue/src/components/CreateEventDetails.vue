@@ -77,7 +77,6 @@
 
 <script>
 import EventsService from "../services/EventsService.js";
-import UsersService from "../services/UsersService.js";
 
 export default {
   name: "create-event",
@@ -94,12 +93,6 @@ export default {
         EndTime: "",
       }
     };
-  },
-  created() {
-    UsersService.getUsers().then((users) => {
-      this.$store.commit("GET_ALL_USERS", users);     
-      console.log(users);
-    });
   },
   computed: {
     allItems() {

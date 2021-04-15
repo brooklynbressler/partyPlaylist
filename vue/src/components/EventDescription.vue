@@ -12,7 +12,6 @@
         <p>{{ event.eventDescription }}</p>
       </div>
     </div>
-
     <div>
       <iframe
         src="https://open.spotify.com/embed/playlist/6OnduA17QGmW6Ak91Uo4M6"
@@ -415,6 +414,7 @@ export default {
   text-align: center;
   width: 60%;
   margin: auto;
+<<<<<<< HEAD
   margin-bottom: -50px;
   background: rgba(0, 0, 0, 0.4);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
@@ -428,6 +428,15 @@ export default {
 }
 .event-description {
   text-align: center;
+=======
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+}
+.event-description {
+  text-align: center;
+  border-radius: 3px;
+>>>>>>> 70b8ae4025a8105566470e1e2f79b4ee512f3198
   width: 50%;
   margin: auto;
   margin-top: 5px;
@@ -451,11 +460,13 @@ export default {
   max-height: 150%;
   overflow: auto;
 }
-
 a {
   text-decoration: none;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 70b8ae4025a8105566470e1e2f79b4ee512f3198
 #large-2,
 #large-1 {
   height: 100vh;
@@ -469,32 +480,31 @@ a {
   padding: 2px 0;
   background-color: #404040;
 }
-
 #large-2::-webkit-scrollbar {
   width: 10px;
 }
-
 #large-2::-webkit-scrollbar-thumb {
   border-radius: 10px;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #737272;
   border: 1px solid #000;
 }
-
 #large-1::-webkit-scrollbar-track {
   border: 1px solid #000;
   padding: 2px 0;
   background-color: #404040;
 }
-
 #large-1::-webkit-scrollbar {
   width: 10px;
 }
-
 #large-1::-webkit-scrollbar-thumb {
   border-radius: 10px;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #737272;
   border: 1px solid #000;
+}
+.description-box {
+  margin-top: 35px;
+  color: rgb(241, 239, 239);
 }
 </style>

@@ -1,16 +1,12 @@
 <template>
   <div class="wrapper">
-    <v-form
-      id="create-event-form"
-      ref="form"
-      lazy-validation
-      v-on:submit.prevent="createNewEvent"
-    >
+    <v-form id="update-event-form" ref="form" lazy-validation v-on:submit.prevent="updateEvent">
+      
       <!-- name -->
       <v-text-field
-        v-model="event.EventName"
+        v-model="updatedEvent.EventName"
         :counter="60"
-        label="New Event Name"
+        label="Update Name"
         append-icon="mdi-pencil-outline"
         dark
       ></v-text-field>
@@ -18,7 +14,7 @@
       <!-- description -->
       <v-textarea
         id="text-area"
-        v-model="event.EventDescription"
+        v-model="updateEvent.EventDescription"
         :counter="145"
         label="Description"
         append-icon="mdi-message-text-outline"
@@ -38,7 +34,7 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
-            v-model="event.EventDate"
+            v-model="updateEvent.EventDate"
             label="Date"
             append-icon="mdi-calendar"
             readonly
@@ -50,7 +46,7 @@
         </template>
         <v-date-picker
           ref="picker"
-          v-model="event.EventDate"
+          v-model="updateEvent.EventDate"
           :min="new Date().toISOString().substr(0, 10)"
           color="red darken-1"
           header-color="grey darken-4"
@@ -69,7 +65,7 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
-            v-model="event.StartTime"
+            v-model="updateEvent.StartTime"
             label="Start Time"
             append-icon="mdi-clock-outline"
             readonly
@@ -80,7 +76,7 @@
           ></v-text-field>
         </template>
         <v-time-picker
-          v-model="event.StartTime"
+          v-model="updateEvent.StartTime"
           :max="end"
           ampm-in-title
           :allowed-minutes="allowedMinutes"
@@ -101,7 +97,7 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
-            v-model="event.EndTime"
+            v-model="updateEvent.EndTime"
             label="End Time"
             append-icon="mdi-clock-alert-outline"
             readonly
@@ -112,7 +108,7 @@
           ></v-text-field>
         </template>
         <v-time-picker
-          v-model="event.EndTime"
+          v-model="updateEvent.EndTime"
           :max="end"
           ampm-in-title
           :allowed-minutes="allowedMinutes"
@@ -128,28 +124,30 @@
         item-text="name"
         label="Select a host"
         append-icon="mdi-account-plus-outline"
-        v-model="event.HostUserId"
+        v-model="updateEvent.HostUserId"
         dark
         dense
       ></v-select>
       <v-btn type="submit" class="form-button" color="white" x-large text>
-        Save
+        Update
       </v-btn>
+
     </v-form>
   </div>
 </template>
 
 <script>
+import UsersService from "../services/UsersService.js";
 import EventsService from "../services/EventsService.js";
 
 export default {
-  name: "create-event",
+  name: "new-update-event",
   data() {
     return {
       dateMenu: false,
       startTimeMenu: false,
       endTimeMenu: false,
-      event: {
+      updatedEvent: {
         DjUserId: 0,
         HostUserId: "",
         PlaylistId: 2,
@@ -161,7 +159,20 @@ export default {
       },
     };
   },
+  created() {
+    EventsService.getEvents().then((resp) => {
+      this.$store.commit("SET_EVENTS", resp.data);
+    });
+    UsersService.getUsers().then((users) => {
+      this.$store.commit("GET_ALL_USERS", users);
+    });
+  },
   computed: {
+    eventToEdit() {
+      return this.$store.state.events.find((event) => {
+        return event.eventId == this.$route.params.id;
+      });
+    },
     allItems() {
       return this.$store.state.users.data.map((user) => {
         return {
@@ -170,20 +181,38 @@ export default {
         };
       });
     },
+    formatDate() {
+      const dateToFormat = this.eventToEdit.eventDate.split("/");
+
+      let month = dateToFormat[0];
+      let day = dateToFormat[1];
+      let year = dateToFormat[2];
+
+      dateToFormat.forEach((element) => {
+        if (dateToFormat[0] === element && element.length === 1) {
+          month = `0${element}`;
+        } else if (dateToFormat[1] === element && element.length === 1) {
+          day = `0${element}`;
+        }
+      });
+
+      return `${year}-${month}-${day}`;
+    },
   },
   methods: {
     allowedMinutes: (v) => v % 15 === 0,
-    createNewEvent() {
-      this.event.HostUserId = EventsService.addEvent(this.event)
+    updateEvent() {
+      this.updatedEvent.DjUserId = this.eventToEdit.djUserId;
+      this.updatedEvent.PlaylistId = this.eventToEdit.playlistId;
+      EventsService.updateEvent(this.$route.params.id, this.updatedEvent)
         .then((response) => {
-          console.log(response.status);
           if (response.status === 201) {
             this.$router.push({ name: "events" });
           }
         })
         .catch((error) => {
           alert(
-            `Error: ${error.response.status} - DANG! ${error.response.statusText}`
+            `Error: ${error.response.status} - ${error.response.statusText}`
           );
         });
     },
@@ -192,7 +221,7 @@ export default {
 </script>
 
 <style>
-#create-event-form {
+#update-event-form {
   width: 26%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.4);
@@ -201,7 +230,10 @@ export default {
   padding: 4em 3em 3em 3em;
   text-align: center;
   overflow-y: auto;
-  margin-bottom: -50px;
+  margin-bottom: -35px;
+}
+.v-application {
+  margin-bottom: 0;
 }
 .form-button {
   color: white;
@@ -209,11 +241,11 @@ export default {
 #text-area {
   resize: none;  
 }
-#create-event-form::-webkit-scrollbar {
+#update-event-form::-webkit-scrollbar {
   width: 3px;
   background-color: rgb(185, 177, 177); 
 }
-#create-event-form::-webkit-scrollbar-thumb {
+#update-event-form::-webkit-scrollbar-thumb {
   background-color: #444;
 }
 </style>

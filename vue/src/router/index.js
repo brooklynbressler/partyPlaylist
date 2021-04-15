@@ -12,6 +12,7 @@ import Update from '../views/Update.vue'
 import Setup from '../views/Setup.vue'
 import Create from '../components/Create.vue'
 import Welcome from '../components/Welcome.vue'
+import NewUpdateEvent from '../components/NewUpdateEvent'
 import store from '../store/index'
 
 
@@ -121,7 +122,18 @@ const router = new Router({
     {
       path: "/create",
       name: "create",
-      component: Create
+      component: Create,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/update/:id",
+      name: "update",
+      component: NewUpdateEvent,
+      meta: {
+        requiresAuth: false
+      }
     }
   ]
 })
