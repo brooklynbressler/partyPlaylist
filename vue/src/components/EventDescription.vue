@@ -90,8 +90,8 @@
                   <v-icon dark> mdi-minus </v-icon>
                 </v-btn>
               </td>
-              <td v-if="1 === 1">
-                <enter-shoutout v-bind:songId="song.songId" />
+              <td v-if="$store.state.user.userId != event.djUserId">
+                <enter-shoutout v-bind:songId="song.songId" v-bind:playlistId="event.eventId"/>
               </td>
               <td v-if="hasShoutout(song.songId) && $store.state.user.userId == event.djUserId">
                 <display-shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId"/>

@@ -7,6 +7,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
             small
+            class="mx-4"
             icon
             outlined
             fab

@@ -7,6 +7,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           small
+          class="mx-4"
           icon
           outlined
           fab
@@ -15,7 +16,7 @@
           v-bind="attrs"
           v-on="on"
         >
-          <v-icon dark> mdi-bullhorn </v-icon>
+          <v-icon dark> mdi-message-text </v-icon>
         </v-btn>
       </template>
 
@@ -34,12 +35,12 @@
           class="mx-0 mt-3"
           color="blue darken-3"
           text
-          @click="dialog = false"
+          @click="cancel"
         >
           Cancel
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn class="mx-0 mt-3" color="blue darken-3" text @click="submit">
+        <v-btn class="mx-0 mt-3" color="blue darken-3" text @click="submitNewShoutout">
           Submit
         </v-btn>
       </v-card-actions>
@@ -50,8 +51,10 @@
 
 
 <script>
+import SongsService from "../services/SongsService.js";
+
 export default {
-  props: [],
+  props: ['songId', 'playlistId'],
   data() {
     return {
       dialog: false,
@@ -65,10 +68,27 @@ export default {
     };
   },
   methods: {
-    submit() {
-      console.log(this.shoutout);
+    cancel() {
       this.dialog = false;
+      this.shoutout = "";
     },
+    submitNewShoutout() {
+      this.newSongShoutout.PlaylistId = this.playlistId;
+      this.newSongShoutout.SongId = this.songId;
+      this.newSongShoutout.ShoutOutMessage = this.shoutout;
+      if (this.shoutout != "") {
+        SongsService.addSongShoutout(this.newSongShoutout).then((response) => {
+          if (response.status == 201) {
+            this.shoutout = "";
+            this.dialog = false;
+          }
+        })
+        .catch((error) => {
+          alert(`Error: ${error.response.status} - ${error.response.statusText}`);
+        });
+      }
+
+    }
   },
 };
 </script>
