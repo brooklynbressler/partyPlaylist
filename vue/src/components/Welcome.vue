@@ -8,7 +8,7 @@
       />
     </div>
     <div class="description-div">
-      <h1 v-bind="user">Welcome!</h1>
+      <h1 v-bind="user">Welcome {{ user.firstName }}!</h1>
       <h3 class="how-to">Let's get this party started</h3>
     </div>
     <div class="welcome-container instructions-div">
@@ -47,18 +47,23 @@
 import UsersService from "../services/UsersService.js";
 
 export default {
+  data() {
+    return {
+      usersArray: []
+    }
+  },
   created() {
-    UsersService.getUsers().then((users) => {
-      this.$store.commit("GET_ALL_USERS", users);
+    UsersService.getUsers().then((response) => {
+      this.usersArray = response.data;
     });
   },
-  // computed: {
-  //   user() {
-  //     return this.$store.state.users.find((user) => {
-  //       return user.userId == this.$store.state.user.userId;
-  //     });
-  //   },
-  // },
+  computed: {
+    user() {
+      return this.usersArray.find((user) => {
+        return user.userId == this.$store.state.user.userId;
+      });
+    },
+  },
 };
 </script>
 
