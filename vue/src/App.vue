@@ -58,12 +58,19 @@
 
 <script>
 import Navbar from "./components/Navbar.vue"
+import UsersService from "./services/UsersService.js"
 
 export default {
   components: {
     Navbar
   },
   data: () => ({ drawer: false }),
+  created() {
+    UsersService.getUsers().then((users) => {
+      this.$store.commit("GET_ALL_USERS", users);     
+      console.log(users);
+    });
+  }
 };
 </script>
 

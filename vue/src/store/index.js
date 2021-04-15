@@ -23,7 +23,7 @@ export default new Vuex.Store({
     user: currentUser || {},
     users: [],
     events: [],
-    eventPlaylist: [],   
+    eventPlaylist: []
   },
   mutations: {
     SET_EVENT_PLAYLIST(state, playlist) {
