@@ -12,7 +12,7 @@
     </div>
 
     <div>
-      <iframe src="https://open.spotify.com/embed/playlist/6L6CG4GP8xINEizIW0erbh" width="800" height="360" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <iframe src="https://open.spotify.com/embed/playlist/6OnduA17QGmW6Ak91Uo4M6" width="800" height="360" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
     </div>
 
     <div class="playlist-display">
