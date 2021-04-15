@@ -10,8 +10,8 @@
     <router-link :to="{ name: 'home' }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="nav" icon dark v-bind="attrs" v-on="on">
-            <v-icon x-large>mdi-home-outline</v-icon>
+          <v-btn class="nav mr-3" icon dark v-bind="attrs" v-on="on">
+            <v-icon size="48">mdi-home-outline</v-icon>
           </v-btn>
         </template>
         <span>Home</span>
@@ -21,8 +21,8 @@
     <router-link :to="{ name: 'events' }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="nav" icon dark v-bind="attrs" v-on="on">
-            <v-icon large>mdi-calendar-star</v-icon>
+          <v-btn class="nav mr-3" icon dark v-bind="attrs" v-on="on">
+            <v-icon size="40">mdi-calendar-star</v-icon>
           </v-btn>
         </template>
         <span>View Events</span>
@@ -35,8 +35,8 @@
     >
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="nav" icon dark v-bind="attrs" v-on="on">
-            <v-icon large>mdi-account-plus-outline</v-icon>
+          <v-btn class="nav mr-3" icon dark v-bind="attrs" v-on="on">
+            <v-icon size="40">mdi-account-plus-outline</v-icon>
           </v-btn>
         </template>
         <span>Register</span>
@@ -49,8 +49,8 @@
     >
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="nav" icon dark v-bind="attrs" v-on="on">
-            <v-icon large>mdi-calendar-plus</v-icon>
+          <v-btn class="nav mr-3" icon dark v-bind="attrs" v-on="on">
+            <v-icon size="40">mdi-calendar-plus</v-icon>
           </v-btn>
         </template>
         <span>Create Event</span>
@@ -63,8 +63,8 @@
     >
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="nav" icon dark v-bind="attrs" v-on="on">
-            <v-icon large>mdi-login</v-icon>
+          <v-btn class="nav mr-3" icon dark v-bind="attrs" v-on="on">
+            <v-icon size="40">mdi-login</v-icon>
           </v-btn>
         </template>
         <span>Login</span>
@@ -77,8 +77,8 @@
     >
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn class="nav" icon dark v-bind="attrs" v-on="on">
-            <v-icon large>mdi-logout</v-icon>
+          <v-btn icon dark v-bind="attrs" v-on="on">
+            <v-icon size="40">mdi-logout</v-icon>
           </v-btn>
         </template>
         <span>Logout</span>

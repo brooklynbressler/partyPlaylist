@@ -26,7 +26,7 @@
         <br />
         <h3>HOST</h3>
         <p>
-          Decide an event's name, give it a description, and choose what music
+          Decide an event's name, give it a description, and choose what
           genre's go into a playlist
         </p>
       </div>
@@ -52,13 +52,13 @@ export default {
       this.$store.commit("GET_ALL_USERS", users);
     });
   },
-  computed: {
-    user() {
-      return this.$store.state.users.find((user) => {
-        return user.userId == this.$store.state.user.userId;
-      });
-    },
-  },
+  // computed: {
+  //   user() {
+  //     return this.$store.state.users.find((user) => {
+  //       return user.userId == this.$store.state.user.userId;
+  //     });
+  //   },
+  // },
 };
 </script>
 
@@ -68,7 +68,7 @@ export default {
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 80px;
   text-align: center;
-  width: 70%;
+  width: 75%;
   margin: auto;
   margin-top: 4em;
   font-family: "Titillium Web", sans-serif;
