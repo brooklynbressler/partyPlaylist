@@ -30,7 +30,7 @@ namespace Capstone.DAO
                     conn.Open();
 
                     // sql statements
-                    string sql = "SELECT playlist_id, song_id, song_name, artist_name, genre, img_url, song_score FROM potential_playlist_songs WHERE playlist_id = @playlistId AND song_id = @songId;";
+                    string sql = "SELECT playlist_id, song_id, song_name, artist_name, genre, spotify_id, img_url, song_score FROM potential_playlist_songs WHERE playlist_id = @playlistId AND song_id = @songId;";
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@playlistId", songVote.PlaylistId);

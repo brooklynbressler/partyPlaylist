@@ -335,13 +335,13 @@ export default {
     downVote(song) {
       song.hasDownvoted = true;
       song.hasUpvoted = false;
-      this.downValue = 1;
+      this.downValue = -1;
       this.downVoted.push(song.songId);
       if (this.upVoted.includes(song.songId)) {
         this.upVoted = this.upVoted.filter((vote) => {
           vote != song.songId;
         });
-        this.downValue = 2;
+        this.downValue = -2;
       }
       this.songVote.PlaylistId = this.event.eventId;
       this.songVote.SongId = song.songId;
