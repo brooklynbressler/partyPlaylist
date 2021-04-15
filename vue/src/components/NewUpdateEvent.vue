@@ -230,6 +230,10 @@ export default {
   padding: 4em 3em 3em 3em;
   text-align: center;
   overflow-y: auto;
+  margin-bottom: -35px;
+}
+.v-application {
+  margin-bottom: 0;
 }
 .form-button {
   color: white;

@@ -18,7 +18,7 @@
           }"
           class="addMessage"
         >
-          <v-btn id="setup-button" color="white" rounded outlined medium>
+          <v-btn class="btn" id="setup-button" color="white" rounded outlined medium>
             details
           </v-btn>
         </router-link>
@@ -27,7 +27,7 @@
           v-if="$store.state.user.userId == event.djUserId"
           :to="{ name: 'update', params: { id: event.eventId } }"
         >
-          <v-btn id="setup-button" color="white" rounded outlined medium>
+          <v-btn class="btn" id="setup-button" color="white" rounded outlined medium>
             update
           </v-btn>
         </router-link>
@@ -36,7 +36,7 @@
           v-if="$store.state.user.userId == event.hostUserId"
           :to="{ name: 'setup', params: { id: event.eventId } }"
         >
-          <v-btn id="setup-button" color="white" rounded outlined medium>
+          <v-btn class="btn" id="setup-button" color="white" rounded outlined medium>
             setup
           </v-btn>
         </router-link>
@@ -75,15 +75,22 @@ export default {
   padding-top: 30px;
   color: rgb(252, 249, 249);
   font-family: "Titillium Web", sans-serif;
+  margin-bottom: -50px;
 }
 .event-div {
   text-align: center;
   margin: auto;
   margin-top: 25px;
   padding: 10px;
-  border: solid black;
+  border: thin solid black;
   border-radius: 10px;
   width: 75%;
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+}
+.btn {
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
 }
 .button-spacing {
   display: flex;
@@ -97,7 +104,6 @@ export default {
   font-size: 1em;
   font-weight: bold;
 }
-
 .events {
   height: 100vh;
   overflow-y: scroll;
@@ -105,17 +111,14 @@ export default {
   width: 100px;
   background: #ccc;
 }
-
 .events::-webkit-scrollbar-track {
   border: 1px solid #000;
   padding: 2px 0;
   background-color: #404040;
 }
-
 .events::-webkit-scrollbar {
   width: 10px;
 }
-
 .events::-webkit-scrollbar-thumb {
   border-radius: 10px;
   box-shadow: inset 0 0 6px rgba(0,0,0,.3);

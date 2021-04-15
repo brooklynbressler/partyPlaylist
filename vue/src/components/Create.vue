@@ -201,6 +201,7 @@ export default {
   padding: 4em 3em 3em 3em;
   text-align: center;
   overflow-y: auto;
+  margin-bottom: -50px;
 }
 .form-button {
   color: white;
@@ -208,12 +209,10 @@ export default {
 #text-area {
   resize: none;  
 }
-
 #create-event-form::-webkit-scrollbar {
   width: 3px;
   background-color: rgb(185, 177, 177); 
 }
-
 #create-event-form::-webkit-scrollbar-thumb {
   background-color: #444;
 }
