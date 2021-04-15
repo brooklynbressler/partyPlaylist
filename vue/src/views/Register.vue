@@ -158,6 +158,8 @@ export default {
 }
 .form-register {
   transform: skew(0deg, 10deg);
+  padding-top: 9em;
+  margin-bottom: -7em;
 }
 .alert {
   color: white;

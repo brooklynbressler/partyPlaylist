@@ -74,14 +74,12 @@ export default {
 .nav-button {
   margin-top: 40px;
 }
-
 .toolbar-title {
   font-family: "Bebas Neue", cursive;
   font-family: "Fredoka One", cursive;
   color: rgb(49, 118, 223);
   margin-top: 17px;
 }
-
 body {
   background-image: url(https://www.contiki.com/six-two/wp-content/uploads/2015/09/sarthak-navjivan-iTZOPe7BpTM-unsplash.jpg);
   background-size: cover;
@@ -89,11 +87,9 @@ body {
   margin: 0;
   padding: 0;
 }
-
 .toolbar-title {
   font-family: "Titillium Web", sans-serif;
 }
-
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -104,43 +100,44 @@ body {
   margin-top: 4em;
   font-family: "Titillium Web", sans-serif;
 }
-
 #logo-img {
   width: 25%;
   margin-bottom: -1.5em;
 }
-
 .logo-div {
   text-align: center;
 }
-
 .how-to {
   margin-top: 0.2em;
 }
-
 .description-div {
   color: white;
   text-align: center;
   font-family: "Titillium Web", sans-serif;
 }
-
 .instructions-div div {
   color: white;
 }
-
 h1 {
   font-size: 4em;
 }
-
 h3 {
   font-size: 2em;
 }
-
 p {
   font-size: 1.5em;
 }
-
 .v-application{
   background: transparent !important; 
+}
+.v-main {
+  overflow-y: auto;
+}
+.v-main::-webkit-scrollbar {
+  width: 3px;
+  background-color: rgb(185, 177, 177); 
+}
+.v-main::-webkit-scrollbar-thumb {
+  background-color: #444;
 }
 </style>
