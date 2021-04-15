@@ -1,25 +1,38 @@
 <template>
   <div class="main-description">
-    <popup />
-    <h1>{{ event.eventName }}</h1>
-    <h3>Hosted by: {{ event.hostName }}</h3>
-    <h4>
-      {{ event.eventDate }} from {{ event.startTime }} until {{ event.endTime }}
-    </h4>
-    <h4>Here are the details</h4>
-    <div class="event-description">
-      <p>{{ event.eventDescription }}</p>
+    <div class="description-box">
+      <popup />
+      <h1>{{ event.eventName }}</h1>
+      <h2>Hosted by: {{ event.hostName }}</h2>
+      <h3>
+        {{ event.eventDate }} from {{ event.startTime }} until
+        {{ event.endTime }}
+      </h3>
+      <div class="event-description">
+        <p>{{ event.eventDescription }}</p>
+      </div>
     </div>
 
     <div>
-      <iframe src="https://open.spotify.com/embed/playlist/6OnduA17QGmW6Ak91Uo4M6" width="800" height="360" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      <iframe
+        src="https://open.spotify.com/embed/playlist/6OnduA17QGmW6Ak91Uo4M6"
+        width="800"
+        height="360"
+        frameborder="0"
+        allowtransparency="true"
+        allow="encrypted-media"
+      ></iframe>
     </div>
 
     <div class="playlist-display">
       <div class="playlist-div-left" id="large-2">
-        <v-card class="mx-auto" max-width="800">
+        <v-card class="mx-auto" max-width="800" color="brown lighten-4" >
           <!-- Tool bar -->
-          <v-toolbar color="deep-purple accent-4" dark>
+          <v-toolbar 
+            color="brown lighten-1" 
+            dark
+            flat
+            >
             <v-toolbar-title>DJ's Current Playlist</v-toolbar-title>
 
             <v-spacer></v-spacer>
@@ -38,10 +51,15 @@
             </thead>
 
             <tr v-for="song in activePlaylist" v-bind:key="song.songId">
-
-
               <td>
-                <iframe v-bind:src=(somethingElse+song.spotifyId) width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                <iframe
+                  v-bind:src="somethingElse + song.spotifyId"
+                  width="300"
+                  height="80"
+                  frameborder="0"
+                  allowtransparency="true"
+                  allow="encrypted-media"
+                ></iframe>
               </td>
 
               <td>
@@ -61,29 +79,45 @@
               <td v-if="$store.state.user.userId != event.djUserId">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
-                    <span v-bind="attrs" v-on="on"><enter-shoutout v-bind:songId="song.songId" v-bind:playlistId="event.eventId"/></span>
+                    <span v-bind="attrs" v-on="on"
+                      ><enter-shoutout
+                        v-bind:songId="song.songId"
+                        v-bind:playlistId="event.eventId"
+                    /></span>
                   </template>
                   <span>Enter Shoutout</span>
                 </v-tooltip>
               </td>
 
-              <td v-if="hasShoutout(song.songId) && $store.state.user.userId == event.djUserId">
+              <td
+                v-if="
+                  hasShoutout(song.songId) &&
+                  $store.state.user.userId == event.djUserId
+                "
+              >
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
-                    <span v-bind="attrs" v-on="on"><display-shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId" /></span>
+                    <span v-bind="attrs" v-on="on"
+                      ><display-shoutout
+                        v-bind:shoutouts="eventShoutOuts"
+                        v-bind:songId="song.songId"
+                    /></span>
                   </template>
                   <span>View Shoutout</span>
                 </v-tooltip>
               </td>
-
             </tr>
           </table>
         </v-card>
       </div>
 
       <div class="playlist-div" id="large-1">
-        <v-card class="mx-auto" max-width="700">
-          <v-toolbar color="deep-purple accent-4" dark>
+        <v-card class="mx-auto" max-width="700" color="brown lighten-4">
+          <v-toolbar 
+            color="brown lighten-1" 
+            dark
+            flat
+            >
             <v-toolbar-title>Available Songs To Pick</v-toolbar-title>
 
             <v-spacer></v-spacer>
@@ -105,13 +139,20 @@
             <tbody>
               <tr v-for="song in possibleSongs" v-bind:key="song.songId">
                 <td>
-                  <iframe v-bind:src=(somethingElse+song.spotifyId) width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                  <iframe
+                    v-bind:src="somethingElse + song.spotifyId"
+                    width="300"
+                    height="80"
+                    frameborder="0"
+                    allowtransparency="true"
+                    allow="encrypted-media"
+                  ></iframe>
                 </td>
                 <td>
                   <v-btn
                     small
                     v-show="
-                      (!upVoted.includes(song.songId)) &&
+                      !upVoted.includes(song.songId) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="likebtn"
@@ -130,7 +171,7 @@
                   <v-btn
                     small
                     v-show="
-                      (upVoted.includes(song.songId)) &&
+                      upVoted.includes(song.songId) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="likebtn"
@@ -160,7 +201,7 @@
                   <v-btn
                     small
                     v-show="
-                      (!downVoted.includes(song.songId)) &&
+                      !downVoted.includes(song.songId) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="dislikebtn"
@@ -178,7 +219,7 @@
                   <v-btn
                     small
                     v-show="
-                      (downVoted.includes(song.songId)) &&
+                      downVoted.includes(song.songId) &&
                       $store.state.user.userId != event.djUserId
                     "
                     id="likebtn"
@@ -211,11 +252,10 @@ import DisplayShoutout from "./DisplayShoutout.vue";
 import EnterShoutout from "./EnterShoutout.vue";
 
 export default {
-  components:
-   { 
-     DisplayShoutout,
-     EnterShoutout
-   },
+  components: {
+    DisplayShoutout,
+    EnterShoutout,
+  },
   data() {
     return {
       /* the possible playlist needs to be set when a user clicks on an event. 
@@ -240,12 +280,12 @@ export default {
       totalVotes: 0,
       event: {},
       eventShoutOuts: [],
-      upVoted:[],
+      upVoted: [],
       downVoted: [],
       upValue: 0,
       downValue: 0,
-      temp: '2374M0fQpWi3dLnB54qaLX',
-      somethingElse: 'https://open.spotify.com/embed/track/'
+      temp: "2374M0fQpWi3dLnB54qaLX",
+      somethingElse: "https://open.spotify.com/embed/track/",
     };
   },
   created() {
@@ -272,7 +312,7 @@ export default {
       song.hasDownvoted = false;
       this.upValue = 1;
       this.upVoted.push(song.songId);
-      if (this.downVoted.includes(song.songId)){
+      if (this.downVoted.includes(song.songId)) {
         this.downVoted = this.downVoted.filter((vote) => {
           vote != song.songId;
         });
@@ -298,7 +338,7 @@ export default {
       song.hasUpvoted = false;
       this.downValue = 1;
       this.downVoted.push(song.songId);
-      if (this.upVoted.includes(song.songId)){
+      if (this.upVoted.includes(song.songId)) {
         this.upVoted = this.upVoted.filter((vote) => {
           vote != song.songId;
         });
@@ -358,14 +398,14 @@ export default {
     },
     hasShoutout(songId) {
       console.log(songId);
-       let found = false;
-       this.eventShoutOuts.forEach((shoutout) => {
-         if (songId == shoutout.songId && shoutout.shoutoutMessage != ""){
-           found = true;
-         }
+      let found = false;
+      this.eventShoutOuts.forEach((shoutout) => {
+        if (songId == shoutout.songId && shoutout.shoutoutMessage != "") {
+          found = true;
+        }
       });
       return found;
-    }
+    },
   },
 };
 </script>
@@ -373,15 +413,21 @@ export default {
 <style>
 .main-description {
   text-align: center;
-  width: 75%;
+  width: 60%;
   margin: auto;
+  margin-bottom: -50px;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+  padding-top: 30px;
+}
+.description-box {
   margin-top: 30px;
-  padding: 20px;
+  color: rgb(241, 239, 239);
+  font-family: "Titillium Web", sans-serif;
+
 }
 .event-description {
   text-align: center;
-  border: solid black;
-  border-radius: 3px;
   width: 50%;
   margin: auto;
   margin-top: 5px;
@@ -397,7 +443,8 @@ export default {
 .media-player > img {
   width: 20%;
 }
-.playlist-div, .playlist-div-left {
+.playlist-div,
+.playlist-div-left {
   width: auto;
   margin: auto;
   height: auto;
@@ -409,7 +456,8 @@ a {
   text-decoration: none;
 }
 
-#large-2, #large-1 {
+#large-2,
+#large-1 {
   height: 100vh;
   overflow-y: scroll;
   margin-bottom: 25px;
@@ -428,7 +476,7 @@ a {
 
 #large-2::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #737272;
   border: 1px solid #000;
 }
@@ -445,7 +493,7 @@ a {
 
 #large-1::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #737272;
   border: 1px solid #000;
 }
