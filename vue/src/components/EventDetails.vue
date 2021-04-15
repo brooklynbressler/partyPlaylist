@@ -1,5 +1,5 @@
 <template>
-  <div id="main-div" class="large-2">
+  <div id="main-div" class="events">
     <div
       class="event-div"
       v-for="event in $store.state.events"
@@ -67,6 +67,7 @@ export default {
 <style>
 #main-div {
   margin: auto;
+  margin-bottom: -25px;
   width: 75%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.4);
@@ -97,7 +98,7 @@ export default {
   font-weight: bold;
 }
 
-.large-2 {
+.events {
   height: 100vh;
   overflow-y: scroll;
   margin-bottom: 25px;
@@ -105,17 +106,17 @@ export default {
   background: #ccc;
 }
 
-.large-2::-webkit-scrollbar-track {
+.events::-webkit-scrollbar-track {
   border: 1px solid #000;
   padding: 2px 0;
   background-color: #404040;
 }
 
-.large-2::-webkit-scrollbar {
+.events::-webkit-scrollbar {
   width: 10px;
 }
 
-.large-2::-webkit-scrollbar-thumb {
+.events::-webkit-scrollbar-thumb {
   border-radius: 10px;
   box-shadow: inset 0 0 6px rgba(0,0,0,.3);
   background-color: #737272;
