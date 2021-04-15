@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="wrapper">
     <v-form
       id="setup-form"
       ref="form"
@@ -171,6 +171,7 @@ export default {
   background: rgba(0, 0, 0, 0.4);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
   margin: auto;
+  margin-bottom: 0;
   padding: 10em 3em 3em 3em;
   text-align: center;
 }

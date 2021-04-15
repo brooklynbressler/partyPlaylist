@@ -25,7 +25,7 @@
         <router-link
           class="update-event"
           v-if="$store.state.user.userId == event.djUserId"
-          :to="{ name: 'updateEvent', params: { id: event.eventId } }"
+          :to="{ name: 'update', params: { id: event.eventId } }"
         >
           <v-btn id="setup-button" color="white" rounded outlined medium>
             update
