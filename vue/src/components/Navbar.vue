@@ -1,13 +1,30 @@
 <template>
   <v-toolbar id="navigation" flat>
-    <v-toolbar-title id="toolbar-title" class="text-uppercase white--text">
-      <span class="font-weight-light">Turbo</span>
-      <span>Trax</span>
-    </v-toolbar-title>
+    <router-link 
+      :to="{ name: 'home' }"
+      v-if="$store.state.isLoggedIn === false"
+      >
+      <v-toolbar-title id="toolbar-title" class="text-uppercase white--text">
+        <span class="font-weight-light">Turbo</span>
+        <span>Trax</span>
+      </v-toolbar-title>
+    </router-link>
+
+    <router-link 
+      :to="{ name: 'welcome' }"
+      v-if="$store.state.isLoggedIn === true"
+      >
+      <v-toolbar-title id="toolbar-title" class="text-uppercase white--text">
+        <span class="font-weight-light">Turbo</span>
+        <span>Trax</span>
+      </v-toolbar-title>
+    </router-link>
 
     <v-spacer></v-spacer>
 
-    <router-link :to="{ name: 'home' }">
+    <router-link
+      :to="{ name: 'home' }"
+    >
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="nav mr-3" icon dark v-bind="attrs" v-on="on">
