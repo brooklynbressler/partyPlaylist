@@ -17,7 +17,7 @@
 
     <div class="playlist-display">
       <div class="playlist-div-left" id="large-2">
-        <v-card class="mx-auto" max-width="500">
+        <v-card class="mx-auto" max-width="800">
           <!-- Tool bar -->
           <v-toolbar color="deep-purple accent-4" dark>
             <v-toolbar-title>DJ's Current Playlist</v-toolbar-title>
@@ -32,57 +32,19 @@
           <table>
             <thead>
               <tr>
-                <th>Song Title</th>
-                <th>Artist</th>
+                <th>Embedded Player</th>
                 <th>Add ShoutOut</th>
               </tr>
             </thead>
 
             <tr v-for="song in activePlaylist" v-bind:key="song.songId">
-              <td>
-                <v-avatar rounded size="60">
-                  <img v-bind:src="song.imgUrl" alt="" />
-                </v-avatar>
-              </td>
 
-              <td id="song-artist-info">
-                {{ song.songName }} - {{ song.artistName }}
-              </td>
-
-              <!--
-              <td v-if="$store.state.user.userId != event.djUserId">
-                <enter-shoutout />
-
-              </td>
-              -->
 
               <td>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  v-if="$store.state.user.userId != event.djUserId"
-                  small
-                  icon
-                  outlined
-                  fab
-                  dark
-                  color="blue darken-3"
-                  v-bind="attrs"
-                  v-on="on"
-                  v-on:click="showShoutout(song.songId)"
-                  >
-                   <v-icon dark> mdi-message-text </v-icon>
-                   </v-btn>
-                  </template>
-                  <span>Enter Shoutout</span>
-                </v-tooltip>
-                <input
-                  v-if="$store.state.user.userId != event.djUserId"
-                  type="text"
-                  v-show="song.songId == showShoutoutIndex"
-                  placeholder="enter shoutout"
-                  v-model="newSongShoutout.ShoutOutMessage"
-                />
+                <iframe v-bind:src=(somethingElse+song.spotifyId) width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+              </td>
+
+              <td>
                 <v-btn
                   v-if="$store.state.user.userId == event.djUserId"
                   class="mx-2"
@@ -95,9 +57,25 @@
                   <v-icon dark> mdi-minus </v-icon>
                 </v-btn>
               </td>
-              <td v-if="hasShoutout(song.songId) && $store.state.user.userId == event.djUserId">
-                <display-shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId"/>
+
+              <td v-if="$store.state.user.userId != event.djUserId">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <span v-bind="attrs" v-on="on"><enter-shoutout v-bind:songId="song.songId" v-bind:playlistId="event.eventId"/></span>
+                  </template>
+                  <span>Enter Shoutout</span>
+                </v-tooltip>
               </td>
+
+              <td v-if="hasShoutout(song.songId) && $store.state.user.userId == event.djUserId">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <span v-bind="attrs" v-on="on"><display-shoutout v-bind:shoutouts="eventShoutOuts" v-bind:songId="song.songId" /></span>
+                  </template>
+                  <span>View Shoutout</span>
+                </v-tooltip>
+              </td>
+
             </tr>
           </table>
         </v-card>
@@ -119,8 +97,7 @@
           <table>
             <thead>
               <tr>
-                <th>Song Title</th>
-                <th>Artist</th>
+                <th>Embedded Player</th>
                 <th>Up Vote</th>
                 <th>Down Vote</th>
               </tr>
@@ -128,12 +105,7 @@
             <tbody>
               <tr v-for="song in possibleSongs" v-bind:key="song.songId">
                 <td>
-                  <v-avatar rounded size="60">
-                    <img v-bind:src="song.imgUrl" alt="" />
-                  </v-avatar>
-                </td>
-                <td id="song-artist-info">
-                  {{ song.songName }} - {{ song.artistName }}
+                  <iframe v-bind:src=(somethingElse+song.spotifyId) width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 </td>
                 <td>
                   <v-btn
@@ -236,13 +208,13 @@
 import SongsService from "../services/SongsService.js";
 import EventsService from "../services/EventsService.js";
 import DisplayShoutout from "./DisplayShoutout.vue";
-// import EnterShoutout from "./EnterShoutout.vue";
+import EnterShoutout from "./EnterShoutout.vue";
 
 export default {
   components:
    { 
      DisplayShoutout,
-     // EnterShoutout
+     EnterShoutout
    },
   data() {
     return {
@@ -267,13 +239,13 @@ export default {
       },
       totalVotes: 0,
       event: {},
-      showShoutoutIndex: -1,
-      shoutoutText: "",
       eventShoutOuts: [],
       upVoted:[],
       downVoted: [],
       upValue: 0,
       downValue: 0,
+      temp: '2374M0fQpWi3dLnB54qaLX',
+      somethingElse: 'https://open.spotify.com/embed/track/'
     };
   },
   created() {
@@ -347,28 +319,6 @@ export default {
           );
         });
     },
-    showShoutout(songId) {
-      if (songId != this.showShoutoutIndex) {
-        this.showShoutoutIndex = songId;
-      } else {
-        this.newSongShoutout.PlaylistId = this.event.eventId;
-        this.newSongShoutout.songId = songId;
-        if (this.newSongShoutout.ShoutOutMessage != ""){
-        SongsService.addSongShoutout(this.newSongShoutout)
-          .then((response) => {
-            if (response.status == 201) {
-              this.showShoutoutIndex = -1;
-              this.newSongShoutout.ShoutOutMessage = "";
-            }
-          })
-          .catch((error) => {
-            alert(
-              `Error: ${error.response.status} - ${error.response.statusText}`
-            );
-          });
-      }
-      }
-    },
     addToPlaylist(song) {
       this.addRemoveSong.PlaylistId = this.event.eventId;
       this.addRemoveSong.SongId = song.songId;
@@ -423,8 +373,6 @@ export default {
 <style>
 .main-description {
   text-align: center;
-  border: solid black;
-  border-radius: 3px;
   width: 75%;
   margin: auto;
   margin-top: 30px;
