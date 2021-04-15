@@ -71,11 +71,6 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap");
 
-body {
-  margin: 0;
-  padding: 0;
-}
-
 .nav-button {
   margin-top: 40px;
 }
@@ -87,9 +82,12 @@ body {
   margin-top: 17px;
 }
 
-main {
+body {
   background-image: url(https://www.contiki.com/six-two/wp-content/uploads/2015/09/sarthak-navjivan-iTZOPe7BpTM-unsplash.jpg);
   background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
 }
 
 .toolbar-title {
@@ -140,5 +138,9 @@ h3 {
 
 p {
   font-size: 1.5em;
+}
+
+.v-application{
+  background: transparent !important; 
 }
 </style>
