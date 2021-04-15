@@ -51,20 +51,6 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpPost("/create-possible-songs/{eventId}")]
-        public ActionResult CreateAllPossibleSongs(int eventId)
-        {
-            bool created = songDAO.CreatePossibleSongs(eventId);
-            if (created)
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest("This did not work because you are a loser");
-            }
-        }
-
         [HttpGet("/playlist/{playlistId}")]
         public ActionResult<List<PlaylistSong>> GetPlaylist(int playlistId)
         {
@@ -154,6 +140,20 @@ namespace Capstone.Controllers
             else
             {
                 return BadRequest("Server did not receive excluded genres");
+            }
+        }
+
+        [HttpPost("/create-possible-songs/{eventId}")]
+        public ActionResult CreateAllPossibleSongs(int eventId)
+        {
+            bool created = songDAO.CreatePossibleSongs(eventId);
+            if (created)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("This did not work because you are a loser");
             }
         }
     }

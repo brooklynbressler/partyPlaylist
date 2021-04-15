@@ -85,7 +85,12 @@ export default {
               this.newEvent
             ).then((response) => {
               if (response.status === 200 || response.status === 201) {
-                console.log(this.newEvent)
+                SongsService.createPossibleSongs(this.$route.params.id)
+                .then((resp) => {
+                  if (resp.status === 200){
+                    this.$router.push({ name: "events" });
+                  }
+                })
               }
             });
           }
@@ -95,21 +100,6 @@ export default {
             `Error: ${error.response.status} - ${error.response.statusText}`
           );
         });
-        EventsService.updateEvent(
-              this.$route.params.id,
-              this.newEvent
-            ).then((response) => {
-              if (response.status === 200 || response.status === 201) {
-                console.log(this.newEvent)
-              }
-            });
-        SongsService.createPossibleSongs(this.$route.params.id)
-                .then((resp) => {
-                  if (resp.status === 200){
-                    this.$router.push({ name: "events" });
-                  }
-                })
-        this.$router.push({ name: "events" });
     },
     setupEvent(event) {
       if (event.EventName === "" && event.EventDescription === "") {
